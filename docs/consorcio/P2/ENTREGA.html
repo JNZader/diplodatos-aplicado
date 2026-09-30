@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Consorcio P2 — Entrega</title>
+  <style>
+    @page { size:A4; margin:18mm; }
+    body { margin:0; font:12pt/1.45 "Liberation Serif",Times,serif; background:#e8e4dc; }
+    .sheet { max-width:210mm; margin:1rem auto; background:#fff; padding:18mm; }
+    .guia-nav { font:10pt sans-serif; background:#1c1917; padding:.5rem 1rem; }
+    .guia-nav a { color:#fde68a; }
+    @media print { .guia-nav{display:none;} body{background:#fff;} .sheet{margin:0;padding:0;} }
+  </style>
+</head>
+<body>
+<nav class="guia-nav"><a href="../../index.html">Inicio</a> · <a href="DEFENSA.html">Defensa</a></nav>
+<article class="sheet">
+  <h1>Consorcio P2 — curación (chunking y split)</h1>
+  <p>Unidad de norma = artículo (regex v3, scopeada por <code>tipo</code>). No aplicar <code>## N.</code> global: en este disco son 36 headings en 6 archivos (trampa D-10). Secundarios y KMZ no son derecho aplicable. <code>tipo</code> viaja en el chunk.</p>
+  <p>Split: por <b>archivo</b>, no por heading. Un 80/20 aleatorio de headings deja 33/35 documentos en train y test a la vez (p.ej. Ley 5589 237/59). Eso es fuga. Seed 42 ilustrativo: 28 archivos train / 7 test.</p>
+  <p>Siguiente: P3-eq (cluster / clasificar tipo / TF-IDF). RAG después.</p>
+</article>
+</body>
+</html>

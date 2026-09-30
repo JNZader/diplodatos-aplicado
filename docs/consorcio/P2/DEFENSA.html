@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Consorcio P2 — Defensa (chunking y split)</title>
+  <style>
+    :root { --bg:#f6f4ef; --ink:#1c1917; --muted:#57534e; --card:#fffefb; --line:#e7e5e4; }
+    * { box-sizing:border-box; }
+    body { margin:0; font:18px/1.55 "Iowan Old Style",Palatino,Georgia,serif; color:var(--ink); background:var(--bg); }
+    main { max-width:46rem; margin:0 auto; padding:2rem 1.25rem 4rem; }
+    h1 { font-size:1.75rem; }
+    .lede,.note { color:var(--muted); }
+    .note { background:#fff; border:1px solid var(--line); border-radius:8px; padding:.9rem 1rem; margin:0 0 1.5rem; }
+    section { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:1.1rem 1.15rem; margin:0 0 1.1rem; }
+    .k { display:inline-block; font:700 .7rem ui-sans-serif,system-ui,sans-serif; letter-spacing:.06em; text-transform:uppercase; }
+    .consigna { border-left:3px solid #1e3a5f; padding-left:.75rem; margin:.6rem 0; }
+    .respuesta { border-left:3px solid #16a34a; padding-left:.75rem; margin:.6rem 0; }
+    .teoria { border-left:3px solid #5b21b6; background:#f5f3ff; padding:.65rem .8rem; margin:.6rem 0; }
+    .teoria p { margin:.35rem 0 0; }
+    .nop { border-left:3px solid #ea580c; background:#fff7ed; padding:.5rem .75rem; }
+    .codebox { background:#1c1917; color:#f5f5f4; padding:.6rem .75rem; overflow-x:auto; }
+    .codebox pre { font:12.5px/1.45 ui-monospace,Menlo,monospace; white-space:pre-wrap; }
+    table { border-collapse:collapse; width:100%; font-size:.92rem; }
+    th,td { border:1px solid var(--line); padding:.3rem .45rem; }
+    .guia-nav { font:14px ui-sans-serif,system-ui,sans-serif; background:#1c1917; padding:.65rem 1.25rem; }
+    .guia-nav a { color:#fde68a; margin-right:1rem; text-decoration:none; }
+    footer { color:var(--muted); margin-top:2rem; font-size:.9rem; }
+  </style>
+</head>
+<body>
+<nav class="guia-nav">
+  <a href="../../index.html">Inicio</a>
+  <a href="../P1/DEFENSA.html">P1-eq</a>
+  <a href="DEFENSA.html">P2-eq</a>
+  <a href="../../saij/practicos/P2/DEFENSA.html">SAIJ P2</a>
+</nav>
+<main>
+  <h1>Consorcio P2 — chunking y split</h1>
+  <p class="lede">Equivalente SAIJ D3: no imputar FA, no partir el mismo caso train/test. Acá el “caso” es el <b>documento</b> (una ley), no el heading.</p>
+  <p class="note">Números: disco 2026-08-05, headings crudos (1.546). Las 1.383 oficiales usan regex v3 del MANIFEST. RAG: no.</p>
+
+  <section>
+    <h2>1. Chunking scopeado (trampa D-10)</h2>
+    <div class="consigna"><div class="k">Consigna (P2-eq)</div>Unidad de curación reproducible. No inventar artículos.</div>
+    <div class="respuesta"><div class="k">Respuesta</div>
+      La unidad de las normas es el <b>artículo</b> (regex v3 del MANIFEST: <code>Art.</code> / <code>Artículo</code>, sufijos bis/ter/quáter, headings compuestos Anexo/Decreto). La guía SRH 2013 <b>no tiene articulado</b>: headings <code>## 1. GENERALIDADES</code>. Si corrés <code>^## \d+\. </code> en todo el corpus, en este disco pega <b>36</b> headings en 6 archivos (informes, fallo, caso testigo, Res. APRHI 3/2026, SRH). El MANIFEST lo llamó 31 falsas unidades en 5 secundarios: misma clase de bug.
+      Keep: <code>tipo</code> en cada chunk. Drop como “norma”: secundarios y KMZ. No concatenar ley + auditoría.
+    </div>
+    <div class="teoria">
+      <div class="k">Teoría en este caso</div>
+      <p>SAIJ: no imputar texto en FA. Acá: no aplicar la regex de artículos a un informe. El parser tiene que estar <b>scopeado por tipo</b>. D-8: <code>quáter</code> con tilde vs <code>quater</code> fusionaba el art. 13 de la 5350. D-9: dos resoluciones en un archivo repiten art. 1° — la clave no puede ser solo el número.</p>
+      <p>Error típico: una regex “para todo el repo”. Error 2: split aleatorio de chunks (abajo).</p>
+    </div>
+    <div class="codebox"><div class="k">Cómo probarlo</div>
+<pre>re.findall(r"^## \d+\. ", text, re.M)   # NO global
+# scope: solo tipo == norma-tecnica
+# unidades oficiales: regex v3 en MANIFEST, no este conteo ingenuo</pre></div>
+    <div class="nop"><div class="k">No prueba</div>Que 36 sea el número del MANIFEST (ellos midieron 31 con otra pasada). Prueba la clase de fallo: regex global.</div>
+  </section>
+
+  <section>
+    <h2>2. Split por documento, no por heading</h2>
+    <div class="consigna"><div class="k">Consigna</div>Partición sin fuga. En SAIJ: no el mismo párrafo train/test; acá: no el mismo <b>cuerpo legal</b>.</div>
+    <div class="respuesta"><div class="k">Respuesta</div>
+      Si mezclás los 1.546 headings 80/20 al azar, <b>33 de 35 archivos</b> aparecen en train <i>y</i> test. La Ley 5589 se parte 237/59; el código de procedimiento 106/29. El modelo “aprende” el estilo de la 5589 y “predice” el art. 181 que nunca vio como derecho nuevo: vio a su hermana. Split correcto: <b>asignar archivos enteros</b> (p.ej. 28 train / 7 test). Las unidades quedan 1120 / 426 en este sorteo seed 42 — desbalanceado porque las leyes son gordas, y eso se documenta, no se “arregla” partiendo artículos.
+    </div>
+    <div class="teoria">
+      <div class="k">Teoría en este caso</div>
+      <p>Fuga de grupo: observaciones no independientes. Art. 5 y art. 6 de la misma ley no son dos casos. Es el mismo pecado que duplicar <code>texto</code> SAIJ a ambos lados, peor porque acá es estructural (casi todos los archivos largos filtrarían).</p>
+      <p>Para clasificar <code>tipo</code> (P3-eq): si train y test comparten el mismo decreto, la accuracy es un chiste. Para el buscador: menos grave, pero un eval de retrieval con gold del mismo artículo partido es igualmente sucio.</p>
+      <p>Error típico: <code>train_test_split(chunks)</code> de sklearn. Otro: estratificar por <code>tipo</code> y aún así cortar leyes al medio.</p>
+    </div>
+    <div class="codebox"><div class="k">Cómo probarlo</div>
+<pre># 33/35 archivos en ambos lados si split aleatorio de headings
+# split por archivo: shuffle(files); train, test = 80/20 de FILES</pre></div>
+    <div class="nop"><div class="k">No prueba</div>Que 28/7 sea el split final de P3. Es el principio. Tampoco un F1.</div>
+  </section>
+
+  <section>
+    <h2>Oral Consorcio-P2</h2>
+    <ul>
+      <li>¿Por qué la regex de artículos no corre en la auditoría?</li>
+      <li>¿Qué pasa si partís headings 80/20 al azar?</li>
+      <li>¿Cuál es la unidad del split y por qué no el <code>##</code>?</li>
+    </ul>
+  </section>
+  <footer>P2-eq solamente. P3-eq / RAG: después. Uso académico.</footer>
+</main>
+</body>
+</html>
