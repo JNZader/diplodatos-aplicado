@@ -3,11 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Consorcio P3 — D6-eq</title>
+  <title>Consorcio P3 — hasta D7-eq</title>
   <style>
     @page { size:A4; margin:18mm; }
     body { margin:0; font:12pt/1.45 "Liberation Serif",Times,serif; background:#e8e4dc; }
     .sheet { max-width:210mm; margin:1rem auto; background:#fff; padding:18mm; }
+    table { border-collapse:collapse; width:100%; font-size:10.5pt; }
+    th,td { border:1px solid #bbb; padding:.28rem .45rem; }
     .draft { background:#fff7ed; border:1px solid #fdba74; padding:.5rem .7rem; font:10pt sans-serif; }
     .guia-nav { font:10pt sans-serif; background:#1c1917; padding:.5rem 1rem; }
     .guia-nav a { color:#fde68a; }
@@ -17,9 +19,16 @@
 <body>
 <nav class="guia-nav"><a href="../../index.html">Inicio</a> · <a href="DEFENSA.html">Defensa</a></nav>
 <article class="sheet">
-  <h1>Consorcio P3 — clustering (avance D6-eq)</h1>
-  <p class="draft">Solo no supervisado. Clasificar <code>tipo</code> y RAG: no.</p>
-  <p>TF-IDF + k=8 sobre headings del corpus legal (disco). Silueta ~0,04. ARI vs <code>tipo</code> ~0,07. Los grupos son temas (aguas, tránsito, consorcios, DNV), no ley/decreto/resolución. Misma lección que SAIJ D6.</p>
+  <h1>Consorcio P3 — hasta D7-eq</h1>
+  <p class="draft">D6 cluster + D7 clasificador. Búsqueda/RAG: no.</p>
+  <p><b>D6:</b> k=8, ARI vs tipo ~0,07. Temas, no jerarquía normativa.</p>
+  <p><b>D7:</b> split 28/7 archivos (seed 42). Test 91% ley-provincial.</p>
+  <table>
+    <tr><th>Y</th><th>Dummy macro-F1</th><th>TF-IDF+LR</th></tr>
+    <tr><td>tipo fino</td><td>0,07</td><td>0,16 (accuracy 0,88)</td></tr>
+    <tr><td>norma / acto / secundario</td><td>0,33</td><td>0,78</td></tr>
+  </table>
+  <p>Accuracy 0,88 no se reporta como éxito. La Y de 3 clases es el analogado SU/FA. Sin usar <code>tipo</code> como feature.</p>
 </article>
 </body>
 </html>
