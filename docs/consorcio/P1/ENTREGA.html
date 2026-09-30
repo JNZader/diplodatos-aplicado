@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Consorcio P1 — Entrega</title>
+  <style>
+    @page { size:A4; margin:18mm; }
+    body { margin:0; font:12pt/1.45 "Liberation Serif",Times,serif; background:#e8e4dc; }
+    .sheet { max-width:210mm; margin:1rem auto; background:#fff; padding:18mm; }
+    table { border-collapse:collapse; width:100%; font-size:10.5pt; }
+    th,td { border:1px solid #bbb; padding:.28rem .45rem; }
+    .guia-nav { font:10pt sans-serif; background:#1c1917; padding:.5rem 1rem; }
+    .guia-nav a { color:#fde68a; }
+    @media print { .guia-nav{display:none;} body{background:#fff;} .sheet{margin:0;padding:0;} }
+  </style>
+</head>
+<body>
+<nav class="guia-nav"><a href="../../index.html">Inicio</a> · <a href="DEFENSA.html">Defensa</a></nav>
+<article class="sheet">
+  <p>UNC / Consorcio canalero — P1 equivalente (unidad de análisis)</p>
+  <h1>Qué hay en el corpus legal (sin RAG)</h1>
+  <p>Disco 2026-08-05: 35 Markdown + 1 KMZ. MANIFEST: 1383 unidades indexables. Un recuento ingenuo de <code>##</code> da 1546 headings (no usar como n). 24 normas (1358 u.), 1 guía técnica (6), 4 actos (19), 6 secundarios (0 u. normativas: no son derecho aplicable). El KMZ no se indexa como texto.</p>
+  <p>Lección SAIJ: no mezclar tipos de registro. Acá <code>tipo</code> tiene que viajar en el chunk. <code>ley</code> y <code>ley-provincial</code> no son el mismo string (Ley 8803). Fechas de BO ≠ fecha de ingesta.</p>
+  <p>Siguiente: P2-eq (chunking scopeado, split por documento). RAG: después del P3-eq.</p>
+</article>
+</body>
+</html>

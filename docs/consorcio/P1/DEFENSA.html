@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Consorcio P1 — Defensa (unidad)</title>
+  <style>
+    :root { --bg:#f6f4ef; --ink:#1c1917; --muted:#57534e; --card:#fffefb; --line:#e7e5e4; }
+    * { box-sizing:border-box; }
+    body { margin:0; font:18px/1.55 "Iowan Old Style",Palatino,Georgia,serif; color:var(--ink); background:var(--bg); }
+    main { max-width:46rem; margin:0 auto; padding:2rem 1.25rem 4rem; }
+    h1 { font-size:1.75rem; margin:0 0 .5rem; }
+    .lede { color:var(--muted); }
+    .note { background:#fff; border:1px solid var(--line); border-radius:8px; padding:.9rem 1rem; margin:0 0 1.5rem; }
+    section { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:1.1rem 1.15rem; margin:0 0 1.1rem; }
+    .k { display:inline-block; font:700 .7rem/1 ui-sans-serif,system-ui,sans-serif; letter-spacing:.06em; text-transform:uppercase; margin-bottom:.2rem; }
+    .consigna { border-left:3px solid #1e3a5f; padding-left:.75rem; margin-bottom:.7rem; }
+    .respuesta { border-left:3px solid #16a34a; padding-left:.75rem; margin-bottom:.7rem; }
+    .porque { border-left:3px solid #a8a29e; padding-left:.75rem; margin-bottom:.7rem; }
+    .teoria { border-left:3px solid #5b21b6; background:#f5f3ff; padding:.65rem .8rem; margin:.7rem 0; }
+    .teoria p { margin:.35rem 0 0; }
+    .nop { border-left:3px solid #ea580c; background:#fff7ed; padding:.5rem .75rem; }
+    .codebox { background:#1c1917; color:#f5f5f4; padding:.6rem .75rem; overflow-x:auto; }
+    .codebox pre { font:12.5px/1.45 ui-monospace,Menlo,monospace; white-space:pre-wrap; }
+    table { border-collapse:collapse; width:100%; font-size:.92rem; }
+    th,td { border:1px solid var(--line); padding:.3rem .45rem; text-align:left; }
+    .guia-nav { font:14px ui-sans-serif,system-ui,sans-serif; background:#1c1917; padding:.65rem 1.25rem; }
+    .guia-nav a { color:#fde68a; margin-right:1rem; text-decoration:none; }
+    footer { color:var(--muted); margin-top:2rem; font-size:.9rem; }
+  </style>
+</head>
+<body>
+<nav class="guia-nav">
+  <a href="../../index.html">Inicio</a>
+  <a href="../index.html">Consorcio</a>
+  <a href="../../saij/practicos/P1/DEFENSA.html">SAIJ P1</a>
+</nav>
+<main>
+  <h1>Consorcio P1 — ¿qué es una unidad?</h1>
+  <p class="lede">Equivalente SAIJ §1 (SU vs FA). Corpus en disco 2026-08-05, no re-chunkeado acá. RAG: todavía no.</p>
+  <p class="note">Fuente: <code>~/Escritorio/consorcio/corpus-legal/</code> (MANIFEST v2 integración 5). Este repo <b>no</b> copia los .md: son el dato, no el sitio.</p>
+
+  <section>
+    <h2>1. Una fila no es “un archivo .md”</h2>
+    <div class="consigna"><div class="k">Consigna (P1-eq)</div>Entender el corpus: qué hay y qué se puede preguntar.</div>
+    <div class="respuesta"><div class="k">Respuesta</div>
+      En el directorio hay <b>35 .md + 1 KMZ</b>. El manifiesto declara <b>1.383 unidades indexables</b>, no 35. Un recuento ingenuo de headings <code>##</code> da <b>1.546</b> (1.354 con “Art”). Esa diferencia es el SU/FA de acá: no todo <code>##</code> es un artículo de derecho.
+      El corpus <b>no es homogéneo</b>: 24 normas generales (1.358 unidades), 1 guía técnica (6), 4 actos particulares (19), 6 documentos secundarios (<b>0 unidades normativas a propósito</b>) + KMZ que ni siquiera es texto.
+    </div>
+    <div class="porque"><div class="k">Por qué</div>
+      README/MANIFEST 2026-08-05. Tipos en frontmatter (este recuento): 13 <code>ley-provincial</code>, 1 <code>ley</code> (8803, D-22), 1 nacional, decretos, resoluciones, 1 jurisprudencia, 1 caso-testigo, 1 auditoría, 1 KMZ. Los secundarios no suman artículos porque no son articulado.
+    </div>
+    <div class="teoria">
+      <div class="k">Teoría en este caso</div>
+      <p>En SAIJ la trampa era tratar cada JSONL row como un fallo. Acá es tratar cada archivo como una norma, o cada <code>##</code> como un artículo. Mezclar Ley 9750 art. 3 con un párrafo de la auditoría de 10 de Mayo es promediar personas con facturas: el retriever va a devolver los dos con buen score a “¿quién expropia?” y <b>solo la ley es derecho aplicable</b>.</p>
+      <p>Por eso el campo <code>tipo</code> tiene que viajar en el chunk (el README lo dice). Sin tipo, P3-eq de “clasificar fuero” ni siquiera tiene Y, y el buscador miente con cara de cita.</p>
+      <p>Error típico: regex global <code>^## (\d)\. </code> (trampa D-10) que inventa 31 unidades falsas. Otro: filtrar <code>tipo == ley-provincial</code> y dejar afuera la 8803 (<code>tipo: ley</code>).</p>
+      <div class="k">Teoría general</div>
+      <ul>
+        <li>SAIJ P1 §1 — unidad de análisis</li>
+        <li>EyCD sesgo / tipo de registro</li>
+      </ul>
+    </div>
+    <div class="codebox"><div class="k">Cómo probarlo</div>
+<pre>from pathlib import Path
+import re
+root = Path.home() / "Escritorio/consorcio/corpus-legal"
+mds = [p for p in root.glob("*.md") if p.name not in ("README.md","MANIFEST.md")]
+print(len(mds), "md")
+print(sum(len(re.findall(r"^## .+", p.read_text(), re.M)) for p in mds), "h2 crudos")
+# unidades oficiales: MANIFEST unidades_indexables = 1383
+# no uses el h2 crudo como n del RAG</pre></div>
+    <div class="nop"><div class="k">No prueba</div>Que 1383 sea el n eterno: el manifiesto avisa que otras pasadas mintieron contadores. Recomputar si el disco cambió. Tampoco que el KMZ se “chunkee” como ley.</div>
+  </section>
+
+  <section>
+    <h2>2. Relojes y Y candidata</h2>
+    <div class="respuesta"><div class="k">Respuesta</div>
+      Relojes: fecha de BO / vigencia de la ley ≠ fecha de ingesta al corpus (2026-08-05) ≠ fecha de un acto particular. Preguntar “normativa vigente” con el timestamp de git es el <code>timestamp</code> de SAIJ.
+      Y candidata para un P3-eq: <code>tipo</code> (norma vs acto vs jurisprudencia vs secundario), <b>no</b> un “fuero canalero”. El KMZ no tiene Y de texto.
+    </div>
+    <div class="teoria">
+      <div class="k">Teoría en este caso</div>
+      <p>SAIJ: <code>fecha</code> vs <code>timestamp</code>. Acá: BO vs consolidación SAIJ (Ley 9750 en SAIJ es texto original 2010; el art. 39 se modificó después y SAIJ no lo refleja). Misma lección: chequear qué reloj.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Oral Consorcio-P1</h2>
+    <ul>
+      <li>¿Por qué 35 archivos no son 35 unidades?</li>
+      <li>¿Qué peca igual que mezclar SU y FA?</li>
+      <li>¿Por qué los secundarios suman 0 unidades?</li>
+      <li>¿Qué filtro de <code>tipo</code> se come la Ley 8803?</li>
+    </ul>
+  </section>
+  <footer>Uso académico. No es asesoramiento jurídico. RAG todavía no.</footer>
+</main>
+</body>
+</html>
