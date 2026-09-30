@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Consorcio P3 — D6-eq clustering</title>
+  <style>
+    :root { --bg:#f6f4ef; --ink:#1c1917; --muted:#57534e; --card:#fffefb; --line:#e7e5e4; }
+    * { box-sizing:border-box; }
+    body { margin:0; font:18px/1.55 "Iowan Old Style",Palatino,Georgia,serif; color:var(--ink); background:var(--bg); }
+    main { max-width:46rem; margin:0 auto; padding:2rem 1.25rem 4rem; }
+    h1 { font-size:1.75rem; }
+    .lede,.note { color:var(--muted); }
+    .note { background:#fff; border:1px solid var(--line); border-radius:8px; padding:.9rem 1rem; margin:0 0 1.5rem; }
+    section { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:1.1rem 1.15rem; margin:0 0 1.1rem; }
+    .k { display:inline-block; font:700 .7rem ui-sans-serif,system-ui,sans-serif; letter-spacing:.06em; text-transform:uppercase; }
+    .consigna { border-left:3px solid #1e3a5f; padding-left:.75rem; margin:.6rem 0; }
+    .respuesta { border-left:3px solid #16a34a; padding-left:.75rem; margin:.6rem 0; }
+    .teoria { border-left:3px solid #5b21b6; background:#f5f3ff; padding:.65rem .8rem; margin:.6rem 0; }
+    .teoria p { margin:.35rem 0 0; }
+    .nop { border-left:3px solid #ea580c; background:#fff7ed; padding:.5rem .75rem; }
+    .codebox { background:#1c1917; color:#f5f5f4; padding:.6rem .75rem; }
+    .codebox pre { font:12.5px ui-monospace,Menlo,monospace; white-space:pre-wrap; }
+    .guia-nav { font:14px ui-sans-serif,system-ui,sans-serif; background:#1c1917; padding:.65rem 1.25rem; }
+    .guia-nav a { color:#fde68a; margin-right:1rem; text-decoration:none; }
+    footer { color:var(--muted); margin-top:2rem; font-size:.9rem; }
+  </style>
+</head>
+<body>
+<nav class="guia-nav">
+  <a href="../../index.html">Inicio</a>
+  <a href="../P2/DEFENSA.html">P2-eq</a>
+  <a href="DEFENSA.html">P3 D6-eq</a>
+  <a href="../../saij/practicos/P3/DEFENSA.html">SAIJ P3</a>
+</nav>
+<main>
+  <h1>Consorcio P3 — clustering (D6-eq)</h1>
+  <p class="lede">¿Los grupos latentes son el <code>tipo</code> (ley/decreto/resolución)? Un k-means, TF-IDF. Clasificar tipo y RAG: todavía no.</p>
+  <p class="note">Headings crudos (1.545, len≥80). No es la regex v3. Corpus en disco, no copiado al repo.</p>
+
+  <section>
+    <h2>1. Los clusters son temas, no tipos</h2>
+    <div class="consigna"><div class="k">Consigna</div>Temas latentes vs categorías legales (acá: <code>tipo</code> de frontmatter).</div>
+    <div class="respuesta"><div class="k">Respuesta</div>
+      MiniBatchKMeans k=8, TF-IDF 1–2 grams. Silueta cosine ~<b>0,04</b>. ARI vs <code>tipo</code> ~<b>0,07</b> (con o sin secundarios: 0,072 / 0,079). <b>No recuperan ley vs decreto vs resolución.</b>
+      Centroides (sin secundarios): tránsito/vía pública; consorcios/camineros; disposiciones complementarias; “texto oficial / SAIJ / fiscalía”; APRHI/recursos; <b>aguas/concesión</b>; tránsito otra vez; <b>DNV</b>. Eso es <b>materia temática</b> (agua, camino, consorcio), no el metadato <code>tipo</code>.
+    </div>
+    <div class="teoria">
+      <div class="k">Teoría en este caso</div>
+      <p>Es el mismo resultado que SAIJ D6 (ARI 0,05): TF-IDF agrupa <b>de qué habla el texto</b>, no el casillero del archivo. Una ley de aguas y un decreto de aguas se parecen más entre sí que una ley de aguas y una ley de tránsito. El <code>tipo</code> es administrativo (jerarquía de la norma); el cluster es semántico.</p>
+      <p>Por eso un RAG que “clasifique tipo con k-means” no vuela. Si más adelante clasificamos <code>tipo</code> (D7-eq), va a ser supervisado con Y = frontmatter, split por archivo (P2), texto sin el campo tipo. El cluster sirve para decir: hay tópicos (agua, vial, consorcio) que el buscador sí puede usar.</p>
+      <p>Error típico: “entonces el clustering falló”. No: respondió la pregunta. Error 2: meter <code>tipo</code> en el vectorizer.</p>
+    </div>
+    <div class="codebox"><div class="k">Cómo probarlo</div>
+<pre>X = TfidfVectorizer(...).fit_transform(chunks)
+lab = MiniBatchKMeans(8, random_state=42).fit_predict(X)
+adjusted_rand_score(tipo_frontmatter, lab)  # ~0.07
+# top: cluster_centers_ → feature_names</pre></div>
+    <div class="nop"><div class="k">No prueba</div>El n oficial 1383 (usamos headings crudos). Ni un k “natural”. Ni que DNV sea un tipo jurídico: es un emisor que el TF-IDF ve.</div>
+  </section>
+
+  <section>
+    <h2>Oral Consorcio-P3 D6</h2>
+    <ul>
+      <li>¿El cluster recupera <code>tipo</code> o tema?</li>
+      <li>¿Por qué una ley de aguas se parece a un decreto de aguas?</li>
+      <li>¿Meterías <code>tipo</code> en el TF-IDF? ¿Por qué no?</li>
+    </ul>
+  </section>
+  <footer>D6-eq solamente. Clasificar tipo = D7-eq. RAG después. Uso académico.</footer>
+</main>
+</body>
+</html>

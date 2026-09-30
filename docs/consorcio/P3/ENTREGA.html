@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Consorcio P3 — D6-eq</title>
+  <style>
+    @page { size:A4; margin:18mm; }
+    body { margin:0; font:12pt/1.45 "Liberation Serif",Times,serif; background:#e8e4dc; }
+    .sheet { max-width:210mm; margin:1rem auto; background:#fff; padding:18mm; }
+    .draft { background:#fff7ed; border:1px solid #fdba74; padding:.5rem .7rem; font:10pt sans-serif; }
+    .guia-nav { font:10pt sans-serif; background:#1c1917; padding:.5rem 1rem; }
+    .guia-nav a { color:#fde68a; }
+    @media print { .guia-nav{display:none;} body{background:#fff;} .sheet{margin:0;padding:0;} }
+  </style>
+</head>
+<body>
+<nav class="guia-nav"><a href="../../index.html">Inicio</a> · <a href="DEFENSA.html">Defensa</a></nav>
+<article class="sheet">
+  <h1>Consorcio P3 — clustering (avance D6-eq)</h1>
+  <p class="draft">Solo no supervisado. Clasificar <code>tipo</code> y RAG: no.</p>
+  <p>TF-IDF + k=8 sobre headings del corpus legal (disco). Silueta ~0,04. ARI vs <code>tipo</code> ~0,07. Los grupos son temas (aguas, tránsito, consorcios, DNV), no ley/decreto/resolución. Misma lección que SAIJ D6.</p>
+</article>
+</body>
+</html>
