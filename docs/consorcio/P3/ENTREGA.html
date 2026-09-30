@@ -20,7 +20,7 @@
 <nav class="guia-nav"><a href="../../index.html">Inicio</a> · <a href="DEFENSA.html">Defensa</a></nav>
 <article class="sheet">
   <h1>Consorcio P3 — hasta D7-eq</h1>
-  <p class="draft">D6 cluster + D7 clasificador. Búsqueda/RAG: no.</p>
+  <p class="draft">Hasta D8 (16 errores). D9 búsqueda / RAG: no.</p>
   <p><b>D6:</b> k=8, ARI vs tipo ~0,07. Temas, no jerarquía normativa.</p>
   <p><b>D7:</b> split 28/7 archivos (seed 42). Test 91% ley-provincial.</p>
   <table>
@@ -29,6 +29,7 @@
     <tr><td>norma / acto / secundario</td><td>0,33</td><td>0,78</td></tr>
   </table>
   <p>Accuracy 0,88 no se reporta como éxito. La Y de 3 clases es el analogado SU/FA. Sin usar <code>tipo</code> como feature.</p>
+  <p><b>D8:</b> 16 errores. Informes que citan normas se ven como acto o como ley. El “Visto” de un decreto se ve como acto. Eso es el riesgo de un RAG sin <code>tipo</code> en el chunk.</p>
 </article>
 </body>
 </html>

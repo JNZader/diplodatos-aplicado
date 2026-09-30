@@ -33,7 +33,7 @@
 </nav>
 <main>
   <h1>Consorcio P3 — D6-eq + D7-eq</h1>
-  <p class="note">D6: cluster ≠ tipo. <b>D7: un clasificador de tipo, split por archivo.</b> Buscador/RAG: no.</p>
+  <p class="note">D6 cluster · D7 clase · <b>D8 errores</b>. D9 búsqueda / RAG: no.</p>
 
   <section>
     <h2>D6 (recordatorio)</h2>
@@ -62,6 +62,24 @@
   </section>
 
   <section>
+    <h2>D8 — errores a mano (Y grosera, 16 en test)</h2>
+    <div class="consigna"><div class="k">Consigna</div>No quedarse en el F1. ¿Qué se confunde?</div>
+    <div class="respuesta"><div class="k">Respuesta</div>
+      16 errores / 426 chunks (Y = norma/acto/secundario). Cuatro familias:<br>
+      <b>A. Secundario → acto.</b> El informe F3 y el caso testigo citan resoluciones APRHI; el LR los lee como acto administrativo.<br>
+      <b>B. Norma → acto.</b> Arts. de línea de ribera / “Art. 20 bis — Normas de Procedimiento” / el “Visto” del decreto 280/2025: prosa de expediente, no de código.<br>
+      <b>C. Acto → norma.</b> Un heading “Firmante” de la Res. SRH 157: poco texto, parece ley.<br>
+      <b>D. Secundario → norma.</b> El informe cita artículos; el modelo cree que <i>es</i> la ley (justamente el riesgo del README: recuperar evidencia aplicada con cara de regla).
+    </div>
+    <div class="teoria">
+      <div class="k">Teoría en este caso</div>
+      <p>Como SAIJ D8 familia A: a veces Y/registro y el léxico no coinciden. Un informe que cita el art. 3 de la 6394 <b>habla como norma</b>. Por eso el RAG tiene que llevar <code>tipo</code> y citar la ley, no el informe. El clasificador sin ese campo comete el mismo pecado que el retriever naive.</p>
+      <p>No se retoca el split ni la Y después de ver estos 16. Son el test seed 42 de P2.</p>
+    </div>
+    <div class="nop"><div class="k">No prueba</div>Que haya que fusionar acto y secundario. Prueba que el estilo de cita legal contamina.</div>
+  </section>
+
+  <section>
     <h2>Oral D7-eq</h2>
     <ul>
       <li>¿Por qué accuracy 0,88 no se lidera?</li>
@@ -69,7 +87,15 @@
       <li>¿En qué se parece norma/acto/secundario a SU/FA/NV?</li>
     </ul>
   </section>
-  <footer>Siguiente: D8-eq (errores) o D9-eq (TF-IDF búsqueda). RAG después. Uso académico.</footer>
+  <section>
+    <h2>Oral D8-eq</h2>
+    <ul>
+      <li>¿Por qué un informe de expropiación se clasifica como acto?</li>
+      <li>¿Qué riesgo de RAG es la familia D (secundario → norma)?</li>
+      <li>¿Se puede cambiar Y ahora, después de ver el test?</li>
+    </ul>
+  </section>
+  <footer>D6–D8. D9 = búsqueda TF-IDF. RAG después. Uso académico.</footer>
 </main>
 </body>
 </html>
