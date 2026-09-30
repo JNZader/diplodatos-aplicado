@@ -33,7 +33,7 @@
 </nav>
 <main>
   <h1>Consorcio P3 — D6-eq + D7-eq</h1>
-  <p class="note">D6 cluster · D7 clase · <b>D8 errores</b>. D9 búsqueda / RAG: no.</p>
+  <p class="note">D6–D9. <b>Esto todavía no es RAG</b> (no hay generación ni umbral de abstención).</p>
 
   <section>
     <h2>D6 (recordatorio)</h2>
@@ -80,6 +80,22 @@
   </section>
 
   <section>
+    <h2>D9 — búsqueda TF-IDF (no RAG)</h2>
+    <div class="consigna"><div class="k">Consigna</div>Query en lenguaje natural → chunks. Técnica vs coloquial. Índice = headings del corpus en disco (1.545), TF-IDF coseno.</div>
+    <div class="respuesta"><div class="k">Respuesta</div>
+      <b>Técnica que anda:</b> “servidumbre de acueducto código de aguas” → arts. 256/254/131 Ley 5589 (0,46–0,37), <code>tipo: ley-provincial</code>. “permiso zona de camino DNV” → DNV 908/1898 + decreto 8560, pero también el <i>informe</i> de zona de camino.<br>
+      <b>La trampa del README:</b> “quién expropia” / “sujeto expropiante” → <b>primero el informe F3</b> (0,30 / 0,23), no el art. de la 6394. El secundario gana porque está escrito para esa pregunta.<br>
+      <b>Coloquial:</b> “me van a sacar el campo” scores bajos (~0,22) a 5589. “quién manda en el consorcio” → registro APRHI del 10 de Mayo, no el art. 6 de la 9750 en el top-1.
+    </div>
+    <div class="teoria">
+      <div class="k">Teoría en este caso</div>
+      <p>Igual que SAIJ D9: TF-IDF recupera solapamiento, no la jerarquía de fuentes. Un informe titulado “sujeto expropiante” pisa a la ley porque el query y el heading coinciden. Por eso el paso RAG no es “poner ChatGPT encima”: es <b>filtrar/citar por tipo</b>, abstenerse si solo hay secundario, y no vender el hit como norma.</p>
+      <p>No hay qrels. Evaluación = inspección de top-4. No se usó generación. Índice ≠ 1383 oficiales (headings crudos).</p>
+    </div>
+    <div class="nop"><div class="k">No prueba</div>Un sistema para la comisión. Ni que BGE-M3 no mejore el coloquial. Eso es el paso extra, después de este oral.</div>
+  </section>
+
+  <section>
     <h2>Oral D7-eq</h2>
     <ul>
       <li>¿Por qué accuracy 0,88 no se lidera?</li>
@@ -95,7 +111,15 @@
       <li>¿Se puede cambiar Y ahora, después de ver el test?</li>
     </ul>
   </section>
-  <footer>D6–D8. D9 = búsqueda TF-IDF. RAG después. Uso académico.</footer>
+  <section>
+    <h2>Oral D9-eq</h2>
+    <ul>
+      <li>¿Esto es RAG?</li>
+      <li>¿Por qué “quién expropia” no devuelve primero la 6394?</li>
+      <li>Una query técnica que cita ley y una coloquial que no.</li>
+    </ul>
+  </section>
+  <footer>P3-eq cerrado en búsqueda. Siguiente paso extra: RAG con tipo + citas + abstención. Uso académico.</footer>
 </main>
 </body>
 </html>
