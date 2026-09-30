@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pista Consorcio — P1 equivalente</title>
+  <link rel="stylesheet" href="../saij/guia.css">
+</head>
+<body>
+<nav class="top">
+  <a href="../index.html">Inicio</a>
+  <span class="here">Consorcio</span>
+  <a href="../saij/index.html">SAIJ</a>
+</nav>
+<main>
+  <h1>Consorcio: el práctico sobre normas, no sobre mm de lluvia</h1>
+  <p class="lede">Mismo método que SAIJ. Corpus: leyes/artículos/actos <b>públicos</b>. No actas de comisión.</p>
+  <div class="note"><b>Ahora:</b> P1-equivalente (qué es una unidad). P2–P3 y RAG: después, un paso cada vez.</div>
+  <h2>Mapa</h2>
+  <table>
+    <tr><th>SAIJ</th><th>Acá</th></tr>
+    <tr><td>Fila JSONL / SU vs FA</td><td>Documento vs artículo vs acto vs fallo</td></tr>
+    <tr><td>Campo <code>texto</code> vs encabezado</td><td>Cuerpo del artículo vs título</td></tr>
+    <tr><td>Fuero (Y grosera)</td><td><code>tipo</code> (norma / acto / jurisprudencia) — viaja en el chunk</td></tr>
+    <tr><td>Buscador TF-IDF</td><td>Baseline; RAG con citas = paso extra</td></tr>
+  </table>
+  <h2>P1-eq — preguntas (todavía sin números)</h2>
+  <ul>
+    <li>¿Cada archivo .md es una observación, o cada <code>## Artículo</code>?</li>
+    <li>¿Mezclar KMZ / auditoría de obra con la Ley 9750 es el mismo pecado que mezclar SU y FA?</li>
+    <li>¿Fecha de BO vs fecha de ingesta al corpus?</li>
+  </ul>
+  <p>Defensa HTML de esta pista: el próximo paso fino, no hoy un RAG.</p>
+  <footer><a href="../index.html">← Inicio</a></footer>
+</main>
+</body>
+</html>

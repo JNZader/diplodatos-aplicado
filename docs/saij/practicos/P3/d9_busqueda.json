@@ -1,0 +1,149 @@
+[
+  {
+    "kind": "técnica",
+    "q": "despido por injuria laboral",
+    "hits": [
+      {
+        "id": "SUQ0009026",
+        "score": 0.43469788579611557,
+        "snip": " La posibilidad prevista por el artículo 246 de la L.C.T. para extinguir el vínculo por injuria del trabajador requiere que la misma tenga la relevancia y entidad que no admita la "
+      },
+      {
+        "id": "SUE0026441",
+        "score": 0.40252051377930137,
+        "snip": " La persistencia de la situación de violencia laboral sin adopción de medidas correctivas, protectoras o sancionatorias por parte del empleador constituye injuria de suficiente gra"
+      },
+      {
+        "id": "SUL0003002",
+        "score": 0.4016951648651909,
+        "snip": " La negativa de la relación laboral es causa suficiente para que el trabajador se considere injuriado y el despido resulte indemnizable, toda vez que dicha situación constituye una"
+      }
+    ]
+  },
+  {
+    "kind": "coloquial",
+    "q": "me echaron del trabajo sin motivo",
+    "hits": [
+      {
+        "id": "SUE0017925",
+        "score": 0.354217329010963,
+        "snip": " El actor falleció por causas naturales, sobre el cual no hay prueba alguna que lo vincule en absoluto con la condición de trabajador ni tampoco con el viaje que necesariamente deb"
+      },
+      {
+        "id": "SUS0005049",
+        "score": 0.3197654189646167,
+        "snip": " Las relaciones individuales emergentes del trabajo agrario son reguladas en un marco legislativo autónomo y suficiente, que implementa en su artículo 62 , Ley 22248 la trasferenci"
+      },
+      {
+        "id": "SUQ0026278",
+        "score": 0.3141011210405044,
+        "snip": " El empleador tiene la facultad de rescindir el contrato de trabajo ante un incumplimiento de las obligaciones propias del trabajador que, por su gravedad, no admita la continuidad"
+      }
+    ]
+  },
+  {
+    "kind": "técnica",
+    "q": "concurso preventivo y quiebra",
+    "hits": [
+      {
+        "id": "SUN0041945",
+        "score": 0.6830521001293248,
+        "snip": " Con relación a la ineficacia concursal el hecho de que la LCQ 116 párr. 1° alude a \"la presentación en concurso preventivo\", no conlleva -como se alega- que el período de sospecha"
+      },
+      {
+        "id": "SUN0009687",
+        "score": 0.6113834056117939,
+        "snip": " La ley 24522 art. 56 no es aplicable en los procesos de quiebra, pues dicha norma en su art. 200, referido al periodo informativo de la quiebra, no contiene remisión alguna al art"
+      },
+      {
+        "id": "SUF0016219",
+        "score": 0.5738469264783765,
+        "snip": " Ahora bien, ¿qué sucede en caso de quiebra indirecta? ¿las acciones prescriptas por aplicación de la ley de concursos y quiebras, artículo 56 , en el concurso preventivo precedent"
+      }
+    ]
+  },
+  {
+    "kind": "coloquial",
+    "q": "la empresa no le paga a los que le deben plata",
+    "hits": [
+      {
+        "id": "SUI3600663",
+        "score": 0.20069494911320065,
+        "snip": " Lo que no puede admitirse es que durante tal período de licencia paga por enfermedad, el actor -sin ningún tipo de aviso o solicitud de permiso-, se ponga a trabajar de taxista pa"
+      },
+      {
+        "id": "SUB1402028",
+        "score": 0.1899036103478786,
+        "snip": " La normativa de aplicación es clara en establecer que contra el laudo arbitral \"no se admitirá recurso alguno\" (art. 47 Regl. Trib. Arbitral del Colegio de Abogados de Mar del Pla"
+      },
+      {
+        "id": "SUC0410330",
+        "score": 0.18976143085301256,
+        "snip": " La contienda negativa de competencia planteada entre un Juzgado civil y uno Comercial debe resolverse a favor de la competencia del segundo, pues tratándose de una demanda dirigid"
+      }
+    ]
+  },
+  {
+    "kind": "técnica",
+    "q": "tenencia de estupefacientes",
+    "hits": [
+      {
+        "id": "SU30007820",
+        "score": 0.6328026452779634,
+        "snip": " Entre la tenencia de estupefacientes para uso personal y la siembra y guarda de semillas para producirlos media concurso real. "
+      },
+      {
+        "id": "SUA0013404",
+        "score": 0.5846705165772368,
+        "snip": " Entre las acciones que ofenden el orden, la moral y la salud pública se encuentran sin duda la tenencia de estupefacientes para uso personal. "
+      },
+      {
+        "id": "SUG0003340",
+        "score": 0.5138554460689551,
+        "snip": " Son nulas las actas de secuestro de estupefacientes no suscriptas por el Comisario actuante, razón por la cual dichos instrumentos carecen de validez formal y esa omisión determin"
+      }
+    ]
+  },
+  {
+    "kind": "coloquial",
+    "q": "lo agarraron con droga para consumo",
+    "hits": [
+      {
+        "id": "SUV0107207",
+        "score": 0.46688097667889455,
+        "snip": " El pagaré de consumo puede integrarse dentro del mismo juicio ejecutivo, con documentación adicional relativa al negocio causal a fin de cumplir con los requisitos previstos en el"
+      },
+      {
+        "id": "SUG0003316",
+        "score": 0.382356687795869,
+        "snip": " Encuadra en la figura de tenencia de estupefacientes la acción del procesado que fue detenido en las inmediaciones de una estación ferroviaria probando 13,7 grs. de marihuana dist"
+      },
+      {
+        "id": "SUC1012479",
+        "score": 0.3539288966738023,
+        "snip": " Corresponde declarar la competencia del fuero Contencioso Administrativo, Tributario y de Relaciones de Consumo local porque la competencia jurisdiccional para entender en la repa"
+      }
+    ]
+  },
+  {
+    "kind": "transversal",
+    "q": "recurso extraordinario por sentencia arbitraria",
+    "hits": [
+      {
+        "id": "SUB0046051",
+        "score": 0.47245896976118695,
+        "snip": " El tratamiento del recurso extraordinario de nulidad no puede depender del resultado del recurso extraordinario de inaplicabilidad de ley también interpuesto. "
+      },
+      {
+        "id": "SUB0014974",
+        "score": 0.4156989179882763,
+        "snip": " Es insuficiente el recurso extraordinario de inaplicabilidad de ley que se remite a los argumentos expuestos en el recurso extraordinario de nulidad, pues no se basta a sí mismo ("
+      },
+      {
+        "id": "SUQ0090067",
+        "score": 0.40818909477366433,
+        "snip": " Cabe desestimar el recurso extraordinario federal por arbitrariedad, interpuesto por la demandada, pues el recurso no satisface las exigencias de la regla 2, Ac. 4/2007 y la regla"
+      }
+    ]
+  }
+]

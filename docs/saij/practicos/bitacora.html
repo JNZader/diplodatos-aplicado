@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bitácora mentor</title>
+  <link rel="stylesheet" href="../guia.css">
+</head>
+<body>
+<nav class="top">
+  <a href="../index.html">Índice</a>
+  <a href="../plan.html">Plan</a>
+  <span class="here">Bitácora</span>
+  <a href="P1/DEFENSA.html">P1 defensa</a>
+</nav>
+<main>
+  <h1>Bitácora (clean-room)</h1>
+  <p class="lede">Preguntas, no respuestas. Si contestás con un número del grupo, está mal: medilo en tu muestra.</p>
+  <div class="note">No hay citas literales de Adrián. P3 entrega <b>09/10</b>. Cuerpo de TP3.md: no supervisado + supervisado + buscador.</div>
+
+  <h2>Datos y unidad</h2>
+  <ul>
+    <li>¿Cada fila es un fallo, un sumario, una novedad?</li>
+    <li>¿El mismo caso aparece más de una vez?</li>
+    <li>¿<code>guid</code> e <code>id-infojus</code> identifican lo mismo?</li>
+    <li>¿<code>tribunal</code> y <code>tipo-tribunal</code> miden lo mismo?</li>
+  </ul>
+  <h2>Target y leakage</h2>
+  <ul>
+    <li>¿Cuál es el target y de qué campo sale?</li>
+    <li>¿Usar materia/descriptores/provincia es leakage si se predice fuero desde el sumario?</li>
+  </ul>
+  <h2>Tiempo y sesgo</h2>
+  <ul>
+    <li>¿Qué reloj es actividad judicial vs carga al sistema?</li>
+    <li>¿El desbalance invalida accuracy?</li>
+  </ul>
+  <h2>Texto, split, P3</h2>
+  <ul>
+    <li>¿Qué campo de texto y por qué no concatenar a ciegas?</li>
+    <li>¿Vectorizar con el test adentro es fuga?</li>
+    <li>¿Clustering sin usar el target?</li>
+    <li>¿El DISCLAIMER impide vender el buscador como herramienta jurídica?</li>
+  </ul>
+  <p class="note">Lista completa: <code>practicos/bitacora-mentor.md</code>. Las respuestas viven en la <a href="P1/DEFENSA.html">defensa de cada TP</a>, no acá.</p>
+  <footer><a href="../index.html">← Índice</a></footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>P3 — Defensa (D6 clustering)</title>
+  <style>
+    :root { --bg:#f6f4ef; --ink:#1c1917; --muted:#57534e; --card:#fffefb; --line:#e7e5e4; --consigna:#1e3a5f; }
+    * { box-sizing:border-box; }
+    body { margin:0; font:18px/1.55 "Iowan Old Style",Palatino,Georgia,serif; color:var(--ink); background:var(--bg); }
+    main { max-width:46rem; margin:0 auto; padding:2rem 1.25rem 4rem; }
+    h1 { font-size:1.85rem; margin:0 0 .5rem; }
+    .lede { color:var(--muted); }
+    .note { background:#fff; border:1px solid var(--line); border-radius:8px; padding:.9rem 1rem; margin:0 0 1.5rem; }
+    section { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:1.1rem 1.15rem; margin:0 0 1.1rem; }
+    .k { display:inline-block; font:700 .7rem/1 ui-sans-serif,system-ui,sans-serif; letter-spacing:.06em; text-transform:uppercase; margin-bottom:.2rem; }
+    .consigna { border-left:3px solid #1e3a5f; padding-left:.75rem; margin-bottom:.7rem; }
+    .respuesta { border-left:3px solid #16a34a; padding-left:.75rem; margin-bottom:.7rem; }
+    .porque { border-left:3px solid #a8a29e; padding-left:.75rem; margin-bottom:.7rem; }
+    .teoria { border-left:3px solid #5b21b6; background:#f5f3ff; padding:.65rem .8rem; margin:.7rem 0; }
+    .teoria p { margin:.35rem 0 0; }
+    .nop { border-left:3px solid #ea580c; background:#fff7ed; padding:.5rem .75rem; }
+    .codebox { background:#1c1917; color:#f5f5f4; padding:.6rem .75rem; overflow-x:auto; }
+    .codebox pre { font:12.5px/1.45 ui-monospace,Menlo,monospace; }
+    figure img { max-width:100%; height:auto; }
+    figcaption { font-size:.88rem; color:var(--muted); }
+    ul { margin:.3rem 0 0 1.1rem; }
+    .guia-nav { font:14px ui-sans-serif,system-ui,sans-serif; background:#1c1917; padding:.65rem 1.25rem; }
+    .guia-nav a { color:#fde68a; margin-right:1rem; text-decoration:none; }
+    footer { color:var(--muted); margin-top:2rem; font-size:.9rem; }
+  </style>
+</head>
+<body>
+<nav class="guia-nav">
+  <a href="../../index.html">← Guía</a>
+  <a href="../P2/DEFENSA.html">P2</a>
+  <a href="DEFENSA.html">P3 D6</a>
+  <a href="ENTREGA.html">Entrega</a>
+</nav>
+<main>
+  <h1>P3 — Defensa · solo D6 (clustering)</h1>
+  <p class="lede">D6–D9. Empaquetar Moodle = después. Adelanto viejo de P3 no cuenta.</p>
+  <p class="note">TF-IDF de P2. Y de D5. Test <code>year≥2013</code> no se usó para elegir k ni para el fit.</p>
+
+  <section>
+    <h2>1. ¿Los temas latentes son los fueros?</h2>
+    <div class="consigna"><div class="k">Consigna</div>No supervisado: grupos latentes; ¿coinciden con categorías legales?; ¿qué representación?</div>
+    <div class="respuesta"><div class="k">Respuesta</div>
+      MiniBatchKMeans sobre TF-IDF de train (n=24.635). Silueta cosine (submuestra 3k) es ~<b>0,01</b> para k=4…12: casi no hay bolas separadas. ARI vs Y de D5: máximo <b>0,065</b> (k=6), k=8 da 0,048. <b>No coinciden con fueros.</b>
+      Lo que sí aparece en los centroides de k=8: (0) contrato de trabajo; (1) recurso extraordinario; (2) costas/código procesal; (3) código civil; (4) cajón “debe/puede/prueba” (el más grande, 8.826 docs); (5) citas art./ley; (6) plantilla “opinión personal / minoría”; (7) constitución/corte. O sea: <b>género documental y plantilla</b>, no rama.
+    </div>
+    <div class="porque"><div class="k">Por qué k=8</div>
+      La silueta no elige un k claro (todo ~0,01). k=8 es el del plan; k=6 gana un poco en ARI y no cambia el relato. No se maximizó ARI en test. Representación: la TF-IDF ya congelada; no se reabrió BoW vs LSA acá.
+    </div>
+    <div class="teoria">
+      <div class="k">Teoría en este caso</div>
+      <p>No supervisado <b>no ve Y</b>. Después podés preguntar si los grupos se parecen a una etiqueta que vos ya tenías. ARI≈0 dice: no. Eso no es que el clustering “falló el práctico”: es la respuesta empírica a “¿hay correspondencia con categorías legales?”.</p>
+      <p>P1 ya había dicho que lo frecuente (“recurso”, “ley”) es transversal. El cluster 1 es esa jerga de recurso extraordinario; el 4 es prosa genérica. LABORAL sí se marca un poco en el cluster 0 (39&nbsp;% de los LABORAL caen ahí) porque el vocabulario de LCT es distintivo. PENAL se derrama. CONSTITUCIONAL se va al cluster 7 (corte/constitución) a medias.</p>
+      <p>Error típico: meter Y en el k-means para que “dé fuero”. Error 2: elegir k mirando el test. Error 3: silueta 0,01 y igual vender “8 temas nítidos”.</p>
+      <div class="k">Teoría general</div>
+      <ul>
+        <li>Guía SAIJ <a target="_blank" rel="noopener" href="https://jnzader.github.io/DiploDatos/materias/05-aprendizaje-no-supervisado/">Materia 5</a></li>
+        <li>P1 §11 frecuente ≠ distintivo</li>
+      </ul>
+    </div>
+    <div class="codebox"><div class="k">Cómo probarlo</div>
+<pre>X = vec.fit_transform(train.texto)          # year&lt;2013
+lab = MiniBatchKMeans(8, random_state=42).fit_predict(X)
+adjusted_rand_score(train.y, lab)           # ~0.05
+# silueta solo en submuestra de train, no en test
+# top términos = argsort(cluster_centers_)</pre></div>
+    <figure>
+      <img src="fig/d6_k_sil_ari.png" alt="Silueta y ARI según k, solo train">
+      <figcaption><b>Pregunta:</b> ¿hay k que recupere Y? <b>Hallazgo:</b> no; silueta plana. <b>No prueba:</b> que no existan temas de otro tipo.</figcaption>
+    </figure>
+    <div class="nop"><div class="k">No prueba</div>Que no haya tópicos. Prueba que <i>estos</i> clusters TF-IDF no son la Y de D5. Tampoco que k=8 sea “el” número natural del corpus.</div>
+  </section>
+
+  <section>
+    <h2>2. Supervisado (D7) — un modelo, test de verdad</h2>
+    <div class="consigna"><div class="k">Consigna</div>Tipo de problema, split, métricas, cómo varían modelos/representaciones.</div>
+    <div class="respuesta"><div class="k">Respuesta</div>
+      Multiclase 8 etiquetas (Y de D5). Split ya fijado: train &lt;2013 (24.635) / test ≥2013 (6.736). Dummy estratificado macro-F1 test = <b>0,12</b>. Representación congelada en D4: TF-IDF+LR → <b>0,41</b> (weighted 0,45). BoW+NB en el <i>mismo</i> test da 0,41 también: empate. <b>No cambiamos a BoW</b>: el test no sirve para elegir de nuevo. Por clase (TF-IDF+LR): PENAL 0,72 · LABORAL 0,54 · CIVIL 0,47 · COMERCIAL 0,42 · CONSTITUCIONAL 0,42 · OTROS 0,35 · ADMIN 0,26 · CIVIL-COMERCIAL <b>0,07</b>.
+    </div>
+    <div class="porque"><div class="k">Por qué baja vs D4</div>
+      El 0,68 era una <i>sonda</i> (solo un token, sin OTROS ni combos) en validación 2010–2012. Acá Y incluye el 25&nbsp;% OTROS y CIVIL-COMERCIAL, y el test es futuro. CIVIL-COMERCIAL es la frontera de P1: no hay clase limpia. OTROS es cajón. PENAL sigue siendo la más fácil (léxico distintivo, como el cluster 0 de LABORAL en D6).
+    </div>
+    <div class="teoria">
+      <div class="k">Teoría en este caso</div>
+      <p>El problema es <b>multiclase desbalanceado</b>. Accuracy 0,45 no se lidera: OTROS es la clase más frecuente en test (2105/6736). Macro-F1 trata igual a COMERCIAL (391) y a OTROS. Por eso se reportan las dos (macro y weighted) y el dummy.</p>
+      <p>Ganar al dummy prueba que hay señal en el párrafo <i>sin</i> usar materia/provincia como X. No prueba un fuero jurídico verdadero. La matriz va a mostrar que CIVIL-COMERCIAL se va a CIVIL y a OTROS: es el diseño de Y, no un misterio del LR.</p>
+      <p>Error típico: publicar el 0,68 de D4 como resultado de P3. Error 2: mirar test y cambiar TF-IDF→BoW. Error 3: meter provincia “para subir el F1”.</p>
+      <div class="k">Teoría general</div>
+      <ul>
+        <li>IAA <a target="_blank" rel="noopener" href="https://jnzader.github.io/DiploDatos/materias/03-introduccion-aprendizaje/">Materia 3</a></li>
+        <li>Guía SAIJ <a target="_blank" rel="noopener" href="https://jnzader.github.io/DiploDatos/materias/04-aprendizaje-supervisado/">Materia 4</a></li>
+      </ul>
+    </div>
+    <div class="codebox"><div class="k">Cómo probarlo</div>
+<pre>vec.fit(train.texto)                 # year&lt;2013 solamente
+clf.fit(Xtr, train.y)
+pred = clf.predict(vec.transform(test.texto))
+# no re-elegir hiperparámetros con pred</pre></div>
+    <figure>
+      <img src="fig/d7_f1_clase.png" alt="F1 por clase en test">
+      <figcaption><b>Pregunta:</b> ¿qué clase se hunde? <b>Hallazgo:</b> CIVIL-COMERCIAL. <b>No prueba:</b> que CIVIL y COMERCIAL sean inseparables en el derecho, solo en <i>esta</i> Y.</figcaption>
+    </figure>
+    <figure>
+      <img src="fig/d7_confusion.png" alt="Matriz de confusión test">
+      <figcaption>Test ≥2013. Ejes = Y grosera, no el fuero verdadero.</figcaption>
+    </figure>
+    <div class="nop"><div class="k">No prueba</div>Un sistema usable en tribunales. Ni que BoW sea mejor: el empate en test no reabre D4.</div>
+  </section>
+
+  <section>
+    <h2>3. Errores a mano (D8)</h2>
+    <div class="consigna"><div class="k">Consigna</div>Analizar cómo varían los resultados; no quedarse en el F1.</div>
+    <div class="respuesta"><div class="k">Respuesta</div>
+      Test: 6.736 docs, 3.680 “errores” (acc 0,45). 20 casos sorteados de pares frecuentes. <b>Cuatro familias:</b><br>
+      <b>A. Y peor que el modelo.</b> <code>materia</code> CIVIL-PENAL-PROCESAL → nuestra regla lo manda a OTROS; el LR dice PENAL y el párrafo es apremios ilegales. El “error” es de la receta D5, no del texto.<br>
+      <b>B. Frontera CIVIL/COMERCIAL.</b> Robo de auto/seguro → COMERCIAL; reparación integral → CIVIL. La clase CIVIL-COMERCIAL no tiene léxico propio (F1 0,07).<br>
+      <b>C. Cajón OTROS ↔ todo.</b> PROCESAL puro es OTROS; el modelo inventa un fuero. O CONSTITUCIONAL↔PENAL por “inconstitucionalidad” en un expediente penal.<br>
+      <b>D. Texto corto / jerga transversal.</b> Párrafos de 176 caracteres o “iure novit curia” no traen fuero: se van a CIVIL-COMERCIAL o a recurso genérico.
+    </div>
+    <div class="teoria">
+      <div class="k">Teoría en este caso</div>
+      <p>Un error no es “el modelo falló”. Es: ¿falló Y, falló X, o el fenómeno es mixto? Familia A es etiquetado. B es clase mal definida (P1 ya lo dijo). C es OTROS como basura. D es X pobre (encabezado disfrazado de párrafo, o plantilla procesal = cluster 1 y 4 de D6).</p>
+      <p>Por eso no se “arregla” con otro C de LR. Se arregla (si se quiere) cambiando Y o filtrando PROCESAL-only, y eso es otra receta, no un parche post-test.</p>
+      <p>Error típico: 20 errores y concluir “hay que más datos”. Acá el patrón ya estaba en P1.</p>
+    </div>
+    <div class="codebox"><div class="k">Cómo probarlo</div>
+<pre>err = test[test.y != test.pred]
+err.groupby(["y","pred"]).size().sort_values(ascending=False).head(10)
+# 20 filas en practicos/P3/d8_errores.json</pre></div>
+    <div class="nop"><div class="k">No prueba</div>Que haya que copiar el fuzzy del grupo. Algunos “errores” desaparecerían si Y fuera PENAL y no OTROS; otros no.</div>
+  </section>
+
+  <section>
+    <h2>4. Buscador (D9)</h2>
+    <div class="consigna"><div class="k">Consigna</div>Query en lenguaje natural → documentos con la representación previa. Contraste jerga técnica vs coloquial.</div>
+    <div class="respuesta"><div class="k">Respuesta</div>
+      Índice: 31.371 SU de la <b>50k</b> (no el SAIJ entero). Coseno sobre el TF-IDF de P2. No hay MiniLM. No es RAG (no genera texto).<br>
+      <b>Técnica funciona:</b> “quiebra/concurso” 0,68 → LCQ; “estupefacientes” 0,63 → tenencia; “despido por injuria” 0,44 → art. 246 LCT.<br>
+      <b>Coloquial se cae:</b> “me echaron del trabajo” aún cae cerca de laboral (0,35) pero más flojo. “la empresa no le paga a los que le deben plata” → scores ~0,20, ruido. “lo agarraron con droga para consumo” → <b>primero un pagaré de consumo</b> (la palabra consumo), después sí estupefacientes.<br>
+      <b>Transversal:</b> “recurso extraordinario por sentencia arbitraria” → plantilla de recurso (cluster 1 de D6), no un fuero.
+    </div>
+    <div class="teoria">
+      <div class="k">Teoría en este caso</div>
+      <p>TF-IDF+coseno recupera <b>solapamiento de términos ponderados</b>, no sentido. Si la query trae palabras distintivas (quiebra, estupefacientes, injuria LCT), gana. Si trae castellano de a pie (“echaron”, “plata”) o una palabra ambigua (“consumo”), el ranking miente. El README preguntaba exactamente eso: jerga vs hechos coloquiales.</p>
+      <p>No hay qrels: “relevante” acá es inspección cualitativa de 3 hits, no nDCG. El índice incluye épocas de test porque es un demo de producto sobre la muestra de trabajo; no se usó para elegir TF-IDF (eso fue D4 en train).</p>
+      <p>Error típico: llamarlo RAG o “IA jurídica”. Error 2: indexar 874k y no mirar un hit. DISCLAIMER del mentor: no dictámenes.</p>
+      <div class="k">Teoría general</div>
+      <ul>
+        <li>Guía SAIJ <a target="_blank" rel="noopener" href="https://jnzader.github.io/DiploDatos/materias/05-aprendizaje-no-supervisado/">Materia 5 / integrador</a></li>
+        <li>P1 frecuente ≠ distintivo; D6 cluster “recurso”</li>
+      </ul>
+    </div>
+    <div class="codebox"><div class="k">Cómo probarlo</div>
+<pre>X = vec.fit_transform(nlp.texto)     # 50k SU
+cosine_similarity(vec.transform([query]), X)
+# hits en practicos/P3/d9_busqueda.json</pre></div>
+    <div class="nop"><div class="k">No prueba</div>Un buscador de producción ni que embeddings neuronales no ayuden al coloquial. No se corrieron.</div>
+  </section>
+
+  <section>
+    <h2>Oral D6</h2>
+    <ul>
+      <li>¿El clustering usa Y? ¿Entonces qué mide el ARI?</li>
+      <li>Nombrá dos clusters que sean plantilla/género, no fuero.</li>
+      <li>¿Por qué LABORAL se ve un poco y PENAL no?</li>
+      <li>¿Se usó el test ≥2013 para elegir k?</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Oral D7</h2>
+    <ul>
+      <li>¿Por qué el 0,68 de D4 no se copia a la entrega?</li>
+      <li>¿Qué mide el dummy y por qué 0,41 vs 0,12 importa?</li>
+      <li>¿Por qué CIVIL-COMERCIAL sale 0,07?</li>
+      <li>BoW empató en test: ¿cambiamos la representación?</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Oral D8</h2>
+    <ul>
+      <li>¿Todo error es culpa del modelo?</li>
+      <li>Ejemplo de familia A (Y peor que el LR) vs familia B (frontera).</li>
+      <li>¿Por qué no se cambia Y ahora, mirando el test?</li>
+    </ul>
+  </section>
+  <section>
+    <h2>Oral D9</h2>
+    <ul>
+      <li>¿El buscador es RAG?</li>
+      <li>Una query técnica que funciona y una coloquial que se rompe. ¿Por qué?</li>
+      <li>¿Qué tiene que ver “consumo” en pagaré vs droga?</li>
+    </ul>
+  </section>
+  <footer>D6–D9. D10 = PDF/Moodle. Uso académico. No asesoramiento jurídico.</footer>
+</main>
+</body>
+</html>

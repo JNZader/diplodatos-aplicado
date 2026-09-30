@@ -1,0 +1,242 @@
+[
+  {
+    "id": "SUH0006726",
+    "year": 2023,
+    "y": "CIVIL-COMERCIAL",
+    "pred": "CIVIL",
+    "materia": "COMERCIAL-CIVIL",
+    "chars": 208,
+    "tags": [
+      "frontera_CIVIL_COMERCIAL"
+    ],
+    "snip": " La sentencia que impone una solución que pretende justa, pero se desentiende del valor económico real, encierra una contradicción insalvable y no cumple con los postulados de la reparación integral y plena. "
+  },
+  {
+    "id": "SUI0078852",
+    "year": 2014,
+    "y": "CIVIL-COMERCIAL",
+    "pred": "CIVIL",
+    "materia": "CIVIL-COMERCIAL",
+    "chars": 599,
+    "tags": [
+      "frontera_CIVIL_COMERCIAL"
+    ],
+    "snip": " El tribunal de apelación se encuentra plenamente autorizado a hacer uso del principio \"iure novit curia\", es decir, que el Organo Ad quem no está limitado en su razonamiento ni por la argumentación del recurrente ni por"
+  },
+  {
+    "id": "SUN0032974",
+    "year": 2022,
+    "y": "CIVIL-COMERCIAL",
+    "pred": "COMERCIAL",
+    "materia": "COMERCIAL-PROCESAL-CIVIL",
+    "chars": 914,
+    "tags": [
+      "frontera_CIVIL_COMERCIAL",
+      "materia_PROCESAL"
+    ],
+    "snip": " La aceptación tácita del siniestro de robo de un rodado hace inaudible considerar sobrevinientemente cualquier causal exoneratoria del asegurador (conf. CNCom, Sala D, in re \"Felice Jorge A. c/ Liderar Cia. Gral de Segu"
+  },
+  {
+    "id": "SUN0043038",
+    "year": 2025,
+    "y": "CIVIL-COMERCIAL",
+    "pred": "COMERCIAL",
+    "materia": "CIVIL-COMERCIAL",
+    "chars": 349,
+    "tags": [
+      "frontera_CIVIL_COMERCIAL"
+    ],
+    "snip": " Asimismo, el actor carece de derecho a reclamar reembolso alguno a la agencia de turismo por el concepto bajo estudio, ya que optó por reprogramar el crucero contratado, ejerciendo de tal modo una de las alternativas br"
+  },
+  {
+    "id": "SUZ0020867",
+    "year": 2013,
+    "y": "CIVIL",
+    "pred": "CIVIL-COMERCIAL",
+    "materia": "CIVIL",
+    "chars": 176,
+    "tags": [
+      "frontera_CIVIL_COMERCIAL",
+      "texto_corto"
+    ],
+    "snip": " La incapacidad sobreviniente es definida como la secuela o disminución física o psíquica que pudiera quedar luego de completado el periodo de recuperación o restablecimiento. "
+  },
+  {
+    "id": "SUI0079853",
+    "year": 2017,
+    "y": "CIVIL",
+    "pred": "CIVIL-COMERCIAL",
+    "materia": "CIVIL",
+    "chars": 600,
+    "tags": [
+      "frontera_CIVIL_COMERCIAL"
+    ],
+    "snip": " [Es absolutamente improcedente] la declaración de oficio de la aludida falta de legitimación, defensa que requiere expresa alegación de parte. Incluso, respecto a la forma en que debe ser introducida por la parte demand"
+  },
+  {
+    "id": "SU20006609",
+    "year": 2013,
+    "y": "OTROS",
+    "pred": "PENAL",
+    "materia": "CIVIL-PENAL-PROCESAL",
+    "chars": 600,
+    "tags": [
+      "OTROS_cajon",
+      "materia_PROCESAL"
+    ],
+    "snip": " Debe confirmarse la condena del agente policial en orden al delito de apremios ilegales por vejámenes, cometidos en perjuicio de un menor que se encontraba detenido en una comisaría hasta que fue trasladado a un nosocom"
+  },
+  {
+    "id": "SUB0963177",
+    "year": 2022,
+    "y": "OTROS",
+    "pred": "PENAL",
+    "materia": "PROCESAL",
+    "chars": 391,
+    "tags": [
+      "OTROS_cajon",
+      "materia_PROCESAL",
+      "jerga_recurso"
+    ],
+    "snip": " Conforme lo resuelto por este Tribunal en casos análogos (arts. 31 bis, ley 5.827 - texto según ley 13.812 - y 298, CPCC ), no prospera el recurso extraordinario de nulidad art. 171, Constitución provincial ) cuando el "
+  },
+  {
+    "id": "SUI0081334",
+    "year": 2020,
+    "y": "OTROS",
+    "pred": "CIVIL",
+    "materia": "PROCESAL",
+    "chars": 813,
+    "tags": [
+      "OTROS_cajon",
+      "materia_PROCESAL"
+    ],
+    "snip": " Los herederos cuando inician acciones contra otros legitimarios o terceros donatarios tendientes a reconstituir el haber partible a consecuencia de que la ley fue soslayada mediante una operación insincera realizada por"
+  },
+  {
+    "id": "SUC0411076",
+    "year": 2023,
+    "y": "OTROS",
+    "pred": "CIVIL",
+    "materia": "CIVIL-CONSTITUCIONAL",
+    "chars": 608,
+    "tags": [
+      "OTROS_cajon"
+    ],
+    "snip": " Corresponde conceder la medida autosatisfactiva solicitada por una periodista supuestamente mencionada en la viralización de chats de contenido íntimo entre personas famosas, y ordenar el cese de la difusión y divulgaci"
+  },
+  {
+    "id": "SUJ0050111",
+    "year": 2022,
+    "y": "CONSTITUCIONAL",
+    "pred": "PENAL",
+    "materia": "CONSTITUCIONAL",
+    "chars": 913,
+    "tags": [],
+    "snip": " Se advierte que el remedio de inconstitucionalidad analizado se dirige a impedir que la entrevista bajo procedimiento de Cámara Gesell de menores como anticipo jurisdiccional de prueba se realice sin la presencia del im"
+  },
+  {
+    "id": "SUJ0046418",
+    "year": 2020,
+    "y": "CONSTITUCIONAL",
+    "pred": "PENAL",
+    "materia": "CONSTITUCIONAL",
+    "chars": 1283,
+    "tags": [],
+    "snip": " Surge del sistema informático de la Oficina de Gestión de la Primera Circunscripción Judicial que se han celebrado las audiencias de debate del juicio oral correspondiente, habiendo emitido el Tribunal sentencia condena"
+  },
+  {
+    "id": "SUC1010043",
+    "year": 2021,
+    "y": "ADMINISTRATIVO",
+    "pred": "OTROS",
+    "materia": "ADMINISTRATIVO-PROCESAL",
+    "chars": 662,
+    "tags": [
+      "OTROS_cajon",
+      "materia_PROCESAL"
+    ],
+    "snip": " El rechazo del acuerdo de avenimiento no constituye la sentencia definitiva del proceso ni una que pueda serle equiparada. Ello así, dado que los pronunciamientos que tienen por consecuencia la obligación del imputado d"
+  },
+  {
+    "id": "SUK0029108",
+    "year": 2018,
+    "y": "ADMINISTRATIVO",
+    "pred": "OTROS",
+    "materia": "ADMINISTRATIVO",
+    "chars": 625,
+    "tags": [
+      "OTROS_cajon"
+    ],
+    "snip": " Debe confirmarse la suspensión en el ejercicio de la profesión por el término de seis meses impuesta a un letrado que intervino en la etapa de mediación y luego representó al actor en la misma causa, habida cuenta que n"
+  },
+  {
+    "id": "SUN0028897",
+    "year": 2021,
+    "y": "COMERCIAL",
+    "pred": "CIVIL",
+    "materia": "PROCESAL-COMERCIAL",
+    "chars": 551,
+    "tags": [
+      "materia_PROCESAL"
+    ],
+    "snip": " Corresponde confirmar la sentencia que dispuso la entrega a la coactora de un vehículo igual al siniestrado o aquél que lo hubiera sustituido, y rechazar el recurso interpuesto por la importadora demandada, en cuanto pl"
+  },
+  {
+    "id": "SUN0037746",
+    "year": 2024,
+    "y": "COMERCIAL",
+    "pred": "CIVIL",
+    "materia": "COMERCIAL",
+    "chars": 314,
+    "tags": [],
+    "snip": " Los cambios tecnológicos afectan la teoría de los actos jurídicos y a sus formas y el desuso progresivo de las formalidades tradicionales (soporte papel, escrito y firmado) y que tal inevitable mutación poco depende de "
+  },
+  {
+    "id": "SUI0082737",
+    "year": 2021,
+    "y": "LABORAL",
+    "pred": "CIVIL",
+    "materia": "LABORAL",
+    "chars": 660,
+    "tags": [],
+    "snip": " El factor \"tipo de actividad\" y el factor \"posibilidades de reubicación laboral\" deben aplicarse como porcentuales extraídos del porcentaje primigenio determinado en el baremo para la lesión considerada. Luego, respecto"
+  },
+  {
+    "id": "SUI0083819",
+    "year": 2023,
+    "y": "LABORAL",
+    "pred": "CIVIL",
+    "materia": "LABORAL-PROCESAL",
+    "chars": 590,
+    "tags": [
+      "materia_PROCESAL"
+    ],
+    "snip": " Cuando se discute la existencia de medidas discriminatorias en el ámbito de la relación de empleo, dada la notoria dificultad de probar la existencia del motivo para la parte que lo afirma por la particularidad propia d"
+  },
+  {
+    "id": "SUC1013207",
+    "year": 2023,
+    "y": "PENAL",
+    "pred": "OTROS",
+    "materia": "PENAL",
+    "chars": 1292,
+    "tags": [
+      "OTROS_cajon"
+    ],
+    "snip": " En los casos en que los jueces contendientes no disputan ni la calificación legal de la conducta involucrada, ni que ella ha quedado dentro de la jurisdicción devuelta a los jueces de la CABA, no comparto la idea de res"
+  },
+  {
+    "id": "SUA0079856",
+    "year": 2020,
+    "y": "PENAL",
+    "pred": "OTROS",
+    "materia": "PROCESAL-PENAL",
+    "chars": 935,
+    "tags": [
+      "OTROS_cajon",
+      "materia_PROCESAL"
+    ],
+    "snip": " La demora irrazonable que se produjo a criterio de los jueces del tribunal oral y que llevó a dictar el sobreseimiento del actor y de otros imputados por prescripción, no implica necesariamente que los daños que derivar"
+  }
+]

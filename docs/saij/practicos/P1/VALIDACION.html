@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>P1 — Validación muestra vs corpus</title>
+  <link rel="stylesheet" href="../../guia.css">
+</head>
+<body>
+<nav class="top">
+  <a href="../../index.html">Índice</a>
+  <a href="../../plan.html">Plan</a>
+  <a href="DEFENSA.html">P1 defensa</a>
+  <span class="here">Validación 8.7k vs 874k</span>
+</nav>
+<main>
+  <h1>¿La muestra oficial alcanza?</h1>
+  <p class="lede">Censo del JSONL HuggingFace (874.845 filas, 2,47&nbsp;GB) contra <code>dataset_sample.jsonl.gz</code> (8.748). También un SRS de 8.748 y un estratificado por prefijo SU/FA/NV. No usamos el 50&nbsp;% del grupo como verdad.</p>
+
+  <div class="note">
+    <b>Veredicto:</b> no hace falta reescribir la P1 conceptual.
+    La muestra oficial es ~1&nbsp;% y <b>se parece al censo en estructura</b>
+    (unidades, relojes, <code>sumario</code>≠<code>texto</code>, desbalance).
+    <b>No alcanza para la cola de <code>materia</code></b> (282 etiquetas vs 2.636).
+    P2/P3: subir a 50–100k estratificado o al full para Y y clases raras.
+    Los porcentajes finos de la defensa quedan como “esta muestra”; el relato no cambia.
+  </div>
+
+  <h2>Diseño</h2>
+  <table>
+    <tr><th>Enfoque</th><th>n</th><th>Para qué</th></tr>
+    <tr><td>Muestra oficial (mentor)</td><td>8.748</td><td>Lo que usó P1</td></tr>
+    <tr><td>Full</td><td>874.845</td><td>Censo</td></tr>
+    <tr><td>SRS</td><td>8.748</td><td>Error muestral de un sorteo puro</td></tr>
+    <tr><td>Estratificado por prefijo</td><td>8.748</td><td>Misma mezcla SU/FA que el full</td></tr>
+  </table>
+  <p>Distancia: TVD (total variation) entre tasas. 0 = idéntico. Prefijo muestra vs full = <b>0,002</b>; SRS vs full = 0,005. El sample oficial no está peor que un sorteo: está un poco <i>mejor</i> (suerte / 1&nbsp;% parejo).</p>
+
+  <h2>Estructura (acá P1 acertó)</h2>
+  <table>
+    <tr><th></th><th>Oficial 8.7k</th><th>Full 874k</th><th>SRS 8.7k</th></tr>
+    <tr><td>Plantilla / sin id</td><td>11,8&nbsp;%</td><td>12,0&nbsp;%</td><td>~12&nbsp;%</td></tr>
+    <tr><td>SU</td><td>55,5&nbsp;%</td><td>55,2&nbsp;%</td><td>~55&nbsp;%</td></tr>
+    <tr><td>FA</td><td>32,7&nbsp;%</td><td>32,7&nbsp;%</td><td>~33&nbsp;%</td></tr>
+    <tr><td>NV</td><td>0,03&nbsp;%</td><td>0,02&nbsp;%</td><td>—</td></tr>
+    <tr><td><code>fecha</code> con <code>|</code></td><td>1,90&nbsp;%</td><td>1,88&nbsp;%</td><td>—</td></tr>
+    <tr><td>SU: sumario == texto</td><td>0</td><td>~0</td><td>0</td></tr>
+    <tr><td>CABA</td><td>41,0&nbsp;%</td><td>40,2&nbsp;%</td><td>39,7&nbsp;%</td></tr>
+    <tr><td>TVD provincias (top) vs full</td><td>0,020</td><td>0</td><td>0,015</td></tr>
+  </table>
+  <p>Longitudes: en full, <code>sumario</code> sigue en 40–159 caracteres y <code>texto</code> en 320–1279. El encabezado vs párrafo <b>no es un artefacto del sample</b>.</p>
+
+  <h2>Donde 8.7k no alcanza</h2>
+  <table>
+    <tr><th></th><th>8.7k</th><th>874k</th></tr>
+    <tr><td>Etiquetas distintas de <code>materia</code></td><td><b>282</b></td><td><b>2.636</b></td></tr>
+    <tr><td>Buckets groseros (PENAL, CIVIL_only, ∩, …)</td><td>mismos nombres, tasas parecidas</td><td>igual relato, más cola</td></tr>
+  </table>
+  <p>Si P2 cierra Y con 282 valores, te comés la cola que solo vive en el censo. Por eso <b>mejorar la muestra</b> = estratificar 50–100k (o full) para curación/target, no rehacer los gráficos de P1.</p>
+
+  <h2>¿Reescribimos P1?</h2>
+  <ul>
+    <li><b>No</b> el relato: SU/FA, dos relojes, campo <code>texto</code>, Y no cerrada.</li>
+    <li><b>Sí</b> una nota en defensa/entrega: “muestra ~1&nbsp;%, representativa en estructura; 282 vs 2.636 materias”.</li>
+    <li>P2: no uses 8.7k como universo para keep/drop de clases raras.</li>
+  </ul>
+  <p>El 50&nbsp;% del grupo (437k) es un punto intermedio de RAM, no un diseño. Si hace falta n grande, mejor estratificado que copiar su 50&nbsp;%.</p>
+  <p class="note"><code>timestamp</code> en el full no se comparó igual (tasa “ts&gt;0” = 0 en censo vs 0,76 en sample): probablemente cambió el tipo (string vs int). No uses eso como hallazgo.</p>
+  <p>Números crudos: <code>validacion-muestra.json</code>. Script: <code>validate_sample_vs_full.py</code>.</p>
+  <footer><a href="../../index.html">← Índice</a> · <a href="DEFENSA.html">Defensa P1</a></footer>
+</main>
+</body>
+</html>

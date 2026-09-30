@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TP1 — Análisis y visualización (borrador)</title>
+  <style>
+    @page { size: A4; margin: 18mm 16mm; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: #111;
+      font: 12pt/1.45 "Liberation Serif", "Times New Roman", Times, serif;
+      background: #e8e4dc;
+    }
+    .sheet {
+      max-width: 210mm;
+      margin: 1rem auto 3rem;
+      background: #fff;
+      padding: 18mm 16mm 20mm;
+      box-shadow: 0 2px 18px rgba(0,0,0,.12);
+    }
+    .brand { font: 9pt/1.3 ui-sans-serif, system-ui, sans-serif; color: #444; text-transform: uppercase; letter-spacing: .04em; }
+    h1 { font-size: 18pt; margin: .4rem 0 .2rem; }
+    .sub { color: #333; margin: 0 0 1rem; }
+    .draft {
+      font: 10pt ui-sans-serif, system-ui, sans-serif;
+      background: #fff7ed;
+      border: 1px solid #fdba74;
+      padding: .5rem .7rem;
+      margin: 0 0 1.2rem;
+    }
+    h2 { font-size: 13pt; margin: 1.3rem 0 .4rem; border-bottom: 1px solid #ccc; padding-bottom: .15rem; }
+    p { margin: 0 0 .65rem; }
+    ul { margin: .2rem 0 .8rem 1.2rem; }
+    table { border-collapse: collapse; width: 100%; font-size: 10.5pt; margin: 0 0 1rem; }
+    th, td { border: 1px solid #bbb; padding: .28rem .45rem; text-align: left; }
+    th { background: #f4f4f4; }
+    .muted { color: #555; font-size: 10pt; }
+    code { font-size: 9.5pt; }
+    figure { margin: 0 0 1rem; }
+    figure img { max-width: 100%; height: auto; }
+    figcaption { font-size: 9pt; color: #444; }
+    .print-hint { font: 10pt ui-sans-serif, system-ui, sans-serif; color: #555; margin: 0 0 1rem; }
+    @media print {
+      body { background: #fff; }
+      .sheet { margin: 0; box-shadow: none; max-width: none; padding: 0; }
+      .print-hint, .draft { break-inside: avoid; }
+      .no-print { display: none; }
+    }
+    .guia-nav { font: 10pt ui-sans-serif, system-ui, sans-serif; background: #1c1917; color: #fff; padding: .5rem 1rem; }
+    .guia-nav a { color: #fde68a; margin-right: 1rem; }
+  </style>
+</head>
+<body>
+<nav class="guia-nav no-print"><a href="../../index.html">← Guía</a> <a href="DEFENSA.html">Defensa</a></nav>
+<article class="sheet">
+  <p class="brand">UNC — FaMAF · Diplomatura en Ciencia de Datos · Mentoría SAIJ 2026</p>
+  <h1>Práctico 1 — Análisis y visualización</h1>
+  <p class="sub">Decodificando la Ley: clasificación y búsqueda semántica de jurisprudencia argentina</p>
+  <p class="print-hint no-print">Para PDF: Ctrl+P → Destino: <b>Guardar como PDF</b> → márgenes predeterminados.</p>
+  <p class="draft"><b>P1 cerrado sobre la muestra oficial</b> (no el corpus de 874k). Defensa pedagógica: <a href="DEFENSA.html">DEFENSA.html</a>. Moodle: cuando el buzón acepte.</p>
+
+  <h2>1. Datos</h2>
+  <p>Se utilizó la <b>muestra oficial</b> del repositorio de la mentoría (<code>datos/dataset_sample.jsonl.gz</code>): 8.748 filas × 71 columnas (~1&nbsp;% del corpus HuggingFace, 874.845 filas). Un censo posterior (véase <a href="VALIDACION.html">validación</a>) muestra que las <b>tasas estructurales coinciden</b> (SU/FA, plantilla, dos relojes, <code>sumario</code>≠<code>texto</code>). No coinciden las etiquetas distintas de <code>materia</code> (282 vs 2.636): los porcentajes finos son de la muestra; el relato no se reescribe.</p>
+  <p>Se excluyeron 1.035 filas de plantilla (sin <code>id-infojus</code> ni <code>materia</code>, descriptores dummy). Quedan <b>7.713</b> filas de trabajo. El campo <code>guid</code> es único pero está anonimizado en toda la muestra; no se usa como identificador de caso real.</p>
+
+  <h2>2. Unidad de análisis</h2>
+  <p>El JSONL no es un único tipo documental. El prefijo de <code>id-infojus</code> y la cobertura de campos distinguen al menos:</p>
+  <table>
+    <thead><tr><th>Prefijo</th><th>n</th><th>materia / sumario</th><th>tribunal</th></tr></thead>
+    <tbody>
+      <tr><td>SU</td><td>4.851</td><td>sí (~100&nbsp;%)</td><td>no</td></tr>
+      <tr><td>FA</td><td>2.859</td><td>no</td><td>sí</td></tr>
+      <tr><td>NV</td><td>3</td><td>no</td><td>no (sí <code>titulo_noticia</code>)</td></tr>
+    </tbody>
+  </table>
+  <p>Los faltantes de <code>sumario</code> en FA son <b>estructurales</b>, no aleatorios. No se imputa materia en FA.</p>
+
+  <h2>3. Fueros, tribunales y geografía</h2>
+  <p>No existe la columna <code>fuero</code>. El campo más cercano es <code>materia</code>, presente solo en SU (4.851 valores, 282 categorías). Las más frecuentes son PROCESAL (684), PENAL (527), LABORAL (483), CIVIL (459) y CIVIL - COMERCIAL (419). Hay la misma combinación con otro separador (<code>CIVIL-COMERCIAL</code>, 202).</p>
+  <p><code>tipo-tribunal</code> son 139 códigos; el más frecuente es <code>CS</code> (2.877), luego <code>CC</code> (1.048). Provincia: CABA 3.591, Buenos Aires 1.337; el resto cae rápido. Hay desbalance de etiquetas y de geografía: una métrica de accuracy sobre un modelo futuro sería engañosa.</p>
+
+  <h2>4. Tiempo</h2>
+  <p>Hay más de un reloj. <code>fecha</code> se interpreta como candidato a fecha del documento; 166 filas traen varias fechas separadas por <code>|</code>. <code>timestamp</code> está en milisegundos y, una vez convertido, cubre ~2012–2026 (carga al sistema, no emisión). En 6.606 filas con ambos relojes, solo el <b>12,4&nbsp;%</b> comparte el año; el documento es anterior al timestamp en todos esos casos. Un pico de <code>timestamp</code> no se interpreta como volumen de fallos emitidos.</p>
+
+  <h2>5. Variable objetivo (preliminar)</h2>
+  <p>El proyecto pide predecir fuero/rama a partir del sumario. Se identifica <code>materia</code> en filas SU como <b>candidato</b> a origen de esa etiqueta. No se congela la receta de colapso en este práctico: <code>materia</code> mezcla fueros con tipos procesales, combinaciones y 891 valores sin token típico de fuero. Los FA no tienen <code>materia</code>.</p>
+  <p>Si el target se deriva de <code>materia</code>, no se usarán <code>materia</code> ni descriptores equivalentes como features en la etapa supervisada, coherente con “predecir leyendo exclusivamente el sumario”.</p>
+
+  <h2>6. Textos</h2>
+  <p>En SU coexisten dos campos que <b>no son el mismo contenido</b>. <code>sumario</code> es un encabezado corto (mediana 73 caracteres; 100&nbsp;% con markup <code>[[p]]</code>). <code>texto</code> es el párrafo (mediana 509 caracteres). Igualdad exacta: 0&nbsp;%. Se elige <code>texto</code> en SU para el análisis léxico. Los FA no traen estos campos. No se concatenan campos. No se analizan fallos completos.</p>
+  <figure>
+    <img src="fig/01_longitud_sumario_vs_texto.png" alt="Longitud de sumario versus texto">
+    <figcaption>Figura 1. El nombre de la columna “sumario” no coincide con un sumario en sentido prosa.</figcaption>
+  </figure>
+  <p>Vocabulario de <code>texto</code> ~21.700 tipos. Términos frecuentes (sin stopwords genéricas de castellano): jerga procesal transversal (<i>recurso, sentencia, prueba</i>), no un fuero. Bigramas: recurso extraordinario, daños y perjuicios, contrato de trabajo.</p>
+  <figure>
+    <img src="fig/02_terminos_texto.png" alt="Términos frecuentes">
+    <figcaption>Figura 2. Frecuente no es distintivo.</figcaption>
+  </figure>
+  <figure>
+    <img src="fig/03_bigrams_texto.png" alt="Bigramas">
+    <figcaption>Figura 3. Locuciones que un tokenizador unigram rompe.</figcaption>
+  </figure>
+  <p>Agrupando de forma <b>provisoria</b> por un único token de fuero en <code>materia</code> (Y no cerrada), el párrafo de PENAL / CIVIL / LABORAL muestra léxico distintivo. CIVIL-only 714, COMERCIAL-only 275, ambas etiquetas 689: frontera difusa. No se congela el target.</p>
+  <figure>
+    <img src="fig/04_distintivos_fuero.png" alt="Términos distintivos por fuero provisorio">
+    <figcaption>Figura 4. Distintivo vs resto; agrupación no es la etiqueta final.</figcaption>
+  </figure>
+
+  <h2>7. Validación vs corpus completo</h2>
+  <p>Se contrastó la muestra con el JSONL completo (874.845), un SRS de 8.748 y un estratificado por prefijo. Tasas SU/FA/plantilla y el hecho <code>sumario</code>≠<code>texto</code> coinciden (TVD de prefijos 0,002). <code>materia</code> distinta: 282 vs 2.636 etiquetas. Informe: <a href="VALIDACION.html">VALIDACION.html</a>. P2 no usará 8.7k como universo de clases.</p>
+
+  <h2>8. Limitaciones y riesgos para P2</h2>
+  <ul>
+    <li>Muestra, no censo.</li>
+    <li>Dos unidades (SU/FA). No imputar materia en FA.</li>
+    <li>Target no cerrado. No usar materia, descriptores ni el encabezado <code>sumario</code> como feature si Y nace de materia.</li>
+    <li>No ajustar representaciones con el test. CIVIL∩COMERCIAL es clase gris.</li>
+    <li>Uso académico; no es asesoramiento jurídico.</li>
+  </ul>
+
+  <p class="muted">Fuente de datos: SAIJ vía dataset Apache 2.0 de marianbasti. Cálculos: <code>practicos/P1/p1_eda.ipynb</code>.</p>
+</article>
+</body>
+</html>

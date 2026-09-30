@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>P2 — Defensa (D3)</title>
+  <style>
+    :root { --bg:#f6f4ef; --ink:#1c1917; --muted:#57534e; --card:#fffefb; --line:#e7e5e4; --consigna:#1e3a5f; --respuesta:#14532d; --porque:#44403c; --nop:#9a3412; }
+    * { box-sizing: border-box; }
+    body { margin:0; font:18px/1.55 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif; color:var(--ink); background:var(--bg); }
+    main { max-width:46rem; margin:0 auto; padding:2rem 1.25rem 4rem; }
+    h1 { font-size:1.85rem; line-height:1.2; margin:0 0 .5rem; }
+    .lede { color:var(--muted); margin:0 0 1.5rem; }
+    .note { background:#fff; border:1px solid var(--line); border-radius:8px; padding:.9rem 1rem; margin:0 0 1.75rem; font-size:.95rem; }
+    section { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:1.1rem 1.15rem 1.2rem; margin:0 0 1.1rem; }
+    section h2 { font-size:1.15rem; margin:0 0 .85rem; }
+    .block { margin:0 0 .75rem; }
+    .k { display:inline-block; font-family:ui-sans-serif,system-ui,sans-serif; font-size:.7rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; margin-bottom:.2rem; }
+    .consigna { border-left:3px solid var(--consigna); padding-left:.75rem; }
+    .consigna .k { color:var(--consigna); }
+    .respuesta { border-left:3px solid #16a34a; padding-left:.75rem; }
+    .respuesta .k { color:var(--respuesta); }
+    .porque { border-left:3px solid #a8a29e; padding-left:.75rem; }
+    .porque .k { color:var(--porque); }
+    .nop { border-left:3px solid #ea580c; padding:.5rem .75rem; background:#fff7ed; border-radius:0 6px 6px 0; }
+    .nop .k { color:var(--nop); }
+    .teoria { border-left:3px solid #5b21b6; background:#f5f3ff; padding:.65rem .8rem .75rem; border-radius:0 6px 6px 0; }
+    .teoria .k { color:#5b21b6; }
+    .teoria p { margin:.35rem 0 0; font-size:1.02rem; }
+    .teoria p:first-of-type { margin-top:.2rem; }
+    .teoria ul { margin:.2rem 0 0 1.1rem; font-size:.92rem; }
+    .teoria a { color:var(--consigna); }
+    .codebox { border-left:3px solid #57534e; background:#1c1917; color:#f5f5f4; border-radius:0 8px 8px 0; padding:.55rem .75rem .7rem; overflow-x:auto; }
+    .codebox .k { color:#a8a29e; }
+    .codebox pre { margin:.35rem 0 0; font:12.5px/1.45 ui-monospace,Menlo,monospace; white-space:pre; }
+    table { border-collapse:collapse; width:100%; font-size:.92rem; margin:.4rem 0 .8rem; }
+    th, td { border:1px solid var(--line); padding:.3rem .45rem; text-align:left; vertical-align:top; }
+    th { background:#f5f5f4; }
+    ul { margin:.3rem 0 0 1.1rem; }
+    code { font-size:.88em; background:#f5f5f4; padding:.05em .3em; border-radius:4px; }
+    footer { color:var(--muted); font-size:.9rem; margin-top:2rem; }
+    .guia-nav { font:14px/1.4 ui-sans-serif,system-ui,sans-serif; background:#1c1917; color:#f5f5f4; padding:.65rem 1.25rem; }
+    .guia-nav a { color:#fde68a; text-decoration:none; margin-right:1rem; }
+  </style>
+</head>
+<body>
+<nav class="guia-nav">
+  <a href="../../index.html">← Guía</a>
+  <a href="../../plan.html">Plan</a>
+  <a href="../P1/DEFENSA.html">P1</a>
+  <a href="DEFENSA.html">P2 defensa</a>
+  <a href="ENTREGA.html">P2 entrega</a>
+</nav>
+<main>
+  <h1>P2 — Defensa (D3: calidad y recorte)</h1>
+  <p class="lede">Curación 50k SU+FA + bake-off de representaciones <b>solo train</b> (test ≥2013 no se tocó). Y de fuero <b>no</b> cerrada con fuzzy: el bake-off usa una etiqueta <i>sonda</i> (un solo token de fuero en materia).</p>
+  <p class="note">Herencia de P1: dos unidades; campo léxico = <code>texto</code> en SU; no imputar materia en FA; CIVIL∩COMERCIAL es gris. Riesgos: <code>riesgos-desde-p1.md</code>.</p>
+
+  <section>
+    <h2>1. Muestra de trabajo (por qué no 8.7k)</h2>
+    <div class="block consigna"><div class="k">Consigna</div>Preparar datos para la fase siguiente. La validación P1 dijo: 8.7k no cubre la cola de <code>materia</code>.</div>
+    <div class="block respuesta"><div class="k">Respuesta</div>Reservoir estratificado del JSONL completo, seed 42: <b>31.400 SU + 18.600 FA = 50.000</b> (mezcla ~63/37 como el censo SU+FA, no como el 50&nbsp;% plano del grupo). Archivo: <code>datos/work-sample-su-fa-50k.jsonl.gz</code> (34&nbsp;MB). En SU, <code>materia</code> distintas: <b>725</b> crudas / <b>567</b> tras normalizar guiones (vs 282 en 8.7k). Eso era el hueco.</div>
+    <div class="block porque"><div class="k">Por qué</div>Censo: SU 483.305, FA 286.283. Un 50k proporcional ve más cola sin cargar 874k en RAM.</div>
+    <div class="block teoria">
+      <div class="k">Teoría en este caso</div>
+      <p>Estratificar por prefijo es respetar las <b>unidades</b> que P1 descubrió. Un 50&nbsp;% al azar (grupo) también es grande, pero no es un diseño: es “me entró en memoria”. Acá el diseño es explícito y reproducible (seed, tamaños fijos).</p>
+      <p>Error típico: seguir laburando P2 en 8.7k “porque P1 ya estaba”. La validación dijo que la cola no entra.</p>
+      <div class="k">Teoría general</div>
+      <ul>
+        <li>EyCD <a target="_blank" rel="noopener" href="../../../Análisis Exploratorio y Curación de Datos/estudio/03-sesgo.md">03 sesgo</a></li>
+        <li>P1 <a href="../P1/VALIDACION.html">validación 8.7k vs 874k</a></li>
+      </ul>
+    </div>
+    <div class="block nop"><div class="k">No prueba</div>Que 50k baste para P3. Es el piso de curación, no el techo de entrenamiento.</div>
+  </section>
+
+  <section>
+    <h2>2. Duplicados</h2>
+    <div class="block consigna"><div class="k">Consigna</div>Qué hacer con duplicados.</div>
+    <div class="block respuesta"><div class="k">Respuesta</div><code>id-infojus</code> y <code>guid</code> únicos en las 50k (0 extras). En SU, <code>texto</code>: 31.400 no nulos, 31.373 únicos → <b>27</b> textos repetidos. No los borramos todavía: hay que ver si el id cambia (mismo párrafo, otro expediente) antes de dropear. Para el split, la unidad candidata de NLP es el <b>texto</b>, no la fila: si el mismo párrafo cae en train y test, hay fuga.</div>
+    <div class="block teoria">
+      <div class="k">Teoría en este caso</div>
+      <p>Duplicado de id ≠ duplicado de texto. El primero es un error de carga. El segundo puede ser el mismo sumario republicado. En P3, si partís por fila, dos ids con el mismo <code>texto</code> entrenan y examinan la misma prosa.</p>
+      <div class="k">Teoría general</div>
+      <ul>
+        <li>EyCD <a target="_blank" rel="noopener" href="../../../Análisis Exploratorio y Curación de Datos/estudio/01-introduccion-y-curacion.md">01 curación</a></li>
+      </ul>
+    </div>
+    <div class="block codebox">
+      <div class="k">Cómo probarlo</div>
+<pre>print(df["id-infojus"].nunique(), len(df))
+su = df[df.id_prefix=="SU"]
+print(su["texto"].nunique(dropna=True), su["texto"].notna().sum())</pre>
+    </div>
+  </section>
+
+  <section>
+    <h2>3. Faltantes (otra vez, en 50k)</h2>
+    <div class="block respuesta"><div class="k">Respuesta</div>FA sigue sin <code>texto</code> (0&nbsp;%). No se imputa. Columnas casi vacías (<code>hechos</code>, <code>sintesis</code>, <code>texto-completo</code> &gt;98&nbsp;% NA): no son el campo de P1; se dropean del modelo. <code>analista</code>/<code>responsable</code> (~15–21&nbsp;% presentes): olores a quién etiquetó, no a qué dice el fallo — afuera de X.</div>
+    <div class="block teoria">
+      <div class="k">Teoría en este caso</div>
+      <p>Misma lección P1, ahora con n que ya ve cola: faltante estructural vs columna que no es de este formulario. Imputar FA.texto sería alucinar sumarios.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>4. Categorías inconsistentes (<code>materia</code>)</h2>
+    <div class="block respuesta"><div class="k">Respuesta</div>725 valores crudos → 567 si unificás espacios y <code>-</code> (<code>CIVIL - COMERCIAL</code> vs <code>CIVIL-COMERCIAL</code>). Eso es curación <b>ortográfica</b>, no la receta fuzzy del grupo. Y sigue sin cerrarse: 567 etiquetas no son fueros. D4 puede agrupar; D3 solo deja de contar la misma combo dos veces.</div>
+    <div class="block teoria">
+      <div class="k">Teoría en este caso</div>
+      <p>Normalizar separadores es reproducible y no introduce una lista canónica ajena. Fuzzy contra una lista de fueros <b>ya es diseñar Y</b>. Eso no entra hasta que puedas defender cada regla. Error típico: copiar rapidfuzz y creer que curaste.</p>
+      <div class="k">Teoría general</div>
+      <ul>
+        <li>EyCD <a target="_blank" rel="noopener" href="../../../Análisis Exploratorio y Curación de Datos/estudio/04-tipos-de-variables-y-encodings.md">04 encodings</a> (más adelante)</li>
+      </ul>
+    </div>
+    <div class="block nop"><div class="k">No prueba</div>Un mapeo a CIVIL/PENAL/… listo para sklearn.</div>
+  </section>
+
+  <section>
+    <h2>5. Keep / drop</h2>
+    <table>
+      <tr><th>Campo</th><th>Decisión</th><th>Motivo</th></tr>
+      <tr><td><code>texto</code> (solo SU)</td><td>KEEP = X</td><td>Párrafo (P1)</td></tr>
+      <tr><td><code>materia</code></td><td>KEEP para armar Y después; NO X</td><td>Leakage si Y nace de acá</td></tr>
+      <tr><td><code>sumario</code></td><td>KEEP encabezado; NO X</td><td>Título; parece materia</td></tr>
+      <tr><td><code>descriptores</code></td><td>DROP de X</td><td>Parafraseo del tema</td></tr>
+      <tr><td><code>fecha</code> → year</td><td>KEEP split / diagnóstico</td><td>Reloj judicial</td></tr>
+      <tr><td><code>timestamp</code></td><td>NO para split de Y</td><td>Reloj de carga (P1)</td></tr>
+      <tr><td>provincia, tribunal, tipo-tribunal</td><td>KEEP diagnóstico; NO X si Y=fuero</td><td>Proxy / organigrama</td></tr>
+      <tr><td>analista, responsable</td><td>DROP X</td><td>Quién cargó, no el fallo</td></tr>
+      <tr><td>hechos, síntesis, texto-completo, citas, … NA&gt;90%</td><td>DROP</td><td>Otro formulario / vacío</td></tr>
+      <tr><td>FA entero</td><td>Fuera del NLP de fuero-por-texto</td><td>No hay <code>texto</code></td></tr>
+    </table>
+    <div class="block nop"><div class="k">No prueba</div>Que FA no sirva para otra pregunta (tribunales, tiempo). Sirve; no para este X.</div>
+  </section>
+
+  <section>
+    <h2>6. Split (ahora)</h2>
+    <div class="block respuesta"><div class="k">Respuesta</div>En SU, <code>fecha</code> parsea en el 100&nbsp;% de las 31.400. Corte temporal: train <code>year &lt; 2013</code> (24.645) / test <code>≥ 2013</code> (6.755) ≈ 80/20 por el cuantil 0,80 de esta muestra. Las estadísticas de limpieza (stopwords, min_df de D4) <b>solo train</b>. No se toca test para elegir representación.</div>
+    <div class="block teoria">
+      <div class="k">Teoría en este caso</div>
+      <p>Split aleatorio mezcla épocas: el modelo “ve el futuro” (jerga 2020 en train y test). Split por <code>timestamp</code> mediría carga al sistema. <code>fecha</code> es el reloj judicial de P1. El 80&nbsp;% cae en 2013 en <i>esta</i> 50k; no lo copies como ley del SAIJ — se documenta el corte.</p>
+      <p>Fuga extra: los 27 textos duplicados. Antes de D4, hay que impedir que el mismo párrafo esté en los dos lados (quedarse con un id, o split por hash de texto).</p>
+      <div class="k">Teoría general</div>
+      <ul>
+        <li>IAA <a target="_blank" rel="noopener" href="https://jnzader.github.io/DiploDatos/materias/03-introduccion-aprendizaje/">Materia 3</a></li>
+        <li>EyCD <a target="_blank" rel="noopener" href="../../../Análisis Exploratorio y Curación de Datos/estudio/05-transformaciones.md">05 leakage</a></li>
+      </ul>
+    </div>
+    <div class="block codebox">
+      <div class="k">Cómo probarlo</div>
+<pre>su["year"] = su["fecha"].map(lambda v: int(str(v).split("|")[0][:4]))
+cut = su["year"].quantile(0.80)  # 2013.0 en esta 50k
+train = su[su.year &lt; cut]
+test  = su[su.year &gt;= cut]</pre>
+    </div>
+  </section>
+
+  <section>
+    <h2>7. Bake-off de representaciones (D4, train only)</h2>
+    <div class="block consigna"><div class="k">Consigna</div>Comparar BoW, TF-IDF y embeddings; elegir una para lo que sigue. Lematizar solo si un A/B lo justifica.</div>
+    <div class="block respuesta"><div class="k">Respuesta</div>Ganó <b>TF-IDF (1–2 grams, min_df=5, 8k features) + LR</b> en una sonda temporal interna: macro-F1 <b>0,681</b> vs dummy estratificado <b>0,171</b>. BoW+LR 0,647; BoW+NB 0,645; TF-IDF+NB 0,634. El “embedding” liviano = TF-IDF+SVD 128 (LSA) + LR: <b>0,606</b>, peor. No hay sentence-transformers en el entorno: no se bajó un MiniLM. No lematizamos (sin spaCy; el costo no se justificó en 90 min). Test <code>year≥2013</code> (6.755 SU) <b>no se usó</b>.</div>
+    <div class="block porque"><div class="k">Por qué</div>Pool: SU con texto, year&lt;2013, un solo token de fuero en materia, textos no duplicados. Fit del vectorizer: year&lt;2010 (n=14.001). Validación: 2010–2012 (n=1.166). Clases sonda: PENAL/CIVIL/LABORAL/ADMINISTRATIVO/CONSTITUCIONAL/COMERCIAL. Por clase (TF-IDF+LR): PENAL 0,88 · LABORAL 0,78 · CIVIL 0,71 · ADMIN 0,62 · COMERCIAL 0,58 · CONSTITUCIONAL 0,53.</div>
+    <div class="block teoria">
+      <div class="k">Teoría en este caso</div>
+      <p>BoW cuenta. TF-IDF baja lo que aparece en todos los fallos (“recurso”, “ley”) y sube lo más específico. Por eso TF-IDF le gana a BoW <i>acá</i>: P1 ya había mostrado que lo frecuente no es distintivo. LSA comprime a 128 dimensiones y <b>perdió</b> esa señal (0,61). Un embedding denso no es automáticamente mejor.</p>
+      <p>La etiqueta del bake-off <b>no es Y final</b>: es un token exclusivo en materia, tirando combos y OTROS. Sirve para comparar representaciones, no para reportar el TP3. CIVIL∩COMERCIAL ni siquiera entra a la sonda. Por eso CONSTITUCIONAL sale flojo: mezcla y frontera.</p>
+      <p>Error típico: ajustar TF-IDF con train+test (fuga). Error 2: elegir embeddings porque “es lo moderno” sin número. Error 3: lematizar “porque TP2 lo pide” sin A/B — la consigna pide ver el efecto, no mandar spaCy de default.</p>
+      <div class="k">Teoría general</div>
+      <ul>
+        <li>Guía SAIJ <a target="_blank" rel="noopener" href="https://jnzader.github.io/DiploDatos/materias/02-exploracion-curacion/">Materia 2</a></li>
+        <li>IAA <a target="_blank" rel="noopener" href="https://jnzader.github.io/DiploDatos/materias/03-introduccion-aprendizaje/">Materia 3</a></li>
+      </ul>
+    </div>
+    <div class="block codebox">
+      <div class="k">Cómo probarlo</div>
+<pre>fit = pool[pool.year &lt; 2010]          # vectorizer.fit acá
+val = pool[(pool.year&gt;=2010)&amp;(pool.year&lt;2013)]
+# test year&gt;=2013: ni fit ni selección de modelo
+TfidfVectorizer(ngram_range=(1,2), min_df=5, max_features=8000)</pre>
+    </div>
+    <div class="block nop"><div class="k">No prueba</div>El F1 0,68 del TP3. Ni que MiniLM no pueda ganar: no se corrió. Ni que Y ya esté cerrada.</div>
+  </section>
+
+  <section>
+    <h2>8. Elección para P3</h2>
+    <div class="block respuesta"><div class="k">Respuesta</div>Representación congelada para lo que sigue: <b>TF-IDF 1–2 grams</b> (min_df=5, máx. 8.000, stopwords genéricas de castellano, sin lemas). BoW queda como baseline barato. LSA no. Embeddings neuronales: solo si en P3 el buscador los exige, no para clasificar fuero en este D4.</div>
+  </section>
+
+  <section>
+    <h2>9. Receta de Y (D5) — paso detallado</h2>
+    <div class="block consigna"><div class="k">Consigna</div>Dejar una etiqueta para P3. No copiar fuzzy ni la lista del grupo.</div>
+    <div class="block respuesta"><div class="k">Respuesta</div>
+      Regla, en este orden, sobre <code>materia</code> ya con guiones unificados:<br>
+      1) tokens ∩ {CIVIL, COMERCIAL, PENAL, LABORAL, ADMINISTRATIVO, CONSTITUCIONAL};<br>
+      2) si el conjunto es exactamente {CIVIL, COMERCIAL} → clase <code>CIVIL-COMERCIAL</code>;<br>
+      3) si hay <b>exactamente un</b> token → esa clase;<br>
+      4) si hay cero, o dos o más que no sean ese par → <code>OTROS</code>.<br>
+      Sin rapidfuzz, sin sinónimos, sin “parece laboral”. En las 31.400 SU de la 50k: OTROS 7726 (25&nbsp;%) · PENAL 5282 · CIVIL-COMERCIAL 4168 · CIVIL 4018 · LABORAL 3235 · CONSTITUCIONAL 2832 · ADMINISTRATIVO 2514 · COMERCIAL 1625.
+    </div>
+    <div class="block porque"><div class="k">Por qué estas reglas</div>
+      P1 ya mostró que <code>materia</code> no es fuero: hay PROCESAL, combos y dos escrituras de CIVIL-COMERCIAL. D3 unificó guiones (725→567) y <b>paró ahí</b>. D4 midió representaciones con una <i>sonda</i> (solo un token, sin OTROS ni combos) y sacó F1 0,68: eso <b>no</b> es Y de entrega. D5 tiene que escribir una Y que entre a P3 entera, reproducible en 10 líneas, y que vos puedas recitar sin el notebook.
+    </div>
+    <div class="block teoria">
+      <div class="k">Teoría en este caso</div>
+      <p>Supervisado pide una Y <b>antes</b> del modelo. Si Y es un quilombo, el F1 mide el quilombo, no “el fuero argentino”. Por eso distinguimos tres cosas: (a) el fenómeno (rama del derecho), (b) el campo sucio (<code>materia</code>), (c) la etiqueta que inventamos nosotros con reglas. (c) no es (a).</p>
+      <p>OTROS no es una rama: es “no pude aplicar 2 ni 3”. El 25&nbsp;% te dice cuánta <code>materia</code> no entra en seis palabras. CIVIL-COMERCIAL no es cobardía: P1 midió 689 filas con ambos tokens en 8.7k; en 50k son 4168. Si las fusionás a CIVIL, mentís COMERCIAL; si las tirás, perdés la frontera que el README pregunta.</p>
+      <p>El grupo cerró Y con fuzzy + lista + OTROS si ≥3 ramas. Eso es <b>otra</b> receta, no la nuestra. No la copies aunque “dé mejor”. Error típico: usar <code>materia</code> cruda como Y (282–567 clases inútil) o como X (fuga). Otro: cambiar la regla después de mirar el F1 de test — el test ≥2013 sigue cerrado para diseñar Y.</p>
+      <div class="k">Teoría general</div>
+      <ul>
+        <li>IAA <a target="_blank" rel="noopener" href="https://jnzader.github.io/DiploDatos/materias/03-introduccion-aprendizaje/">Materia 3</a> — formular Y, leakage</li>
+        <li>EyCD <a target="_blank" rel="noopener" href="../../../Análisis Exploratorio y Curación de Datos/estudio/04-tipos-de-variables-y-encodings.md">04 variables</a></li>
+        <li>P1 §8 y §11 (candidato y frontera CIVIL/COMERCIAL)</li>
+      </ul>
+    </div>
+    <div class="block codebox">
+      <div class="k">Cómo probarlo</div>
+<pre>CANON = ["CIVIL","COMERCIAL","PENAL","LABORAL",
+         "ADMINISTRATIVO","CONSTITUCIONAL"]
+def y_from_materia(m):
+    if not isinstance(m, str) or not m.strip():
+        return "OTROS"
+    t = re.sub(r"\s*-\s*", "-", m.strip().upper())
+    parts = set(re.split(r"[^A-ZÁÉÍÓÚÜÑ]+", t))
+    hits = [c for c in CANON if c in parts]
+    if set(hits) == {"CIVIL", "COMERCIAL"}:
+        return "CIVIL-COMERCIAL"
+    if len(hits) == 1:
+        return hits[0]
+    return "OTROS"
+# no uses test (year&gt;=2013) para cambiar estas reglas</pre>
+    </div>
+    <div class="block nop"><div class="k">No prueba</div>Que OTROS sea un fuero. Que 25&nbsp;% sea el del censo 874k. Que el F1 de P3 vaya a ser 0,68.</div>
+  </section>
+
+  <section>
+    <h2>Oral D3+D4</h2>
+    <ul>
+      <li>¿Por qué 50k estratificada y no 8.7k ni el 50&nbsp;% del grupo?</li>
+      <li>¿Qué campo es X y cuáles no pueden serlo si Y sale de <code>materia</code>?</li>
+      <li>¿Por qué el split es por <code>fecha</code> y no al azar ni por timestamp?</li>
+      <li>¿Qué es curación ortográfica de <code>materia</code> y qué no lo es (fuzzy)?</li>
+      <li>¿Por qué TF-IDF le ganó a BoW y a LSA <i>en este corpus</i>?</li>
+      <li>¿El 0,68 es el resultado de P3? ¿Qué etiqueta se usó en el bake-off?</li>
+      <li>¿El test ≥2013 se usó para elegir el vectorizer?</li>
+      <li>Recitá las 4 reglas de Y. ¿Qué es OTROS y qué es CIVIL-COMERCIAL?</li>
+      <li>¿Por qué esta receta no es la del grupo (fuzzy)?</li>
+    </ul>
+  </section>
+  <footer>Muestra de trabajo SU+FA 50k. Uso académico. No es asesoramiento jurídico.</footer>
+</main>
+</body>
+</html>

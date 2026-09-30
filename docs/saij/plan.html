@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plan 11 días — SAIJ</title>
+  <link rel="stylesheet" href="guia.css">
+</head>
+<body>
+<nav class="top">
+  <a href="index.html">Índice</a>
+  <span class="here">Plan 11 días</span>
+  <a href="practicos/P1/DEFENSA.html">P1 defensa</a>
+  <a href="practicos/P1/ENTREGA.html">P1 entrega</a>
+</nav>
+<main>
+  <h1>Plan 29/09 → 09/10</h1>
+  <p class="lede">118 h (~10.7 h/día). Techo 12 h. 15 h solo si se cae un fit. Objetivo: entregar y defender P1+P2+P3. No es toda la diplomatura.</p>
+
+  <div class="note"><b>P3 Moodle: 09/10</b> (el repo dice 02/10; está viejo). P1 y P2 vencidos: se hacen igual. Formato real: defensa HTML + entrega HTML + lab, no “un notebook y listo”.</div>
+
+  <h2>Índice de días</h2>
+  <ol class="toc">
+    <li><a href="#d1">D1 mar 29/09 — P1 estructurado</a> <span class="status done">hecho</span></li>
+    <li><a href="#d2">D2 mié 30/09 — P1 texto, congelar</a> <span class="status done">hecho</span></li>
+    <li><a href="#d3">D3 jue 01/10 — P2 calidad</a> <span class="status next">siguiente</span></li>
+    <li><a href="#d4">D4 vie 02/10 — P2 representaciones</a> <span class="status wait">pico 12 h</span></li>
+    <li><a href="#d5">D5 sáb 03/10 — congelar P2</a> <span class="status wait">pendiente</span></li>
+    <li><a href="#d6">D6 dom 04/10 — P3 no supervisado</a> <span class="status wait">12 h</span></li>
+    <li><a href="#d7">D7 lun 05/10 — P3 supervisado</a> <span class="status wait">12 h</span></li>
+    <li><a href="#d8">D8 mar 06/10 — errores</a> <span class="status wait">12 h</span></li>
+    <li><a href="#d9">D9 mié 07/10 — buscador</a> <span class="status wait">consigna TP3.md</span></li>
+    <li><a href="#d10">D10 jue 08/10 — empaquetar</a> <span class="status wait">pendiente</span></li>
+    <li><a href="#d11">D11 vie 09/10 — entregar P3</a> <span class="status wait">8 h</span></li>
+  </ol>
+
+  <h2>Plantilla de día</h2>
+  <p>09:00–13:00 A (4 h) · comida · 13:45–18:15 B (4.5 h) · cena · 19:15–22:45 C · 22:45 oral 5 min, notebook cerrado.</p>
+
+  <h2>Días</h2>
+
+  <details id="d1" open>
+    <summary>D1 — 10 h — entorno + P1 estructurado (hecho)</summary>
+    <p>Output: lab + defensa estructurada. Muestra oficial, no 2.5 GB.</p>
+    <table>
+      <tr><th>Bloque</th><th>h</th><th>Qué</th></tr>
+      <tr><td>A</td><td>4</td><td>Moodle + sample + leer con código propio</td></tr>
+      <tr><td>B</td><td>4</td><td>Esquema, nulos, candidato a target, tribunales, provincias</td></tr>
+      <tr><td>C</td><td>2</td><td>Dos relojes. No interpretar picos</td></tr>
+    </table>
+    <p>Oral: unidad · target · por qué no timestamp · leakage.</p>
+  </details>
+
+  <details id="d2">
+    <summary>D2 — 11 h — texto + reporte. Congelar P1</summary>
+    <table>
+      <tr><th>Bloque</th><th>h</th><th>Qué</th></tr>
+      <tr><td>A</td><td>4</td><td>Un campo de texto (sumario en SU). Longitud, vocabulario</td></tr>
+      <tr><td>B</td><td>4.5</td><td>Stopwords, n-gramas, distintivos vs compartidos</td></tr>
+      <tr><td>C</td><td>2.5</td><td>Reporte visual. Completar defensa + entrega. HTML</td></tr>
+    </table>
+    <p>No: vectorizar, lematizar, sklearn. No: fallos completos.</p>
+  </details>
+
+  <details id="d3">
+    <summary>D3 — 11 h — P2 calidad y recorte</summary>
+    <p>Nulos (MCAR/MAR/MNAR), duplicados, keep/drop, split temporal o estratificado <b>ahora</b>. Limpiezas solo con stats de train.</p>
+  </details>
+
+  <details id="d4">
+    <summary>D4 — 12 h — P2 representaciones (pico)</summary>
+    <p>BoW vs TF-IDF vs un embedding liviano. Lematizar solo si un A/B de 90 min gana. Elegir una y escribir por qué <i>acá</i>.</p>
+  </details>
+
+  <details id="d5">
+    <summary>D5 — 10 h — validar y congelar P2</summary>
+    <p>Más datos si la RAM da. Defensa + entrega P2. Test set intacto.</p>
+  </details>
+
+  <details id="d6">
+    <summary>D6 — 12 h — P3 no supervisado</summary>
+    <p>Un clustering. ¿Los temas son fueros u otra cosa?</p>
+  </details>
+
+  <details id="d7">
+    <summary>D7 — 12 h — P3 supervisado</summary>
+    <p>Dummy + 1 modelo. No accuracy. Macro-F1 y por clase (CIVIL/COMERCIAL).</p>
+  </details>
+
+  <details id="d8">
+    <summary>D8 — 12 h — errores</summary>
+    <p>20 errores a mano. Cerrar el eje flaco. No un tercer modelo.</p>
+  </details>
+
+  <details id="d9">
+    <summary>D9 — 10 h — buscador</summary>
+    <p>Está en <code>TP3.md</code>. Query → top-k. Si D7–D8 no se defienden, se corta acá.</p>
+  </details>
+
+  <details id="d10">
+    <summary>D10 — 10 h — empaquetar</summary>
+    <p>Releer las tres entregas. Subir P1/P2 si Moodle abre.</p>
+  </details>
+
+  <details id="d11">
+    <summary>D11 — 8 h — P3 al buzón</summary>
+    <p>Nada nuevo después de las 15:00. Video 07/11 no entra.</p>
+  </details>
+
+  <h2>Pánico</h2>
+  <ol>
+    <li>Buscador</li>
+    <li>Lemas / embeddings pesados → TF-IDF + SVM</li>
+    <li>“Ambos” de P3 → solo supervisado</li>
+    <li>Nunca: split honesto, F1 por clase, narrativa/defensa</li>
+  </ol>
+
+  <p>Fuente markdown (por si acaso): <code>PLAN-SPRINT-P1-P2-P3.md</code></p>
+  <footer><a href="index.html">← Índice</a></footer>
+</main>
+</body>
+</html>

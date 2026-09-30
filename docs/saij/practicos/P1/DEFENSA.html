@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>P1 — Defensa</title>
+  <style>
+    :root {
+      --bg: #f6f4ef;
+      --ink: #1c1917;
+      --muted: #57534e;
+      --card: #fffefb;
+      --line: #e7e5e4;
+      --consigna: #1e3a5f;
+      --respuesta: #14532d;
+      --porque: #44403c;
+      --nop: #9a3412;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font: 18px/1.55 "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      color: var(--ink);
+      background: var(--bg);
+    }
+    main { max-width: 46rem; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+    h1 { font-size: 1.85rem; line-height: 1.2; margin: 0 0 .5rem; }
+    .lede { color: var(--muted); margin: 0 0 1.5rem; }
+    .note {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: .9rem 1rem;
+      margin: 0 0 1.75rem;
+      font-size: .95rem;
+    }
+    section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 1.1rem 1.15rem 1.2rem;
+      margin: 0 0 1.1rem;
+    }
+    section h2 { font-size: 1.15rem; margin: 0 0 .85rem; }
+    .block { margin: 0 0 .75rem; }
+    .k {
+      display: inline-block;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-bottom: .2rem;
+    }
+    .consigna { border-left: 3px solid var(--consigna); padding-left: .75rem; }
+    .consigna .k { color: var(--consigna); }
+    .respuesta { border-left: 3px solid #16a34a; padding-left: .75rem; }
+    .respuesta .k { color: var(--respuesta); }
+    .porque { border-left: 3px solid #a8a29e; padding-left: .75rem; }
+    .porque .k { color: var(--porque); }
+    .nop { border-left: 3px solid #ea580c; padding: .5rem .75rem; background: #fff7ed; border-radius: 0 6px 6px 0; }
+    .nop .k { color: var(--nop); }
+    .teoria { border-left: 3px solid #5b21b6; background: #f5f3ff; padding: .65rem .8rem .75rem; border-radius: 0 6px 6px 0; }
+    .teoria .k { color: #5b21b6; }
+    .teoria p { margin: .35rem 0 0; font-size: 1.02rem; }
+    .teoria p:first-of-type { margin-top: .2rem; }
+    .teoria .k + .k { margin-top: .85rem; }
+    .teoria ul { margin: .2rem 0 0 1.1rem; font-size: .92rem; }
+    .teoria a { color: var(--consigna); }
+    .codebox { border-left: 3px solid #57534e; background: #1c1917; color: #f5f5f4; border-radius: 0 8px 8px 0; padding: .55rem .75rem .7rem; overflow-x: auto; }
+    .codebox .k { color: #a8a29e; }
+    .codebox pre {
+      margin: .35rem 0 0;
+      font: 12.5px/1.45 ui-monospace, "Cascadia Code", "SF Mono", Menlo, monospace;
+      white-space: pre;
+    }
+    ul { margin: .3rem 0 0 1.1rem; }
+    code { font-size: .88em; background: #f5f5f4; padding: .05em .3em; border-radius: 4px; }
+    .codebox code { background: transparent; color: inherit; padding: 0; }
+    footer { color: var(--muted); font-size: .9rem; margin-top: 2rem; }
+    figure { margin: .7rem 0 .2rem; }
+    figure img { max-width: 100%; height: auto; border: 1px solid var(--line); }
+    figcaption { font-size: .88rem; color: var(--muted); margin-top: .35rem; }
+    @media print {
+      body { background: #fff; }
+      section { break-inside: avoid; }
+      .codebox { background: #f5f5f4; color: #1c1917; }
+    }
+    .guia-nav { font: 14px/1.4 ui-sans-serif, system-ui, sans-serif; background: #1c1917; color: #f5f5f4; padding: .65rem 1.25rem; }
+    .guia-nav a { color: #fde68a; text-decoration: none; margin-right: 1rem; }
+  </style>
+</head>
+<body>
+<nav class="guia-nav"><a href="../../index.html">← Guía</a> <a href="../../plan.html">Plan</a> <a href="DEFENSA.html">Defensa</a> <a href="ENTREGA.html">Entrega</a></nav>
+<main>
+  <h1>P1 — Defensa</h1>
+  <p class="lede">Consigna → respuesta → por qué → <b>cómo probarlo en código</b> → qué no prueba. Lab: <code>p1_eda.ipynb</code>. Entrega: <a href="ENTREGA.html">ENTREGA.html</a>. Validación vs corpus: <a href="VALIDACION.html">8.7k vs 874k</a> (estructura igual; cola de <code>materia</code> no).</p>
+
+  <p class="note">Corrés el <b>setup una vez</b>. Después cada tarjeta asume <code>work</code>. Ruta desde <code>practicos/P1/</code>. El bloque violeta: primero la <b>teoría aplicada a este corpus</b>, después el capítulo general. Los links de Pages (jnzader.github.io) se ven en el browser. Los <code>.md</code> locales, si Chrome los deja en blanco, abrilos en el editor — no es que se haya roto esta página.</p>
+
+  <section>
+    <h2>0. Setup (todas las pruebas)</h2>
+    <div class="block codebox">
+      <div class="k">Cómo probarlo</div>
+<pre>from pathlib import Path
+import json, re
+import numpy as np
+import pandas as pd
+
+SAMPLE = Path("../../datos/dataset_sample.jsonl.gz")
+df = pd.read_json(SAMPLE, lines=True, compression="gzip")
+
+def dump(v):
+    if isinstance(v, (dict, list)):
+        return json.dumps(v, ensure_ascii=False)
+    return str(v)
+
+def nonempty(s):
+    if s.dtype == object:
+        return s.notna() &amp; s.map(lambda v: v not in ("", {}, []))
+    return s.notna()
+
+dummy = df["descriptores"].map(dump).str.contains(
+    "Término elegido para describir", na=False
+)
+work = df.loc[~dummy].copy()
+print(len(df), "filas crudas;", len(work), "después de sacar plantilla")</pre>
+    </div>
+    <div class="block nop"><div class="k">No prueba</div>Si filtrás <code>guid</code> que empieza con <code>123456789</code> te quedás en cero: en esta muestra <b>todos</b> los guid están anonimizados así.</div>
+  </section>
+
+  <section>
+    <h2>1. ¿Qué información hay? ¿Qué se puede preguntar?</h2>
+    <div class="block consigna"><div class="k">Consigna</div>Entender el corpus: qué hay y qué preguntas se pueden responder.</div>
+    <div class="block respuesta"><div class="k">Respuesta</div>El JSONL mezcla más de un tipo de registro: sumarios (<code>SU</code>), fallos (<code>FA</code>), novedades (<code>NV</code>), más ~1.000 plantillas. No es una única unidad “fallo”.</div>
+    <div class="block porque"><div class="k">Por qué</div>8.748 filas; 1.035 plantilla; 7.713 de trabajo. Prefijos SU 4.851 / FA 2.859 / NV 3. <code>guid</code> único pero anonimizado.</div>
+    <div class="block teoria">
+      <div class="k">Teoría en este caso</div>
+      <p>En EDA lo primero no es un gráfico: es preguntar <b>qué es una fila</b>. La unidad de análisis es el objeto que estás dispuesto a contar, promediar o etiquetar. Si mezclás objetos distintos, todos los números de abajo quedan podridos aunque el código corra.</p>
+      <p>En este JSONL una fila <b>no</b> es “un fallo argentino”. El prefijo de <code>id-infojus</code> parte el archivo: <code>SU</code> (4.851) trae <code>materia</code> y <code>sumario</code>; <code>FA</code> (2.859) trae <code>tribunal</code> y <b>cero</b> materia; <code>NV</code> (3) parece novedad. Además hay 1.035 filas de plantilla. <code>guid</code> es único, pero está anonimizado: no demuestra “un caso judicial = un guid”.</p>
+      <p>Analogía: es como juntar en una planilla personas, facturas y tuits y preguntar “edad promedio”. El error típico es hacer <code>value_counts</code> de <code>materia</code> sobre las 8.748 filas y titulear “fueros del dataset”. Primero se parte; después se describe. Las únicas preguntas honestas hoy son sobre <i>esta muestra</i> y, adentro, sobre <i>este tipo de registro</i>.</p>
+      <div class="k">Teoría general</div>
+      <ul>
+        <li>AVD <a target="_blank" rel="noopener" href="../../../Análisis y Visualización de Datos/estudio/01-eda-y-tipos-de-datos.md">01 EDA y tipos</a></li>
+        <li>AVD <a target="_blank" rel="noopener" href="../../../Análisis y Visualización de Datos/estudio/00-python-y-pandas.md">00 pandas</a></li>
+        <li>Guía SAIJ <a target="_blank" rel="noopener" href="https://jnzader.github.io/DiploDatos/materias/01-analisis-visualizacion/">Materia 1</a></li>
+      </ul>
+    </div>
+    <div class="block codebox">
+      <div class="k">Cómo probarlo</div>
+<pre>print(df.shape)  # (8748, 71)
+print("plantilla", int(dummy.sum()), "trabajo", len(work))
+print("guid únicos", work["guid"].nunique(), "de", len(work))
+print("guid anonimizado",
+      float(df["guid"].astype(str).str.startswith("123456789").mean()))
+
+ids = work["id-infojus"].dropna().astype(str)
+print(ids.str.slice(0, 2).value_counts())
+
+# cobertura de campos por prefijo → no son la misma unidad
+work["id_prefix"] = work["id-infojus"].astype(str).str.slice(0, 2)
+cols = ["materia", "sumario", "texto", "tribunal", "tipo-tribunal", "titulo_noticia"]
+rows = []
+for pref, g in work.groupby("id_prefix"):
+    rec = {"prefix": pref, "n": len(g)}
+    for c in cols:
+        rec[c] = float(nonempty(g[c]).mean())
+    rows.append(rec)
+pd.DataFrame(rows).sort_values("n", ascending=False)</pre>
+    </div>
+    <div class="block nop"><div class="k">No prueba</div>La mezcla del corpus completo de HuggingFace. Es una muestra.</div>
+  </section>
+
+  <section>
+    <h2>2. Distribución de fueros y tribunales</h2>
+    <div class="block consigna"><div class="k">Consigna</div>Evaluar distribución de fueros y tribunales.</div>
+    <div class="block respuesta"><div class="k">Respuesta</div>No hay columna <code>fuero</code>. <code>materia</code> solo en SU. <code>tipo-tribunal</code> son 139 códigos, no un fuero.</div>
+    <div class="block porque"><div class="k">Por qué</div>4.851 <code>materia</code> (62,9&nbsp;%), 282 valores. Top PROCESAL/PENAL/LABORAL/CIVIL. CS 2.877, CC 1.048.</div>
+    <div class="block teoria">
+      <div class="k">Teoría en este caso</div>
+      <p>Hay dos “tipos” que la gente confunde. El <b>tipo de la computadora</b> (string, int) dice cómo se guarda. El <b>tipo estadístico</b> dice qué operaciones tienen sentido. <code>tipo-tribunal</code> es string, pero no es un texto libre para promediar: es categórica de <b>alta cardinalidad</b> (139 códigos). La media de <code>CS</code> no existe. Se describe con conteos, moda, cola.</p>
+      <p><code>materia</code> tampoco es “el fuero”. Son 282 etiquetas de redacción humana: PROCESAL (un tipo de acto), PENAL (una rama), CIVIL - COMERCIAL y CIVIL-COMERCIAL (la misma combo con otro separador). Solo aparece en SU (62,9&nbsp;% de las filas de trabajo). Preguntar “distribución de fueros” sobre FA es preguntarle el color a una foto en blanco y negro.</p>
+      <p>Error típico: “pandas dice object, entonces es texto y lo tokenizo” o “CS será Corte Suprema, listo”. Un código hay que <b>documentarlo</b>. Hasta entonces CS es “el código más frecuente (2.877)”, no un fuero.</p>
+      <div class="k">Teoría general</div>
+      <ul>
+        <li>AVD <a target="_blank" rel="noopener" href="../../../Análisis y Visualización de Datos/estudio/03-descriptiva-visualizacion.md">03 descriptiva</a></li>
+        <li>AVD <a target="_blank" rel="noopener" href="../../../Análisis y Visualización de Datos/estudio/01-eda-y-tipos-de-datos.md">01 tipos</a></li>
+        <li>Guía SAIJ <a target="_blank" rel="noopener" href="https://jnzader.github.io/DiploDatos/materias/01-analisis-visualizacion/">Materia 1</a></li>
+      </ul>
+    </div>
+    <div class="block codebox">
+      <div class="k">Cómo probarlo</div>
+<pre>print("¿existe columna fuero?", "fuero" in work.columns)
+mat = work["materia"].dropna().astype(str)
+print("materia no nula", len(mat), f"({len(mat)/len(work):.1%})")
+print("únicos", mat.nunique())
+print(mat.value_counts().head(15))
+print("tipo-tribunal únicos", work["tipo-tribunal"].nunique())
+print(work["tipo-tribunal"].value_counts(dropna=False).head(12))
+# FA no tienen materia:
+print("materia% por prefijo")
+print(work.groupby("id_prefix")["materia"].apply(lambda s: s.notna().mean()))</pre>
+    </div>
+    <div class="block nop"><div class="k">No prueba</div>Que PROCESAL sea un fuero. Que CS sea “Corte Suprema” sin documentar el código.</div>
+  </section>
+
+  <section>
+    <h2>3. Valores faltantes</h2>
+    <div class="block consigna"><div class="k">Consigna</div>Indagar si hay valores faltantes.</div>
+    <div class="block respuesta"><div class="k">Respuesta</div>Faltantes estructurales: un FA no “olvidó” el sumario. Hay columnas siempre vacías y campos anidados.</div>
+    <div class="block porque"><div class="k">Por qué</div>Mediana 23/71 campos. SU: sumario ≈1, tribunal 0. FA: al revés.</div>
+    <div class="block teoria">
+      <div class="k">Teoría en este caso</div>
+      <p>Un faltante no es “un hueco feo”. La pregunta es <b>por qué falta</b>. MCAR: al azar (se perdió un bit). MAR: depende de otra variable observada (faltan más sumarios en un año). MNAR: depende de lo que no ves. Y hay una cuarta que en este corpus manda: <b>estructural</b> — ese campo no forma parte de ese tipo de registro.</p>
+      <p>Los FA tienen tribunal ~100&nbsp;% y sumario 0&nbsp;%. No “olvidaron” el sumario: el esquema FA no lo trae. Es como quejarse de que una factura no tiene DNI. Imputar <code>materia</code> en FA sería inventar fueros. Las columnas siempre vacías (<code>disidencia</code>, etc.) y las de noticia/norma (3 filas) son otro formulario pegado al mismo JSONL, no “el fallo incompleto”.</p>
+      <p>Los anidados (<code>descriptores</code>, <code>jurisdiccion</code>) tampoco se cuentan como un string vacío. Un dict no es NA. Error típico: <code>fillna('desconocido')</code> en todo y seguir. Curar es decidir con propósito, no tapar huecos.</p>
+      <div class="k">Teoría general</div>
+      <ul>
+        <li>EyCD <a target="_blank" rel="noopener" href="../../../Análisis Exploratorio y Curación de Datos/estudio/02-datos-faltantes.md">02 faltantes (MCAR/MAR/MNAR)</a></li>
+        <li>AVD <a target="_blank" rel="noopener" href="../../../Análisis y Visualización de Datos/estudio/07-limpieza-y-calidad-de-datos.md">07 limpieza</a></li>
+        <li>EyCD <a target="_blank" rel="noopener" href="../../../Análisis Exploratorio y Curación de Datos/estudio/01-introduccion-y-curacion.md">01 curación</a></li>
+        <li>Guía SAIJ <a target="_blank" rel="noopener" href="https://jnzader.github.io/DiploDatos/materias/02-exploracion-curacion/">Materia 2</a></li>
+      </ul>
+    </div>
+    <div class="block codebox">
+      <div class="k">Cómo probarlo</div>
+<pre>n_nonnull = work.apply(nonempty).sum(axis=1)
+print("min/mediana/max no nulos",
+      int(n_nonnull.min()), int(n_nonnull.median()), int(n_nonnull.max()))
+print("siempre vacías:",
+      [c for c in work.columns if work[c].isna().all()])
+
+# anidados: no contarlos como string
+for c in ["descriptores", "jurisdiccion"]:
+    print(c, work[c].map(type).value_counts().to_dict())
+
+# estructural vs aleatorio = cobertura por prefijo (misma tabla del §1)</pre>
+    </div>
+    <div class="block nop"><div class="k">No prueba</div>Que haya que imputar <code>materia</code> en FA.</div>
+  </section>
+
+  <section>
+    <h2>4. Desbalance de clases</h2>
+    <div class="block consigna"><div class="k">Consigna</div>¿Hay desbalance?</div>
+    <div class="block respuesta"><div class="k">Respuesta</div>Sí en <code>materia</code> y en provincia (CABA+PBA). Accuracy mentiría.</div>
+    <div class="block porque"><div class="k">Por qué</div>CABA 3.591, PBA 1.337. Top de materia se come gran parte de los 4.851 SU.</div>
+    <div class="block teoria">
+      <div class="k">Teoría en este caso</div>
+      <p>Desbalance quiere decir que las clases (o los grupos) no tienen el mismo peso. No es un bug: es el mundo. El problema es la <b>métrica</b> y el <b>sesgo que el modelo puede memorizar</b>.</p>
+      <p>En SU, PROCESAL y PENAL pesan mucho; hay colas de 20–30 filas. Un clasificador que siempre diga la clase mayoritaria puede tener accuracy “linda” y no haber leído un sumario. Por eso en P3 no vamos a usar accuracy como estrella: hace falta F1 por clase (CIVIL vs COMERCIAL se van a pelear).</p>
+      <p>Hay un segundo desbalance, geográfico: CABA 3.591, PBA 1.337, después un salto. Un modelo con provincia como feature puede “acertar fuero” porque en CABA hay más de cierto fuero, no porque entendió el texto. La descriptiva obliga a ver top <b>y</b> cola, no solo la moda. Error típico: “está desbalanceado, entonces borro las clases chicas”. A veces las chicas son las que importan.</p>
+      <div class="k">Teoría general</div>
+      <ul>
+        <li>AVD <a target="_blank" rel="noopener" href="../../../Análisis y Visualización de Datos/estudio/03-descriptiva-visualizacion.md">03 descriptiva</a></li>
+        <li>EyCD <a target="_blank" rel="noopener" href="../../../Análisis Exploratorio y Curación de Datos/estudio/03-sesgo.md">03 sesgo</a></li>
+        <li>IAA <a target="_blank" rel="noopener" href="https://jnzader.github.io/DiploDatos/materias/03-introduccion-aprendizaje/">Materia 3</a> (métricas en P3)</li>
+      </ul>
+    </div>
+    <div class="block codebox">
+      <div class="k">Cómo probarlo</div>
+<pre>vc = mat.value_counts()
+print(vc.head(10))
+print("share top 5", vc.head(5).sum() / vc.sum())
+print(work["provincia"].value_counts().head(8))
+# desbalance grosero:
+print("ratio max/min (materias con n>=20)",
+      vc[vc >= 20].max() / vc[vc >= 20].min())</pre>
+    </div>
+    <div class="block nop"><div class="k">No prueba</div>Proporciones del corpus completo. El target todavía no está cerrado.</div>
+  </section>
+
+  <section>
+    <h2>5. Evolución temporal y sesgo temporal</h2>
+    <div class="block consigna"><div class="k">Consigna</div>Evolución temporal; sesgos temporales.</div>
+    <div class="block respuesta"><div class="k">Respuesta</div>Varios relojes. <code>fecha</code> = candidato judicial (a veces varias, con <code>|</code>). <code>timestamp</code> en ms ≈ carga (~2012). Mismo año solo 12,4&nbsp;%.</div>
+    <div class="block porque"><div class="k">Por qué</div>166 fechas con pipe. 6.606 con ambos relojes; documento siempre anterior al timestamp.</div>
+    <div class="block teoria">
+      <div class="k">Teoría en este caso</div>
+      <p>Una fecha no es un float. Es un <b>reloj atado a un evento</b>. “Fecha de qué”: del fallo, de la carga, de la modificación, del newsletter. Si mezclás relojes, la serie temporal cuenta otra película.</p>
+      <p>Acá <code>fecha</code> parece el documento (rango ~1865–2026) y a veces trae <b>varias</b> fechas en un string con <code>|</code> (166 filas): ni siquiera es un solo instante. <code>timestamp</code> está en milisegundos y, convertido, vive ~2012–2026: calza con “alta en un sistema informático”, no con “se dictó el fallo en 1996”. En 6.606 filas con ambos, solo el 12,4&nbsp;% comparte el año; el documento es anterior al timestamp en todas. Eso es evidencia de dos relojes, no de un bug de parseo.</p>
+      <p>Error típico: un line plot de timestamp titulado “fallos por año”. Estás midiendo digitalización/carga. Otro: parsear <code>|</code> tomando la primera fecha sin decir que era un atajo. Para “actividad judicial” el candidato es <code>fecha</code> (con sus suciedades). Para “cuándo entró al SAIJ”, timestamp.</p>
+      <div class="k">Teoría general</div>
+      <ul>
+        <li>AVD <a target="_blank" rel="noopener" href="../../../Análisis y Visualización de Datos/estudio/01-eda-y-tipos-de-datos.md">01 EDA (semántica de la variable)</a></li>
+        <li>EyCD <a target="_blank" rel="noopener" href="../../../Análisis Exploratorio y Curación de Datos/estudio/03-sesgo.md">03 sesgo</a></li>
+        <li>Guía SAIJ <a target="_blank" rel="noopener" href="https://jnzader.github.io/DiploDatos/materias/01-analisis-visualizacion/">Materia 1</a></li>
+      </ul>
+    </div>
+    <div class="block codebox">
+      <div class="k">Cómo probarlo</div>
+<pre>print("fecha con |", int(work["fecha"].astype(str).str.contains(r"\|", na=False).sum()))
+work["fecha_str"] = work["fecha"].map(lambda v: None if pd.isna(v) else str(v))
+work["fecha_primera"] = pd.to_datetime(
+    work["fecha_str"].map(lambda s: s.split("|")[0] if isinstance(s, str) else None),
+    errors="coerce",
+)
+print(work["fecha_primera"].min(), work["fecha_primera"].max())
+
+ts = pd.to_numeric(work["timestamp"], errors="coerce")
+ts = ts.mask(ts &lt;= 0)  # pandas a veces mete el min de int64
+work["ts_dt"] = pd.to_datetime(ts, unit="ms", errors="coerce", utc=True)
+print(work["ts_dt"].min(), work["ts_dt"].max())
+
+cmp = work.dropna(subset=["fecha_primera", "ts_dt"]).copy()
+doc = cmp["fecha_primera"]
+if getattr(doc.dt, "tz", None) is None:
+    doc = doc.dt.tz_localize("UTC")
+print("ambos relojes", len(cmp))
+print("mismo año", float((doc.dt.year == cmp["ts_dt"].dt.year).mean()))
+print("doc &lt; timestamp", int((doc &lt; cmp["ts_dt"]).sum()))</pre>
+    </div>
+    <div class="block nop"><div class="k">No prueba</div>Migración ni “boom de 1996”. No uses timestamp como fecha del fallo.</div>
+  </section>
+
+  <section>
+    <h2>6. Áreas más/menos representadas</h2>
+    <div class="block consigna"><div class="k">Consigna</div>Qué áreas legales están más o menos representadas.</div>
+    <div class="block respuesta"><div class="k">Respuesta</div>Más PROCESAL/PENAL/LABORAL/CIVIL (solo SU). Geografía: CABA y PBA.</div>
+    <div class="block porque"><div class="k">Por qué</div>Mismos counts que §2 y §4; Córdoba es chica en <i>esta</i> muestra.</div>
+    <div class="block teoria">
+      <div class="k">Teoría en este caso</div>
+      <p><b>Cobertura ≠ población.</b> Lo que ves en la muestra es lo que el recorte dejó pasar, no “el derecho argentino”. SAIJ indexa con sesgos (qué tribunales cargan, qué años se digitalizaron, qué materias se resumen). Encima nosotros estamos en una muestra de ~8.7k, no en los 874k.</p>
+      <p>Que PROCESAL y PENAL lideren <code>materia</code> en SU no prueba que el país litigue eso. Prueba qué etiquetas hay acá. Córdoba chica en esta muestra no es “poca actividad cordobesa”: puede ser subcarga, filtro del sample, o las dos. Lo mismo CABA inflada.</p>
+      <p>Error típico: “el área menos representada hay que dropearla porque no hay n”. A veces es la que el mentor quiere que discutas. Otro: extrapolar al país. La frase honesta es “en esta muestra, bajo este esquema SU…”.</p>
+      <div class="k">Teoría general</div>
+      <ul>
+        <li>EyCD <a target="_blank" rel="noopener" href="../../../Análisis Exploratorio y Curación de Datos/estudio/03-sesgo.md">03 sesgo</a></li>
+        <li>AVD <a target="_blank" rel="noopener" href="../../../Análisis y Visualización de Datos/estudio/03-descriptiva-visualizacion.md">03 descriptiva</a></li>
+      </ul>
+    </div>
+    <div class="block codebox">
+      <div class="k">Cómo probarlo</div>
+<pre>print(mat.value_counts().head(20))
+print(mat.value_counts().tail(10))  # cola
+print(work["provincia"].value_counts())
+print("Córdoba", int((work["provincia"] == "Córdoba").sum()))</pre>
+    </div>
+    <div class="block nop"><div class="k">No prueba</div>Que el derecho argentino “sea” eso.</div>
+  </section>
+
+  <section>
+    <h2>7. Tribunales sobrerrepresentados</h2>
+    <div class="block consigna"><div class="k">Consigna</div>¿Hay tribunales sobrerrepresentados?</div>
+    <div class="block respuesta"><div class="k">Respuesta</div>Sí: <code>CS</code> ~2.877 vs <code>CC</code> ~1.048. <code>instancia</code> sucia.</div>
+    <div class="block porque"><div class="k">Por qué</div>139 códigos; cola larga; <code>S S S S</code> en instancia.</div>
+    <div class="block teoria">
+      <div class="k">Teoría en este caso</div>
+      <p>Sobrerrepresentación = un nivel de una categórica se come el conteo. <code>CS</code> ~2.877 vs <code>CC</code> ~1.048, y después una cola de 139 códigos. Eso no es “el fuero CS”: es un código institucional frecuente. <code>instancia</code> encima está sucia (<code>S S S S</code>): basura de carga, no una jerarquía jurídica limpia.</p>
+      <p>Por qué importa para más adelante: si el target es fuero y metés tribunal o provincia como feature, el modelo puede aprender la <b>organigrama</b> (“esta cámara hace civil”) en vez del sumario. Eso se llama <b>leakage por proxy</b>: una X que ya conoce Y por canal administrativo. El README pide predecir leyendo el sumario. Tribunal puede ser diagnóstico en P1; como feature en P3 es sospechoso.</p>
+      <p>Error típico: borrar los tribunales chicos “para limpiar”. Estás tirando las clases raras y sesgando más. Otro: decodificar CS = Corte Suprema de memoria, sin evidencia en el archivo.</p>
+      <div class="k">Teoría general</div>
+      <ul>
+        <li>AVD <a target="_blank" rel="noopener" href="../../../Análisis y Visualización de Datos/estudio/03-descriptiva-visualizacion.md">03 descriptiva</a></li>
+        <li>EyCD <a target="_blank" rel="noopener" href="../../../Análisis Exploratorio y Curación de Datos/estudio/03-sesgo.md">03 sesgo</a></li>
+        <li>EyCD <a target="_blank" rel="noopener" href="../../../Análisis Exploratorio y Curación de Datos/estudio/05-transformaciones.md">05 transformaciones / leakage</a></li>
+      </ul>
+    </div>
+    <div class="block codebox">
+      <div class="k">Cómo probarlo</div>
+<pre>tt = work["tipo-tribunal"].value_counts(dropna=False)
+print(tt.head(15))
+print("n únicos", tt.shape[0], "share CS", tt.iloc[0] / tt.sum())
+print(work["instancia"].value_counts(dropna=False).head(12))</pre>
+    </div>
+    <div class="block nop"><div class="k">No prueba</div>Que haya que tirar tribunales chicos (TP2). Tribunal como feature puede ser leakage.</div>
+  </section>
+
+  <section>
+    <h2>8. Variable objetivo (target)</h2>
+    <div class="block consigna"><div class="k">Consigna</div>Identificar el target que vamos a predecir.</div>
+    <div class="block respuesta"><div class="k">Respuesta</div>Aún no cerrado. Candidato: fuero desde <code>materia</code> en SU. Mezcla PENAL con PROCESAL, combos, y 891 sin token de fuero. FA no tienen materia.</div>
+    <div class="block porque"><div class="k">Por qué</div>Tokens groseros: muchos CIVIL+COMERCIAL; un montón sin token.</div>
+    <div class="block teoria">
+      <div class="k">Teoría en este caso</div>
+      <p>Supervisado = aprender una regla Y a partir de X, con ejemplos. Antes del modelo hay que clavar tres cosas: <b>qué es Y</b>, <b>qué puede ser X</b>, y <b>qué sería hacer trampa</b> (leakage). El README ya las dice: Y = fuero/rama, X = el sumario, trampa = usar metadatos que ya son el fuero.</p>
+      <p><code>materia</code> no es Y lista. Es una etiqueta sucia: mezcla ramas (PENAL) con tipos de acto (PROCESAL), combos (CIVIL-COMERCIAL escrito de dos maneras) y 891 valores sin token típico de fuero. Solo existe en SU. Los FA no tienen candidata: no es “faltante”, es otro problema. Congelar hoy un mapeo materia→fuero sería inventar la etiqueta para llegar más rápido a sklearn.</p>
+      <p>Si Y se construye desde <code>materia</code>, entonces <code>materia</code> y los descriptores que la parafrasean <b>no pueden entrar como X</b>. Sería copiar la respuesta en la pregunta. Error típico: “el grupo ya agrupó en OTROS, lo copio”. La receta es TP2. Hoy solo se identifica el candidato y se listan trampas.</p>
+      <div class="k">Teoría general</div>
+      <ul>
+        <li>IAA <a target="_blank" rel="noopener" href="https://jnzader.github.io/DiploDatos/materias/03-introduccion-aprendizaje/">Materia 3</a></li>
+        <li>AVD <a target="_blank" rel="noopener" href="../../../Análisis y Visualización de Datos/estudio/01-eda-y-tipos-de-datos.md">01 EDA</a></li>
+        <li>EyCD <a target="_blank" rel="noopener" href="../../../Análisis Exploratorio y Curación de Datos/estudio/05-transformaciones.md">05 transformaciones</a></li>
+      </ul>
+    </div>
+    <div class="block codebox">
+      <div class="k">Cómo probarlo</div>
+<pre>print("¿columna fuero?", "fuero" in work.columns)
+print("materia en FA", work.loc[work["id_prefix"]=="FA", "materia"].notna().mean())
+
+FUERO = ["CIVIL","COMERCIAL","PENAL","LABORAL","ADMINISTRATIVO",
+         "CONSTITUCIONAL","TRIBUTARIO","ADUANERO","AGRARIO","FAMILIA"]
+hits = []
+for m in mat:
+    parts = set(re.split(r"[^A-Za-zÁÉÍÓÚáéíóúÑñ]+", m.upper()))
+    hit = sorted(t for t in FUERO if t in parts)
+    hits.append(",".join(hit) if hit else "&lt;sin token de fuero&gt;")
+print(pd.Series(hits).value_counts().head(20))
+print("sin token", sum(h == "&lt;sin token de fuero&gt;" for h in hits))
+print("más de un fuero", sum("," in h for h in hits))
+print("separadores distintos CIVIL-COMERCIAL vs CIVIL - COMERCIAL")
+print(int((mat == "CIVIL-COMERCIAL").sum()),
+      int((mat == "CIVIL - COMERCIAL").sum()))</pre>
+    </div>
+    <div class="block nop"><div class="k">No prueba</div>La receta del grupo. Si el target nace de <code>materia</code>, no la uses como feature si el juego es “solo el sumario”.</div>
+  </section>
+
+  <section>
+    <h2>9. Campo de texto (elegido)</h2>
+    <div class="block consigna"><div class="k">Consigna</div>Seleccionar el campo de texto más adecuado.</div>
+    <div class="block respuesta"><div class="k">Respuesta</div>En filas <code>SU</code> hay dos campos útiles y <b>no son el mismo</b>. <code>sumario</code> es un <b>encabezado/descriptores</b> (mediana ~73 caracteres, ~7 tokens, todos con markup <code>[[p]]</code>). <code>texto</code> es el <b>párrafo</b> (mediana ~509 caracteres). Nunca son iguales (0&nbsp;% de igualdad; Jaccard de tokens ~0,05). Los FA no traen ninguno. Elegimos <code>texto</code> en SU para el léxico de P1. El README dice “predecir leyendo el sumario”: en <i>este</i> dump esa prosa está en <code>texto</code>; el campo <code>sumario</code> parece un título. No concatenamos.</div>
+    <div class="block porque"><div class="k">Por qué</div>4.851 SU con sumario; 4.850 con ambos. FA: 0&nbsp;% sumario/texto. <code>texto-completo</code> residual. Markup en el 100&nbsp;% de sumarios y textos SU.</div>
+    <div class="block teoria">
+      <div class="k">Teoría en este caso</div>
+      <p>Elegir campo es una decisión de <b>medición</b>, igual que elegir el reloj. El nombre de la columna miente: en SAIJ “sumario” a veces es una línea de temas (LOCACION DE INMUEBLES-CONVENIO…) y “texto” es el párrafo que un abogado llamaría sumario.</p>
+      <p>Si concatenás los dos, mezclás un título con una prosa y después los n-gramas no se sabe de dónde salen. Si usás solo el encabezado, el “vocabulario distintivo” va a parecerse a <code>materia</code> (fuga futura). Por eso el léxico de P1 va sobre <code>texto</code>, y el encabezado se documenta como otra cosa.</p>
+      <p>Error típico: “el README dice sumario, entonces la columna <code>sumario</code>”. Hay que mirar 3 filas crudas. Otro: TF-IDF ya en P1.</p>
+      <div class="k">Teoría general</div>
+      <ul>
+        <li>Guía SAIJ <a target="_blank" rel="noopener" href="https://jnzader.github.io/DiploDatos/materias/02-exploracion-curacion/">Materia 2</a></li>
+        <li>AVD <a target="_blank" rel="noopener" href="../../../Análisis y Visualización de Datos/estudio/01-eda-y-tipos-de-datos.md">01 EDA (qué mide el campo)</a></li>
+      </ul>
+    </div>
+    <div class="block codebox">
+      <div class="k">Cómo probarlo</div>
+<pre>su = work.loc[work["id_prefix"]=="SU"]
+both = su["sumario"].notna() &amp; su["texto"].notna()
+print("SU", len(su), "ambos", int(both.sum()))
+print("igualdad exacta", float((su.loc[both,"sumario"]==su.loc[both,"texto"]).mean()))
+print("mediana chars sumario/texto",
+      su["sumario"].astype(str).str.len().median(),
+      su.loc[su["texto"].notna(),"texto"].astype(str).str.len().median())
+print(su[["sumario","texto"]].head(2).to_string())</pre>
+    </div>
+    <div class="block nop"><div class="k">No prueba</div>Que en el corpus completo de 874k los nombres de columna signifiquen lo mismo. Es esta muestra.</div>
+  </section>
+
+  <section>
+    <h2>10. Longitud, markup, vocabulario, n-gramas, stopwords</h2>
+    <div class="block consigna"><div class="k">Consigna</div>Longitud, tamaño de vocabulario, términos frecuentes, n-gramas; efecto de stopwords.</div>
+    <div class="block respuesta"><div class="k">Respuesta</div>Tras sacar <code>[[p]]</code> y similares: sumario mediano 73 caracteres; texto 509. Vocabulario de texto ~21.7k tipos. Frecuentes en texto (sin stopwords genéricas de castellano, lista corta nuestra, no NLTK): <code>recurso</code>, <code>sentencia</code>, <code>ley</code>, <code>prueba</code>… son jerga procesal transversal, no un fuero. Bigramas útiles: “recurso extraordinario”, “daños perjuicios”, “contrato trabajo”, “accidente transito”. “Ley”/“fallo” no las matamos como stopwords: en jurídico pueden ser señal. No usamos stopwords en inglés.</div>
+    <div class="block porque"><div class="k">Por qué</div>Histogramas y tops corridos sobre SU. Stopwords = lista mínima (artículos, preposiciones). Sin sklearn ni TF-IDF.</div>
+    <div class="block teoria">
+      <div class="k">Teoría en este caso</div>
+      <p>Longitud y vocabulario se describen como cualquier variable: distribución, no un único número. Un encabezado de 7 tokens no tiene “riqueza léxica” comparable a un párrafo de 500 caracteres: son objetos distintos.</p>
+      <p>Stopwords genéricas (“el”, “del”, “que”) tapaban la señal. Las jurídicas (“ley”, “recurso”) hay que verlas on/off. Un bigrama (“daños perjuicios”, “recurso extraordinario”) es una locución: tokenizar y tirar una de las dos palabras la rompe. Eso se mira en P1; lematizar es P2 y solo si un A/B lo justifica.</p>
+      <p>Error típico: nube de palabras con “del/que/ley” y decir que descubriste el corpus. Otro: vectorizar ya (eso es representación, TP2).</p>
+      <div class="k">Teoría general</div>
+      <ul>
+        <li>AVD <a target="_blank" rel="noopener" href="../../../Análisis y Visualización de Datos/estudio/03-descriptiva-visualizacion.md">03 descriptiva</a></li>
+        <li>Guía SAIJ <a target="_blank" rel="noopener" href="https://jnzader.github.io/DiploDatos/materias/02-exploracion-curacion/">Materia 2</a></li>
+      </ul>
+    </div>
+    <div class="block codebox">
+      <div class="k">Cómo probarlo</div>
+<pre>def clean(t):
+    t = re.sub(r"\[\[.*?\]\]", " ", str(t))
+    return t
+def tokenize(t):
+    t = re.sub(r"[^a-záéíóúüñ]+", " ", clean(t).lower())
+    return [w for w in t.split() if len(w) &gt;= 3]
+# ver figuras fig/01–03</pre>
+    </div>
+    <figure>
+      <img src="fig/01_longitud_sumario_vs_texto.png" alt="Histogramas de longitud de sumario vs texto en SU">
+      <figcaption><b>Pregunta:</b> ¿sumario y texto miden lo mismo? <b>Hallazgo:</b> no; el sumario es corto. <b>No prueba:</b> calidad literaria del SAIJ.</figcaption>
+    </figure>
+    <figure>
+      <img src="fig/02_terminos_texto.png" alt="Términos frecuentes en texto SU">
+      <figcaption><b>Pregunta:</b> ¿qué palabras dominan el párrafo? <b>Hallazgo:</b> jerga procesal transversal. <b>No prueba:</b> que “recurso” sea un fuero.</figcaption>
+    </figure>
+    <figure>
+      <img src="fig/03_bigrams_texto.png" alt="Bigramas en texto SU">
+      <figcaption><b>Pregunta:</b> ¿hay locuciones? <b>Hallazgo:</b> sí (recurso extraordinario, daños y perjuicios). <b>No prueba:</b> que haya que lematizar.</figcaption>
+    </figure>
+    <div class="block nop"><div class="k">No prueba</div>Un ranking de palabras no es un modelo. Ni que las stopwords jurídicas vayan siempre fuera.</div>
+  </section>
+
+  <section>
+    <h2>11. Distintivos por fuero y CIVIL vs COMERCIAL</h2>
+    <div class="block consigna"><div class="k">Consigna</div>Palabras que caracterizan cada fuero, compartidas vs distintivas. (Agrupación <b>provisoria</b>: token en <code>materia</code>, Y no cerrada.)</div>
+    <div class="block respuesta"><div class="k">Respuesta</div>Con filas SU de un solo token de fuero en <code>materia</code>: PENAL se distingue (defraudación, estupefacientes, tipicidad); LABORAL (jornada, in itinere, injuria); COMERCIAL (quiebra, concursos, acreedores); CIVIL (alimentos, divorcio, conyugal). Compartido: recurso, ley, sentencia, prueba. CIVIL-only 714 vs COMERCIAL-only 275 vs ambas etiquetas 689: la zona gris es enorme. Las etiquetas dobles no se parecen a “un fuero”. Esto <b>no</b> cierra el target.</div>
+    <div class="block porque"><div class="k">Por qué</div>Ratio de frecuencia vs el resto, mínimo de conteo, solo etiquetas exclusivas para el panel. CIVIL/COMERCIAL por presencia de token, no por receta del grupo.</div>
+    <div class="block teoria">
+      <div class="k">Teoría en este caso</div>
+      <p>Frecuente ≠ distintivo. “Recurso” aparece en todos lados: no caracteriza un fuero. Distintivo es lo que es común <b>acá</b> y raro <b>en el resto</b> (alimentos vs quiebra). Eso es la idea de “específico de clase” que después TF-IDF aproxima; en P1 se ve a mano.</p>
+      <p>CIVIL y COMERCIAL se pisan en la etiqueta (689 filas con ambos tokens). Si el modelo futuro los trata como dos clases limpias, va a confundirlos: no porque el algoritmo sea tonto, sino porque Y está mezclada. P1 ya avisa esa frontera difusa (pregunta del README).</p>
+      <p>Error típico: usar el encabezado <code>sumario</code> para “distintivos” — copia materia. Otro: cerrar Y con estos tokens. Sigue siendo candidato.</p>
+      <div class="k">Teoría general</div>
+      <ul>
+        <li>Guía SAIJ <a target="_blank" rel="noopener" href="https://jnzader.github.io/DiploDatos/materias/01-analisis-visualizacion/">Materia 1</a> (fronteras de vocabulario)</li>
+        <li>IAA <a target="_blank" rel="noopener" href="https://jnzader.github.io/DiploDatos/materias/03-introduccion-aprendizaje/">Materia 3</a></li>
+      </ul>
+    </div>
+    <figure>
+      <img src="fig/04_distintivos_fuero.png" alt="Términos distintivos PENAL CIVIL LABORAL">
+      <figcaption><b>Pregunta:</b> ¿el párrafo cambia con el token de materia? <b>Hallazgo:</b> sí en exclusivos. <b>No prueba:</b> que materia sea Y definitiva.</figcaption>
+    </figure>
+    <div class="block nop"><div class="k">No prueba</div>Un clasificador. Ni que COMERCIAL “sea” quiebra en todo el SAIJ.</div>
+  </section>
+
+  <section>
+    <h2>12. Reporte visual y riesgos para P2</h2>
+    <div class="block consigna"><div class="k">Consigna</div>Reporte visual con hallazgos preliminares.</div>
+    <div class="block respuesta"><div class="k">Respuesta</div>Las figuras de esta defensa <b>son</b> el reporte: cada una trae pregunta, hallazgo y “no prueba”. P1 sobre la muestra queda <b>congelado</b> así. Fallos completos: no. Vectorizar: no.</div>
+    <div class="block teoria">
+      <div class="k">Teoría en este caso</div>
+      <p>Comunicar es titular con una tesis y un límite. Las cuatro figuras de texto + las de D1 (materia, provincia, dos relojes) cierran el práctico. No hace falta un PDF de 40 páginas.</p>
+      <div class="k">Teoría general</div>
+      <ul>
+        <li>AVD <a target="_blank" rel="noopener" href="../../../Análisis y Visualización de Datos/estudio/06-visualizacion-y-comunicacion.md">06 comunicar</a></li>
+      </ul>
+    </div>
+    <p><b>Riesgos que P2 tiene que heredar</b></p>
+    <ul>
+      <li>Dos unidades (SU vs FA). No imputar materia en FA.</li>
+      <li>Y no cerrada. No usar materia/descriptores/encabezado <code>sumario</code> como feature si Y nace de materia.</li>
+      <li>Split: no por fila cruda si el mismo texto se duplica; no mezclar épocas a ciegas; no ajustar el vectorizador con el test.</li>
+      <li>Provincia/tribunal = proxy de fuero.</li>
+      <li>CIVIL∩COMERCIAL es una clase gris, no dos clases limpias.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>13. La muestra vs el corpus (874k)</h2>
+    <div class="block consigna"><div class="k">Consigna (nuestra)</div>¿Los hallazgos de 8.748 filas se sostienen en el JSONL completo? ¿Hay que tirar la muestra?</div>
+    <div class="block respuesta"><div class="k">Respuesta</div>Censo: 874.845 filas. La muestra oficial es ~1&nbsp;%. <b>Estructura: sí, se sostiene.</b> Tasas SU/FA/plantilla, <code>fecha</code> con <code>|</code>, <code>sumario</code>≠<code>texto</code>, CABA~40&nbsp;% coinciden (TVD de prefijos muestra vs full = 0,002; un SRS puro da 0,005). <b>Cola de <code>materia</code>: no.</b> 282 etiquetas en 8.7k vs 2.636 en el censo. No reescribimos P1. P2 no puede tratar 8.7k como universo de clases.</div>
+    <div class="block porque"><div class="k">Por qué</div>Streaming del <code>dataset.jsonl</code> (2,47&nbsp;GB) + SRS 8.748 + estratificado por prefijo. No usamos el 50&nbsp;% del grupo como referencia. Detalle: <a href="VALIDACION.html">VALIDACION.html</a>.</div>
+    <div class="block teoria">
+      <div class="k">Teoría en este caso</div>
+      <p>Una muestra sirve para <b>descubrir el objeto</b> (qué es una fila, qué reloj, qué campo de texto). Sirve peor para <b>catalogar la cola</b> (etiquetas raras de materia). Confundir las dos es el error de “como el 1&nbsp;% ya me dio SU/FA, también me dio todos los fueros”.</p>
+      <p>Comparar sample vs full no es “¿me dio el mismo porcentaje bonito?”. Es: (1) ¿el relato estructural se sostiene? (2) ¿el error muestral de un SRS de 8.7k ya explica las diferencias? Si el oficial está <i>mejor</i> que un SRS en prefijos, no está sesgado a propósito: es un 1&nbsp;% parejo. La TVD de provincias (0,020 vs 0,015 del SRS) es ruido chico, no un recorte CABA-only.</p>
+      <p>Error típico: bajar 874k para P1 y no mirar 3 filas. Otro: cerrar Y con 282 valores y venderlo como el SAIJ. El 50&nbsp;% del grupo es un recorte por RAM, no un diseño estratificado.</p>
+      <div class="k">Teoría general</div>
+      <ul>
+        <li>EyCD <a target="_blank" rel="noopener" href="../../../Análisis Exploratorio y Curación de Datos/estudio/03-sesgo.md">03 sesgo (cobertura ≠ población)</a></li>
+        <li>AVD <a target="_blank" rel="noopener" href="../../../Análisis y Visualización de Datos/estudio/01-eda-y-tipos-de-datos.md">01 EDA (muestra vs censo)</a></li>
+      </ul>
+    </div>
+    <div class="block codebox">
+      <div class="k">Cómo probarlo</div>
+<pre># no cargar 874k en un DataFrame
+# python practicos/P1/validate_sample_vs_full.py
+# → validacion-muestra.json
+print(0.002, "TVD prefijo sample vs full")
+print(282, "materias en 8.7k vs", 2636, "en 874k")</pre>
+    </div>
+    <div class="block nop"><div class="k">No prueba</div>Que 8.7k baste para entrenar P3. Ni que el <code>timestamp</code> del full sea comparable (en el censo el tipo no matcheó el del sample).</div>
+  </section>
+
+  <section>
+    <h2>Oral (P1 completo)</h2>
+    <ul>
+      <li>¿Por qué una fila no es siempre un fallo?</li>
+      <li>¿Por qué <code>texto</code> y no la columna <code>sumario</code>?</li>
+      <li>¿Por qué no congelarías <code>materia</code> como fuero?</li>
+      <li>¿Qué reloj usarías para actividad judicial?</li>
+      <li>Nombrá una palabra frecuente que <b>no</b> es distintiva de fuero, y una que sí (en esta muestra).</li>
+      <li>¿Qué se sostiene en 874k y qué no? (estructura vs cola de <code>materia</code>)</li>
+    </ul>
+  </section>
+
+
+  <footer>Muestra oficial. Uso académico. No es asesoramiento jurídico.</footer>
+</main>
+</body>
+</html>

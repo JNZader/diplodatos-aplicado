@@ -1,0 +1,126 @@
+{
+  "y_counts": {
+    "OTROS": 7726,
+    "PENAL": 5282,
+    "CIVIL-COMERCIAL": 4168,
+    "CIVIL": 4018,
+    "LABORAL": 3235,
+    "CONSTITUCIONAL": 2832,
+    "ADMINISTRATIVO": 2514,
+    "COMERCIAL": 1625
+  },
+  "n_train": 24635,
+  "n_test": 6736,
+  "ari8": 0.04820862391469989,
+  "dummy_macro": 0.11922366113689409,
+  "test_macro": 0.4075857049376574,
+  "test_weighted": 0.44885848268520395,
+  "report": "                 precision    recall  f1-score   support\n\n ADMINISTRATIVO      0.207     0.364     0.264       258\n          CIVIL      0.562     0.405     0.470      1060\nCIVIL-COMERCIAL      0.078     0.071     0.074       310\n      COMERCIAL      0.312     0.650     0.422       391\n CONSTITUCIONAL      0.361     0.503     0.420       887\n        LABORAL      0.489     0.607     0.541       468\n          OTROS      0.474     0.281     0.353      2105\n          PENAL      0.691     0.745     0.717      1257\n\n       accuracy                          0.454      6736\n      macro avg      0.396     0.453     0.408      6736\n   weighted avg      0.476     0.454     0.449      6736\n",
+  "search": [
+    {
+      "q": "despido por injuria laboral",
+      "score": 0.42861739379857644,
+      "y": "LABORAL",
+      "id": "SUQ0009026",
+      "snip": " La posibilidad prevista por el artículo 246 de la L.C.T. para extinguir el vínculo por injuria del trabajador requiere que la misma tenga la relevancia y entidad que no admita la prosecución de la relación laboral, y no"
+    },
+    {
+      "q": "despido por injuria laboral",
+      "score": 0.399685749173251,
+      "y": "LABORAL",
+      "id": "SUL0003002",
+      "snip": " La  negativa  de la relación laboral es causa suficiente para que el trabajador se considere injuriado y el despido resulte indemnizable, toda  vez que dicha situación constituye una injuria de gravedad tal que  no  con"
+    },
+    {
+      "q": "despido por injuria laboral",
+      "score": 0.37530971694865645,
+      "y": "LABORAL",
+      "id": "SUE0026441",
+      "snip": " La persistencia de la situación de violencia laboral sin adopción de medidas correctivas, protectoras o sancionatorias por parte del empleador constituye injuria de suficiente gravedad para justificar el despido indirec"
+    },
+    {
+      "q": "concurso preventivo y quiebra de acreedores",
+      "score": 0.6228670641913421,
+      "y": "COMERCIAL",
+      "id": "SUN0041945",
+      "snip": " Con relación a la ineficacia concursal el hecho de que la  LCQ 116 párr. 1°  alude a \"la presentación en concurso preventivo\", no conlleva -como se alega- que el período de sospecha sea también instituto aplicable a ese"
+    },
+    {
+      "q": "concurso preventivo y quiebra de acreedores",
+      "score": 0.608792462644234,
+      "y": "COMERCIAL",
+      "id": "SUN0009687",
+      "snip": " La ley 24522 art. 56 no es aplicable en los procesos de quiebra, pues dicha norma en su art. 200, referido al periodo informativo de la quiebra, no contiene remisión alguna al art. 56; cabe además destacar la diferente "
+    },
+    {
+      "q": "concurso preventivo y quiebra de acreedores",
+      "score": 0.5666990605947261,
+      "y": "COMERCIAL",
+      "id": "SUN0020060",
+      "snip": " No mediando plazo expresamente previsto para la prescripción de las acciones derivadas de un acuerdo preventivo homologado, deviene de aplicación el decenal contemplado por el CCOM 846 (CNCom, Sala B in re \"Wobron SAIyC"
+    },
+    {
+      "q": "alimentos y divorcio",
+      "score": 0.5284801186094165,
+      "y": "CIVIL",
+      "id": "SUQ0013479",
+      "snip": " Los alimentos atrasados sólo se pierden por prescripción. "
+    },
+    {
+      "q": "alimentos y divorcio",
+      "score": 0.508536080687381,
+      "y": "CIVIL",
+      "id": "SUC0003571",
+      "snip": " Los  alimentos provisorios del art. 375 del Código Civil, proceden en los casos  de  alimentos  reclamados  entre cónyuges, porque en todos ellos se puede dar la urgencia que los justifica.  En los supuestos en que se r"
+    },
+    {
+      "q": "alimentos y divorcio",
+      "score": 0.4031210313110748,
+      "y": "CIVIL",
+      "id": "SUC0010576",
+      "snip": " La falta de cumplimiento de las obligaciones materiales derivadas del  deber  de  asistencia,  así  como  la  falta de los alimentos es injuria grave causal de divorcio. "
+    },
+    {
+      "q": "tenencia de estupefacientes",
+      "score": 0.53217157814432,
+      "y": "PENAL",
+      "id": "SU30007820",
+      "snip": " Entre  la  tenencia  de  estupefacientes  para  uso personal y la siembra  y  guarda  de  semillas  para producirlos media concurso real. "
+    },
+    {
+      "q": "tenencia de estupefacientes",
+      "score": 0.5311346787769229,
+      "y": "PENAL",
+      "id": "SUA0013404",
+      "snip": " Entre  las  acciones  que  ofenden el orden, la moral y la salud pública se encuentran sin duda la  tenencia  de  estupefacientes para uso personal. "
+    },
+    {
+      "q": "tenencia de estupefacientes",
+      "score": 0.5065645262122309,
+      "y": "PENAL",
+      "id": "SUG0003340",
+      "snip": " Son  nulas  las  actas  de secuestro de estupefacientes no suscriptas por el Comisario actuante,  razón  por  la  cual  dichos instrumentos carecen  de  validez  formal  y  esa omisión determina que  no  pueda tenerse  "
+    },
+    {
+      "q": "recurso extraordinario por sentencia arbitraria",
+      "score": 0.46398094329097583,
+      "y": "LABORAL",
+      "id": "SUB0046051",
+      "snip": " El  tratamiento  del  recurso  extraordinario  de  nulidad no puede depender del resultado del recurso extraordinario de inaplicabilidad de ley también interpuesto. "
+    },
+    {
+      "q": "recurso extraordinario por sentencia arbitraria",
+      "score": 0.4054063443344162,
+      "y": "PENAL",
+      "id": "SUB0014974",
+      "snip": " Es  insuficiente el recurso extraordinario de inaplicabilidad de ley que   se   remite   a   los   argumentos  expuestos  en  el  recurso extraordinario  de  nulidad,  pues no se basta a sí mismo (art. 346 -n.a.- C.P.P."
+    },
+    {
+      "q": "recurso extraordinario por sentencia arbitraria",
+      "score": 0.39577889484368434,
+      "y": "OTROS",
+      "id": "SUQ0090067",
+      "snip": " Cabe desestimar el recurso extraordinario federal por arbitrariedad, interpuesto por la demandada, pues el recurso no satisface las exigencias de la regla 2, Ac. 4/2007 y la regla 3, aps. b, c, d y e de la Ac. 4/2007. N"
+    }
+  ]
+}

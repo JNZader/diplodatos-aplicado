@@ -1,0 +1,61 @@
+[
+  {
+    "course": "3- Clasificación Inteligente de Documentos en la Jurisprudencia Argentina 2026",
+    "course_folder": "Mentoria Jurisprudencia",
+    "section": "Buzón de entrega de Prácticos",
+    "text": "Práctico 1 Assignment",
+    "source_url": "https://famaf.aulavirtual.unc.edu.ar/mod/assign/view.php?id=32823",
+    "source_kind": "section-link",
+    "download_strategy": "manual-assignment",
+    "kind": "moodle-assignment",
+    "reason": "página de entrega con estado personal; se registra, no se guarda HTML privado",
+    "activity_text": null,
+    "download_status": "not-downloaded-by-policy"
+  },
+  {
+    "course": "3- Clasificación Inteligente de Documentos en la Jurisprudencia Argentina 2026",
+    "course_folder": "Mentoria Jurisprudencia",
+    "section": "English ‎(en)‎",
+    "text": "Adrián Zelaya",
+    "source_url": "https://www.linkedin.com/in/adrian-zelaya/",
+    "source_kind": "section-link",
+    "download_strategy": "reference-link",
+    "reason": "link externo de documentación/herramienta; registrar, no descargar",
+    "download_status": "not-downloaded-by-policy"
+  },
+  {
+    "course": "3- Clasificación Inteligente de Documentos en la Jurisprudencia Argentina 2026",
+    "course_folder": "Mentoria Jurisprudencia",
+    "section": "English ‎(en)‎",
+    "text": "https://github.com/adrian-alejandro/mentoria-diplodatos-2026-clasificacion-y-busqueda-textos-legales",
+    "source_url": "https://github.com/adrian-alejandro/mentoria-diplodatos-2026-clasificacion-y-busqueda-textos-legales",
+    "source_kind": "section-link",
+    "download_strategy": "repo-link",
+    "reason": "repositorio GitHub completo: registrar; clonar/zip manual si se decide",
+    "download_status": "not-downloaded-by-policy"
+  },
+  {
+    "course": "3- Clasificación Inteligente de Documentos en la Jurisprudencia Argentina 2026",
+    "course_folder": "Mentoria Jurisprudencia",
+    "section": "English ‎(en)‎",
+    "text": "zelaya.adrian@gmail.com",
+    "source_url": "mailto:zelaya.adrian@gmail.com",
+    "source_kind": "section-link",
+    "download_strategy": "forum/admin-skip",
+    "reason": "correo, meet o dato administrativo",
+    "download_status": "not-downloaded-by-policy"
+  },
+  {
+    "course": "3- Clasificación Inteligente de Documentos en la Jurisprudencia Argentina 2026",
+    "course_folder": "Mentoria Jurisprudencia",
+    "section": "Prácticos",
+    "text": "Práctico 1",
+    "source_url": "https://famaf.aulavirtual.unc.edu.ar/mod/assign/view.php?id=32823",
+    "source_kind": "section-link",
+    "download_strategy": "manual-assignment",
+    "kind": "moodle-assignment",
+    "reason": "página de entrega con estado personal; se registra, no se guarda HTML privado",
+    "activity_text": null,
+    "download_status": "not-downloaded-by-policy"
+  }
+]

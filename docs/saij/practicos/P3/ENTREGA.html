@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TP3 — hasta D7</title>
+  <style>
+    @page { size:A4; margin:18mm; }
+    body { margin:0; font:12pt/1.45 "Liberation Serif",Times,serif; background:#e8e4dc; }
+    .sheet { max-width:210mm; margin:1rem auto; background:#fff; padding:18mm; }
+    .draft { background:#fff7ed; border:1px solid #fdba74; padding:.5rem .7rem; font:10pt sans-serif; }
+    table { border-collapse:collapse; width:100%; font-size:10.5pt; }
+    th,td { border:1px solid #bbb; padding:.28rem .45rem; }
+    figure img { max-width:100%; }
+    .guia-nav { font:10pt sans-serif; background:#1c1917; padding:.5rem 1rem; }
+    .guia-nav a { color:#fde68a; margin-right:1rem; }
+    @media print { .guia-nav{display:none;} body{background:#fff;} .sheet{margin:0;padding:0;} }
+  </style>
+</head>
+<body>
+<nav class="guia-nav"><a href="../../index.html">← Guía</a> <a href="DEFENSA.html">Defensa</a></nav>
+<article class="sheet">
+  <p>UNC — FaMAF · Mentoría SAIJ 2026</p>
+  <h1>Práctico 3 — avance hasta D7</h1>
+  <p class="draft">P3 hasta D9 (buscador). D10 = imprimir/subir. Defensa: DEFENSA.html.</p>
+  <h2>No supervisado (D6)</h2>
+  <p>k=8, train only. Silueta ~0,01. ARI vs Y = 0,048. Clusters = género/plantilla, no fuero.</p>
+  <h2>Supervisado (D7)</h2>
+  <p>Y grosera D5. TF-IDF+LR elegido en D4 (no reelegido con test). Train &lt;2013 / test ≥2013.</p>
+  <table>
+    <tr><th></th><th>macro-F1 test</th></tr>
+    <tr><td>Dummy estratificado</td><td>0,12</td></tr>
+    <tr><td>BoW+NB (solo para comparar)</td><td>0,41</td></tr>
+    <tr><td>TF-IDF+LR (congelado)</td><td>0,41</td></tr>
+  </table>
+  <p>Peor clase: CIVIL-COMERCIAL (0,07). Mejor: PENAL (0,72). El empate BoW/TF-IDF en test no reabre D4.</p>
+  <h2>Errores (D8)</h2>
+  <p>3.680 desaciertos en test. 20 casos: (A) Y manda a OTROS un texto claramente penal; (B) CIVIL↔COMERCIAL sin léxico propio; (C) OTROS/PROCESAL y CONSTITUCIONAL↔PENAL; (D) párrafos cortos o jerga de recurso. Lista: <code>d8_errores.json</code>. No se retoca Y con el test.</p>
+  <h2>Búsqueda (D9)</h2>
+  <p>Coseno TF-IDF, 31.371 docs de la 50k. Queries técnicas (quiebra, estupefacientes, injuria LCT) recuperan el tema. Coloquial (“plata”, “echaron”, “droga para consumo”) baja el score o pega ambigüedad (pagaré de <i>consumo</i>). “Recurso extraordinario” = plantilla procesal, no fuero. No es RAG. No usar para dictámenes.</p>
+  <figure>
+    <img src="fig/d7_f1_clase.png" alt="F1 por clase">
+  </figure>
+</article>
+</body>
+</html>

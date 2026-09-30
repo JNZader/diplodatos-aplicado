@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>D10 — Paquete Moodle</title>
+  <link rel="stylesheet" href="../guia.css">
+</head>
+<body>
+<nav class="top">
+  <a href="../index.html">Índice</a>
+  <span class="here">D10 paquete</span>
+</nav>
+<main>
+  <h1>D10 — Empaquetar (no hay más modelo)</h1>
+  <p class="lede">PDFs locales ya generados. Subir al aula lo hacés vos. P3 Moodle: <b>09/10</b>. P1/P2 vencidos: subilos si el buzón abre.</p>
+
+  <h2>Archivos para entregar</h2>
+  <table>
+    <tr><th>TP</th><th>PDF (imprimible)</th><th>Defensa (para vos)</th></tr>
+    <tr><td>P1</td><td><code>practicos/pdf/P1-ENTREGA.pdf</code></td><td>P1/DEFENSA.html</td></tr>
+    <tr><td>P2</td><td><code>practicos/pdf/P2-ENTREGA.pdf</code></td><td>P2/DEFENSA.html</td></tr>
+    <tr><td>P3</td><td><code>practicos/pdf/P3-ENTREGA.pdf</code></td><td>P3/DEFENSA.html</td></tr>
+  </table>
+  <p>Abrir carpeta:</p>
+  <pre>xdg-open "/home/javier/programacion/Educacion/DiploDatos/Mentoria Jurisprudencia/practicos/pdf"</pre>
+
+  <h2>Qué decir en Moodle (una línea cada uno)</h2>
+  <ul>
+    <li><b>P1:</b> muestra oficial 8.7k (~1% del censo); SU/FA; campo <code>texto</code> no el encabezado <code>sumario</code>; dos relojes; Y no cerrada.</li>
+    <li><b>P2:</b> 50k SU+FA estratificada; TF-IDF; split year&lt;2013; Y grosera 4 reglas, sin fuzzy.</li>
+    <li><b>P3:</b> cluster ≠ fuero (ARI 0,05); TF-IDF+LR test F1 0,41; buscador coseno, no RAG.</li>
+  </ul>
+
+  <h2>Repro (si preguntan)</h2>
+  <ul>
+    <li>Seed 42 · JSONL HF <code>datos/full-dataset/dataset.jsonl</code></li>
+    <li>Muestra trabajo: <code>datos/work-sample-su-fa-50k.jsonl.gz</code></li>
+    <li>Scripts: <code>P2/build_work_sample.py</code>, <code>P1/validate_sample_vs_full.py</code></li>
+  </ul>
+
+  <h2>Checklist tuyo</h2>
+  <ul>
+    <li>[ ] Mirar los 3 PDF (que se vean figuras en P1/P3)</li>
+    <li>[ ] Buzón P1 / P2 / P3 en Moodle</li>
+    <li>[ ] DISCLAIMER: uso académico, no dictamen</li>
+    <li>[ ] No subir el JSONL de 2,5 GB</li>
+  </ul>
+  <p>D11 = apretar enviar el 09/10. El 100% de defender es con las DEFENSA.html, no con el PDF.</p>
+  <footer><a href="../index.html">← Índice</a></footer>
+</main>
+</body>
+</html>

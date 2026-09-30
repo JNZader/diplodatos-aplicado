@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TP2 — Curación (hasta D5)</title>
+  <style>
+    @page { size: A4; margin: 18mm 16mm; }
+    body { margin:0; color:#111; font:12pt/1.45 "Liberation Serif","Times New Roman",Times,serif; background:#e8e4dc; }
+    .sheet { max-width:210mm; margin:1rem auto 3rem; background:#fff; padding:18mm 16mm 20mm; box-shadow:0 2px 18px rgba(0,0,0,.12); }
+    .brand { font:9pt/1.3 ui-sans-serif,system-ui,sans-serif; color:#444; text-transform:uppercase; letter-spacing:.04em; }
+    h1 { font-size:18pt; margin:.4rem 0 .2rem; }
+    h2 { font-size:13pt; margin:1.3rem 0 .4rem; border-bottom:1px solid #ccc; padding-bottom:.15rem; }
+    table { border-collapse:collapse; width:100%; font-size:10.5pt; margin:0 0 1rem; }
+    th, td { border:1px solid #bbb; padding:.28rem .45rem; text-align:left; }
+    th { background:#f4f4f4; }
+    .draft { font:10pt ui-sans-serif,system-ui,sans-serif; background:#fff7ed; border:1px solid #fdba74; padding:.5rem .7rem; }
+    .guia-nav { font:10pt ui-sans-serif,system-ui,sans-serif; background:#1c1917; color:#fff; padding:.5rem 1rem; }
+    .guia-nav a { color:#fde68a; margin-right:1rem; }
+    @media print { body{background:#fff;} .sheet{margin:0;box-shadow:none;padding:0;} .guia-nav{display:none;} }
+  </style>
+</head>
+<body>
+<nav class="guia-nav"><a href="../../index.html">← Guía</a> <a href="DEFENSA.html">Defensa</a></nav>
+<article class="sheet">
+  <p class="brand">UNC — FaMAF · Mentoría SAIJ 2026</p>
+  <h1>Práctico 2 — Exploración y curación</h1>
+  <p class="draft">Hasta <b>D5</b> (Y grosera). D6 clustering todavía no. Defensa §9: <a href="DEFENSA.html">DEFENSA.html</a>.</p>
+
+  <h2>1. Datos de trabajo</h2>
+  <p>No se reutiliza la muestra 8.748 de P1 como universo. Se extrae del JSONL completo (874.845) un reservoir estratificado SU+FA, seed 42: <b>31.400 SU + 18.600 FA</b>. Motivación P1: 282 vs 2.636 etiquetas de <code>materia</code>. En estas 50k SU hay 725 materias crudas (567 normalizando guiones).</p>
+
+  <h2>2. Limpieza</h2>
+  <ul>
+    <li>Ids únicos; 27 textos SU repetidos (pendiente: no partir el mismo párrafo train/test).</li>
+    <li>FA sin <code>texto</code>: fuera del pipeline NLP de fuero.</li>
+    <li><code>materia</code>: solo unificación <code>-</code>/espacios. Sin fuzzy ni lista canónica.</li>
+  </ul>
+
+  <h2>3. Variables</h2>
+  <table>
+    <tr><th>Uso</th><th>Campos</th></tr>
+    <tr><td>X</td><td><code>texto</code> en SU</td></tr>
+    <tr><td>Y (D5)</td><td>tokens canónicos en <code>materia</code>; no es feature</td></tr>
+    <tr><td>Split</td><td><code>fecha</code> → year; train &lt; 2013 (24.645) / test ≥ 2013 (6.755)</td></tr>
+    <tr><td>Prohibidos como X si Y=fuero</td><td>materia, sumario-encabezado, descriptores, provincia, tribunal</td></tr>
+  </table>
+
+  <h2>4. Representación (D4)</h2>
+  <p>Bake-off interno (vectorizer fit en SU year&lt;2010; validación 2010–2012; test ≥2013 no usado). Etiqueta sonda: un solo token de fuero en materia (no es Y final).</p>
+  <table>
+    <tr><th>Representación</th><th>macro-F1 sonda</th></tr>
+    <tr><td>Dummy estratificado</td><td>0,171</td></tr>
+    <tr><td>BoW + NB / LR</td><td>0,645 / 0,647</td></tr>
+    <tr><td>TF-IDF + NB</td><td>0,634</td></tr>
+    <tr><td><b>TF-IDF + LR</b></td><td><b>0,681</b> (elegida)</td></tr>
+    <tr><td>LSA (TF-IDF+SVD 128) + LR</td><td>0,606</td></tr>
+  </table>
+  <p>Congelado: TF-IDF 1–2 grams, min_df=5, 8.000 features, stopwords genéricas, sin lemas. Embeddings neuronales no corridos. BoW queda de baseline.</p>
+
+  <h2>5. Etiqueta Y (D5)</h2>
+  <p>Sin fuzzy. Sobre <code>materia</code> con guiones unificados:</p>
+  <ol>
+    <li>Intersección con {CIVIL, COMERCIAL, PENAL, LABORAL, ADMINISTRATIVO, CONSTITUCIONAL}.</li>
+    <li>Exactamente {CIVIL, COMERCIAL} → <code>CIVIL-COMERCIAL</code>.</li>
+    <li>Exactamente un token → esa clase.</li>
+    <li>Cero o cualquier otro combo → <code>OTROS</code>.</li>
+  </ol>
+  <table>
+    <tr><th>Y (31.400 SU)</th><th>n</th></tr>
+    <tr><td>OTROS</td><td>7726</td></tr>
+    <tr><td>PENAL</td><td>5282</td></tr>
+    <tr><td>CIVIL-COMERCIAL</td><td>4168</td></tr>
+    <tr><td>CIVIL</td><td>4018</td></tr>
+    <tr><td>LABORAL</td><td>3235</td></tr>
+    <tr><td>CONSTITUCIONAL</td><td>2832</td></tr>
+    <tr><td>ADMINISTRATIVO</td><td>2514</td></tr>
+    <tr><td>COMERCIAL</td><td>1625</td></tr>
+  </table>
+  <p>OTROS (~25&nbsp;%) no es un fuero: es “la regla no aplicó”. El F1 0,68 de D4 usaba solo exclusivos; no es el de P3.</p>
+</article>
+</body>
+</html>

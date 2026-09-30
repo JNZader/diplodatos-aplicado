@@ -1,0 +1,403 @@
+{
+  "sample_oficial": {
+    "n": 8748,
+    "dummy": 1035,
+    "dummy_rate": 0.118313,
+    "no_id": 1035,
+    "no_id_rate": 0.118313,
+    "prefix": {
+      "<NA>": 1035,
+      "SU": 4851,
+      "FA": 2859,
+      "NV": 3
+    },
+    "prefix_rate": {
+      "SU": 0.554527,
+      "FA": 0.326818,
+      "<NA>": 0.118313,
+      "NV": 0.000343
+    },
+    "pipe_fecha": 166,
+    "pipe_rate": 0.018976,
+    "ts_pos_rate": 0.755144,
+    "materia_n": 4851,
+    "materia_nunique": 282,
+    "fuero_bucket": {
+      "<otro>": 955,
+      "PENAL": 807,
+      "CIVIL_only": 714,
+      "CIVIL∩COMERCIAL": 689,
+      "LABORAL": 539,
+      "CONSTITUCIONAL": 381,
+      "ADMINISTRATIVO": 344,
+      "COMERCIAL_only": 275,
+      "multi_otro": 147
+    },
+    "prov_top": {
+      "Ciudad Autónoma de Buenos Aires": 3591,
+      "Buenos Aires": 1337,
+      "Santa Fe": 552,
+      "Chubut": 290,
+      "Entre Ríos": 273,
+      "Santiago del Estero": 239,
+      "Córdoba": 162,
+      "Mendoza": 159
+    },
+    "prov_top_rate": {
+      "Ciudad Autónoma de Buenos Aires": 0.410494,
+      "Buenos Aires": 0.152835,
+      "Santa Fe": 0.0631,
+      "Chubut": 0.03315,
+      "Entre Ríos": 0.031207,
+      "Santiago del Estero": 0.027321,
+      "Córdoba": 0.018519,
+      "Mendoza": 0.018176,
+      "Salta": 0.01749,
+      "Río Negro": 0.015203,
+      "San Juan": 0.014403,
+      "Catamarca": 0.012574,
+      "Formosa": 0.010402,
+      "Neuquén": 0.009031,
+      "Santa Cruz": 0.008688,
+      "Chaco": 0.007773,
+      "Tucumán": 0.00743,
+      "Misiones": 0.005487,
+      "Jujuy": 0.004115,
+      "La Pampa": 0.003086
+    },
+    "year_minmax": [
+      1865,
+      2026
+    ],
+    "year_top": {
+      "1996": 368,
+      "1997": 363,
+      "1995": 352,
+      "1992": 321,
+      "1993": 314,
+      "1994": 305,
+      "1991": 269,
+      "1998": 259
+    },
+    "su": 4851,
+    "su_equal_rate": 0.0,
+    "len_sumario_bins": {
+      "40-79": 2078,
+      "80-159": 1743,
+      "0-39": 649,
+      "160-319": 367,
+      "320-639": 14
+    },
+    "len_texto_bins": {
+      "640-1279": 1370,
+      "320-639": 2011,
+      "160-319": 949,
+      "1280+": 348,
+      "80-159": 165,
+      "40-79": 7,
+      "0-39": 1
+    }
+  },
+  "full": {
+    "n": 874845,
+    "dummy": 105096,
+    "dummy_rate": 0.120131,
+    "no_id": 105096,
+    "no_id_rate": 0.120131,
+    "prefix": {
+      "SU": 483305,
+      "FA": 286283,
+      "<NA>": 105096,
+      "NV": 161
+    },
+    "prefix_rate": {
+      "SU": 0.552446,
+      "FA": 0.327239,
+      "<NA>": 0.120131,
+      "NV": 0.000184
+    },
+    "pipe_fecha": 16489,
+    "pipe_rate": 0.018848,
+    "ts_pos_rate": 0.0,
+    "materia_n": 483305,
+    "materia_nunique": 2636,
+    "fuero_bucket": {
+      "<otro>": 89897,
+      "PENAL": 80481,
+      "CIVIL_only": 71230,
+      "CIVIL∩COMERCIAL": 65124,
+      "LABORAL": 50443,
+      "CONSTITUCIONAL": 43553,
+      "ADMINISTRATIVO": 39960,
+      "COMERCIAL_only": 27469,
+      "multi_otro": 15148
+    },
+    "prov_top": {
+      "Ciudad Autónoma de Buenos Aires": 351503,
+      "Buenos Aires": 136153,
+      "Santa Fe": 61759,
+      "Chubut": 30230,
+      "Entre Ríos": 29854,
+      "Santiago del Estero": 21041,
+      "Córdoba": 18532,
+      "Mendoza": 14931
+    },
+    "prov_top_rate": {
+      "Ciudad Autónoma de Buenos Aires": 0.401789,
+      "Buenos Aires": 0.155631,
+      "Santa Fe": 0.070594,
+      "Chubut": 0.034555,
+      "Entre Ríos": 0.034125,
+      "Santiago del Estero": 0.024051,
+      "Córdoba": 0.021183,
+      "Mendoza": 0.017067,
+      "Salta": 0.015083,
+      "Río Negro": 0.014477,
+      "San Juan": 0.014333,
+      "Catamarca": 0.011295,
+      "Neuquén": 0.0087,
+      "Formosa": 0.008571,
+      "Chaco": 0.008268,
+      "Santa Cruz": 0.007665,
+      "Tucumán": 0.006592,
+      "Misiones": 0.006247,
+      "Jujuy": 0.004697,
+      "La Pampa": 0.00298
+    },
+    "year_minmax": [
+      1863,
+      2026
+    ],
+    "year_top": {
+      "1995": 36417,
+      "1996": 35741,
+      "1997": 33869,
+      "1994": 29920,
+      "1992": 29820,
+      "1993": 27782,
+      "1998": 27150,
+      "1991": 26502
+    },
+    "su": 483305,
+    "su_equal_rate": 2e-06,
+    "len_sumario_bins": {
+      "0-39": 65155,
+      "80-159": 171626,
+      "160-319": 38131,
+      "40-79": 206581,
+      "320-639": 1779,
+      "640-1279": 32,
+      "1280+": 1
+    },
+    "len_texto_bins": {
+      "320-639": 204705,
+      "160-319": 90876,
+      "1280+": 35770,
+      "640-1279": 138931,
+      "80-159": 12440,
+      "40-79": 516,
+      "0-39": 67
+    }
+  },
+  "srs_8k7": {
+    "n": 8748,
+    "dummy": 1071,
+    "dummy_rate": 0.122428,
+    "no_id": 1071,
+    "no_id_rate": 0.122428,
+    "prefix": {
+      "FA": 2886,
+      "SU": 4789,
+      "<NA>": 1071,
+      "NV": 2
+    },
+    "prefix_rate": {
+      "SU": 0.547439,
+      "FA": 0.329904,
+      "<NA>": 0.122428,
+      "NV": 0.000229
+    },
+    "pipe_fecha": 171,
+    "pipe_rate": 0.019547,
+    "ts_pos_rate": 0.0,
+    "materia_n": 4789,
+    "materia_nunique": 273,
+    "fuero_bucket": {
+      "<otro>": 862,
+      "PENAL": 752,
+      "CIVIL_only": 743,
+      "CIVIL∩COMERCIAL": 656,
+      "LABORAL": 537,
+      "CONSTITUCIONAL": 439,
+      "ADMINISTRATIVO": 404,
+      "COMERCIAL_only": 259,
+      "multi_otro": 137
+    },
+    "prov_top": {
+      "Ciudad Autónoma de Buenos Aires": 3519,
+      "Buenos Aires": 1365,
+      "Santa Fe": 568,
+      "Entre Ríos": 320,
+      "Chubut": 295,
+      "Santiago del Estero": 207,
+      "Córdoba": 179,
+      "Mendoza": 157
+    },
+    "prov_top_rate": {
+      "Ciudad Autónoma de Buenos Aires": 0.402263,
+      "Buenos Aires": 0.156036,
+      "Santa Fe": 0.064929,
+      "Entre Ríos": 0.03658,
+      "Chubut": 0.033722,
+      "Santiago del Estero": 0.023663,
+      "Córdoba": 0.020462,
+      "Mendoza": 0.017947,
+      "San Juan": 0.015546,
+      "Río Negro": 0.014632,
+      "Salta": 0.012117,
+      "Catamarca": 0.011088,
+      "Neuquén": 0.009259,
+      "Misiones": 0.008345,
+      "Santa Cruz": 0.007545,
+      "Formosa": 0.00743,
+      "Chaco": 0.007202,
+      "Tucumán": 0.006059,
+      "Jujuy": 0.005258,
+      "La Rioja": 0.004115
+    },
+    "year_minmax": [
+      1864,
+      2026
+    ],
+    "year_top": {
+      "1996": 362,
+      "1997": 361,
+      "1995": 360,
+      "1994": 290,
+      "1992": 288,
+      "1993": 269,
+      "1991": 267,
+      "1998": 257
+    },
+    "su": 4789,
+    "su_equal_rate": 0.0,
+    "len_sumario_bins": {
+      "80-159": 1713,
+      "40-79": 2046,
+      "0-39": 651,
+      "160-319": 364,
+      "320-639": 15
+    },
+    "len_texto_bins": {
+      "640-1279": 1394,
+      "320-639": 1944,
+      "160-319": 967,
+      "1280+": 364,
+      "80-159": 117,
+      "40-79": 3
+    }
+  },
+  "strat_prefix_8k7": {
+    "n": 8748,
+    "dummy": 1051,
+    "dummy_rate": 0.120142,
+    "no_id": 1051,
+    "no_id_rate": 0.120142,
+    "prefix": {
+      "SU": 4833,
+      "FA": 2863,
+      "<NA>": 1051,
+      "NV": 1
+    },
+    "prefix_rate": {
+      "SU": 0.552469,
+      "FA": 0.327275,
+      "<NA>": 0.120142,
+      "NV": 0.000114
+    },
+    "pipe_fecha": 170,
+    "pipe_rate": 0.019433,
+    "ts_pos_rate": 0.0,
+    "materia_n": 4833,
+    "materia_nunique": 266,
+    "fuero_bucket": {
+      "<otro>": 867,
+      "PENAL": 800,
+      "CIVIL_only": 694,
+      "CIVIL∩COMERCIAL": 669,
+      "LABORAL": 520,
+      "CONSTITUCIONAL": 438,
+      "ADMINISTRATIVO": 412,
+      "COMERCIAL_only": 296,
+      "multi_otro": 137
+    },
+    "prov_top": {
+      "Ciudad Autónoma de Buenos Aires": 3474,
+      "Buenos Aires": 1405,
+      "Santa Fe": 621,
+      "Chubut": 298,
+      "Entre Ríos": 278,
+      "Santiago del Estero": 222,
+      "Córdoba": 199,
+      "Salta": 142
+    },
+    "prov_top_rate": {
+      "Ciudad Autónoma de Buenos Aires": 0.397119,
+      "Buenos Aires": 0.160608,
+      "Santa Fe": 0.070988,
+      "Chubut": 0.034065,
+      "Entre Ríos": 0.031779,
+      "Santiago del Estero": 0.025377,
+      "Córdoba": 0.022748,
+      "Salta": 0.016232,
+      "San Juan": 0.016004,
+      "Mendoza": 0.014975,
+      "Río Negro": 0.013832,
+      "Catamarca": 0.011888,
+      "Neuquén": 0.010631,
+      "Formosa": 0.007888,
+      "Chaco": 0.00743,
+      "Santa Cruz": 0.007087,
+      "Tucumán": 0.006973,
+      "Misiones": 0.005601,
+      "Jujuy": 0.004001,
+      "Corrientes": 0.002629
+    },
+    "year_minmax": [
+      1867,
+      2026
+    ],
+    "year_top": {
+      "1997": 363,
+      "1995": 343,
+      "1996": 326,
+      "1994": 286,
+      "1992": 283,
+      "1993": 279,
+      "1991": 275,
+      "1999": 269
+    },
+    "su": 4833,
+    "su_equal_rate": 0.0,
+    "len_sumario_bins": {
+      "80-159": 1648,
+      "40-79": 2136,
+      "160-319": 377,
+      "0-39": 656,
+      "320-639": 16
+    },
+    "len_texto_bins": {
+      "640-1279": 1404,
+      "160-319": 944,
+      "320-639": 1997,
+      "1280+": 351,
+      "40-79": 6,
+      "80-159": 131
+    }
+  },
+  "tvd_prefix_sample_vs_full": 0.0022395000000000023,
+  "tvd_prefix_srs_vs_full": 0.005006999999999975,
+  "tvd_prefix_strat_vs_full": 6.999999999998643e-05,
+  "tvd_prov_sample_vs_full": 0.02040450000000001,
+  "tvd_prov_srs_vs_full": 0.014767499999999996
+}
